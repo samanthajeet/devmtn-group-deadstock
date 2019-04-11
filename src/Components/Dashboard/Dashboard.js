@@ -27,6 +27,7 @@ import Settings from '@material-ui/icons/Settings';
 import { ListItemText, ListItemIcon, ListItem } from '@material-ui/core';
 import {Route} from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
+import styled from 'styled-components';
 import axios from 'axios';
 
 const drawerWidth = 240;
@@ -93,6 +94,7 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    overflow:'hidden'
   },
   drawerPaperClose: {
     overflowX: 'hidden',
@@ -290,6 +292,7 @@ class Dashboard extends React.Component {
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
             <Paper className={classes.paperContainer}>
+              {/* <Route path='/dashboard/closet/upload' component={Uploader} /> */}
               <Route path='/dashboard/closet' component={Closet}/>
               <Route path='/dashboard/collection' component={Collection}/>
               <Route path='/dashboard/community' component={Community} />
