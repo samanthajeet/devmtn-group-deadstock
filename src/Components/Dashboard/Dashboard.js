@@ -136,11 +136,12 @@ const styles = theme => ({
   },
   paperContainer:{
     backgroundImage:`url(${image})`,
-    height:'100vh',
+    height:'90vh',
     width:'100%',
-    overflow:'hidden',
+    overflow:'scroll',
     backgroundRepeat:'no-repeat',
-    backgroundSize:'cover'
+    backgroundSize:'cover',
+    overflowX:'hidden'
   }
 
 });
@@ -281,7 +282,6 @@ class Dashboard extends React.Component {
               <Route path='/dashboard/shop' component={Shop} />
             </Paper>
 
-            <div className={classes.backgroundImage} />
         </main>
       </div>
     );
