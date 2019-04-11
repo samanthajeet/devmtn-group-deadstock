@@ -77,7 +77,9 @@ function ProductHowItWorks(props) {
           <Grid container spacing={40}>
             <Grid item xs={12} md={4}>
               <div className={classes.item}>
-                <i class="material-icons md-48" style={{"fontSize": "8rem"}} >view_comfy</i>
+                <i class="material-icons md-48" style={{ fontSize: "8rem" }}>
+                  view_comfy
+                </i>
                 <Typography variant="h5" align="center">
                   Shoe Inventory
                 </Typography>
@@ -85,7 +87,9 @@ function ProductHowItWorks(props) {
             </Grid>
             <Grid item xs={12} md={4}>
               <div className={classes.item}>
-                <i class="material-icons md-48" style={{"fontSize": "8rem"}} >people</i>
+                <i class="material-icons md-48" style={{ fontSize: "8rem" }}>
+                  people
+                </i>
                 <Typography variant="h5" align="center">
                   Shoe Community
                 </Typography>
@@ -93,7 +97,9 @@ function ProductHowItWorks(props) {
             </Grid>
             <Grid item xs={12} md={4}>
               <div className={classes.item}>
-              <i class="material-icons md-48" style={{"fontSize": "8rem"}} >shopping_cart</i>
+                <i class="material-icons md-48" style={{ fontSize: "8rem" }}>
+                  shopping_cart
+                </i>
                 <Typography variant="h5" align="center">
                   Shoe eCommerce
                 </Typography>
