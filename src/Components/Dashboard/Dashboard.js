@@ -28,7 +28,6 @@ import { ListItemText, ListItemIcon, ListItem } from '@material-ui/core';
 import {Route} from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
-
 const drawerWidth = 240;
 const image = 'https://images.unsplash.com/photo-1494122353634-c310f45a6d3c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'
 
@@ -88,6 +87,7 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    overflow:'hidden'
   },
   drawerPaperClose: {
     overflowX: 'hidden',
@@ -283,6 +283,7 @@ class Dashboard extends React.Component {
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
             <Paper className={classes.paperContainer}>
+              {/* <Route path='/dashboard/closet/upload' component={Uploader} /> */}
               <Route path='/dashboard/closet' component={Closet}/>
               <Route path='/dashboard/collection' component={Collection}/>
               <Route path='/dashboard/community' component={Community} />
