@@ -63,6 +63,7 @@ class ProductCard extends React.Component {
   render() {
     const { classes } = this.props;
 
+
     return (
       <Card className={classes.card}>
         <CardHeader
@@ -84,6 +85,7 @@ class ProductCard extends React.Component {
           image={this.props.image}
           title={this.props.model}
           subheader={this.props.colorway}
+          onClick={() => this.props.history.push(`/shop/${this.props.shoe_id}`)}
         />
         <CardContent>
           <Typography component="p">
