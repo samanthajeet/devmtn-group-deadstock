@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import ProductCard from '../ProductCard/ProductCard';
+import { withRouter } from "react-router"
 
 const MappedShoes = styled.div`
   display: flex;
@@ -41,6 +42,8 @@ class Shop extends Component {
             image={shoe.image_1_url}
             price={shoe.price}
             description={shoe.description}
+            shoe_id={shoe.shoe_id}
+            history={this.props.history}
           />
         </div>
       );
@@ -54,4 +57,4 @@ class Shop extends Component {
   }
 }
 
-export default Shop;
+export default withRouter(Shop);

@@ -27,7 +27,9 @@ import Settings from '@material-ui/icons/Settings';
 import { ListItemText, ListItemIcon, ListItem } from '@material-ui/core';
 import {Route} from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
+import styled from 'styled-components';
 import axios from 'axios';
+
 const drawerWidth = 240;
 const image = 'https://images.unsplash.com/photo-1494122353634-c310f45a6d3c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'
 
@@ -37,6 +39,11 @@ const styles = theme => ({
     display: 'flex',
     margin:0,
     padding:0,
+  },
+  drawerButtonContent:{
+    color:'white',
+
+
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -115,13 +122,15 @@ const styles = theme => ({
   },
   iconButtons:{
     '&:hover':{
-        background:'blue',
-      }
+        background:'#26f7ff',
+      },
+      '&:hover $drawerButtonContent':{
+        color:'black'
+      },
   },
   chevronIcon:{
     border:'white 1px dashed'
   },
-
   inputHolder:{
     "&::-webkit-input-placeholder": {
         color: 'white'
@@ -143,7 +152,7 @@ const styles = theme => ({
     backgroundRepeat:'no-repeat',
     backgroundSize:'cover',
     overflowX:'hidden'
-  }
+  },
 
 });
 
@@ -238,43 +247,43 @@ class Dashboard extends React.Component {
                 <div>
                     <ListItem button className={classes.iconButtons} onClick={() => this.props.history.push('/dashboard/closet')}>
                         <ListItemIcon>
-                          <i className="fas fa-door-closed" style={{color:'white',fontSize:'20px'}}></i>
+                          <i className={classes.drawerButtonContent + " " + "fas fa-door-closed"} style={{fontSize:'20px'}}></i>
                         </ListItemIcon>
-                        <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'25px'}}> Closet</Typography>}/>
+                        <ListItemText primary={<Typography className={classes.drawerButtonContent} style={{fontSize:'25px'}}> Closet</Typography>}/>
                     </ListItem>
 
               {/* <Divider /> */}
 
                     <ListItem button className={classes.iconButtons} onClick={() => this.props.history.push('/dashboard/collection')}>
-                        <ListItemIcon>
-                          <Favorite style={{color:'white'}}/>
+                        <ListItemIcon >
+                          <Favorite className={classes.drawerButtonContent}/>
                         </ListItemIcon>
-                        <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'25px'}}> Collection </Typography>}/>
+                        <ListItemText  primary={<Typography className={classes.drawerButtonContent} style={{fontSize:'25px'}}> Collection </Typography>}/>
                     </ListItem>
 
               {/* <Divider /> */}
 
                     <ListItem button className={classes.iconButtons} onClick={() => this.props.history.push('/dashboard/community')}>
                       <ListItemIcon>
-                        <Public style={{color:'white'}}/>
+                        <Public className={classes.drawerButtonContent} />
                       </ListItemIcon>
-                      <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'25px'}}> Community</Typography>} />
+                      <ListItemText  primary={<Typography className={classes.drawerButtonContent} style={{fontSize:'25px'}}> Community</Typography>} />
                     </ListItem>
               {/* <Divider /> */}
 
                     <ListItem button className={classes.iconButtons} onClick={() => this.props.history.push('/dashboard/shop')}>
                       <ListItemIcon>
-                        <ShoppingCart style={{color:'white'}}/>
+                        <ShoppingCart className={classes.drawerButtonContent}/>
                       </ListItemIcon>
-                      <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'25px'}}> Shop</Typography>}/>
+                      <ListItemText primary={<Typography className={classes.drawerButtonContent}  style={{fontSize:'25px'}} > Shop</Typography>}/>
                     </ListItem>
                 </div>
                 <div>
                   <ListItem button className={classes.iconButtons} onClick={this.handleLogout}>
                     <ListItemIcon>
-                      <Logout style={{color:'white'}}/>
+                      <Logout className={classes.drawerButtonContent}/>
                     </ListItemIcon>
-                    <ListItemText primary={<Typography style={{color:'#ffffff',fontSize:'25px'}}> Logout</Typography>}/>
+                    <ListItemText primary={<Typography className={classes.drawerButtonContent} style={{fontSize:'25px'}}> Logout</Typography>}/>
                   </ListItem>
                 </div>
             </div>
