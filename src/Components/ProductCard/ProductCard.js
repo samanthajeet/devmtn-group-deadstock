@@ -13,14 +13,16 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
+// import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+// import MoreVertIcon from '@material-ui/icons/MoreVert';
+import styled from 'styled-components';
 
 const styles = theme => ({
   card: {
     width: '25rem',
     margin: '1rem',
+
   },
   media: {
     height: '18rem',
@@ -44,6 +46,38 @@ const styles = theme => ({
   },
 });
 
+const CardContainer = styled.div `
+  /* animation-name: fade-in; */
+  /* animation-duration: 1s; */
+  /* animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+  transition-timing-function: ease; */
+
+  :hover{
+  animation-name: increasesize;
+  animation-duration: 0.5s;
+  transition: 0s;
+  transition-timing-function: ease;
+  animation-fill-mode: forwards;
+  cursor: pointer;
+  };
+
+
+  @keyframes fade-in {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+  }
+
+
+  @keyframes increasesize {
+  0%   { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
+
+`
+
+
 class ProductCard extends React.Component {
   state = { expanded: false };
 
@@ -65,6 +99,9 @@ class ProductCard extends React.Component {
 
 
     return (
+      <CardContainer>
+
+
       <Card className={classes.card}>
         <CardHeader
           // avatar={
@@ -119,6 +156,7 @@ class ProductCard extends React.Component {
           </CardContent>
         </Collapse>
       </Card>
+      </CardContainer>
     );
   }
 }
