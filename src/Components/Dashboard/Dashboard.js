@@ -27,6 +27,7 @@ import Settings from '@material-ui/icons/Settings';
 import { ListItemText, ListItemIcon, ListItem } from '@material-ui/core';
 import {Route} from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
+import axios from 'axios';
 
 const drawerWidth = 240;
 const image = 'https://images.unsplash.com/photo-1494122353634-c310f45a6d3c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'
@@ -159,6 +160,12 @@ class Dashboard extends React.Component {
     this.setState({ open: false });
   };
 
+  handleLogout=async()=>{
+    await axios.post('/api/auth/logout')
+    console.log('logged out!')
+    this.props.history.push('/')
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -263,7 +270,7 @@ class Dashboard extends React.Component {
                     </ListItem>
                 </div>
                 <div>
-                  <ListItem button className={classes.iconButtons} onClick={() => this.props.history.push('/')}>
+                  <ListItem button className={classes.iconButtons} onClick={this.handleLogout}>
                     <ListItemIcon>
                       <Logout style={{color:'white'}}/>
                     </ListItemIcon>
