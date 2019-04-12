@@ -13,23 +13,23 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 // import NotificationsIcon from '@material-ui/icons/Notifications';
-import ShoppingCart from '@material-ui/icons/ShoppingCart';
-import Public from '@material-ui/icons/Public';
-import Favorite from '@material-ui/icons/Favorite';
-import Closet from '../Closet/Closet';
-import Collection from '../Collection/Collection';
-import Community from '../Community/Community';
-import Shop from '../Shop/Shop';
-import Logout from '@material-ui/icons/ExitToApp';
-import Search from '@material-ui/icons/Search';
-import Chat from '@material-ui/icons/Forum';
-import Settings from '@material-ui/icons/Settings';
-import { ListItemText, ListItemIcon, ListItem } from '@material-ui/core';
-import {Route} from 'react-router-dom';
-import Paper from '@material-ui/core/Paper';
-import styled from 'styled-components';
-import axios from 'axios';
-import Product from '../Product/Product'
+import ShoppingCart from "@material-ui/icons/ShoppingCart";
+import Public from "@material-ui/icons/Public";
+import Favorite from "@material-ui/icons/Favorite";
+import Closet from "../Closet/Closet";
+import Collection from "../Collection/Collection";
+import Community from "../Community/Community";
+import Shop from "../Shop/Shop";
+import Logout from "@material-ui/icons/ExitToApp";
+import Search from "@material-ui/icons/Search";
+import Chat from "@material-ui/icons/Forum";
+import Settings from "@material-ui/icons/Settings";
+import { ListItemText, ListItemIcon, ListItem } from "@material-ui/core";
+import { Route } from "react-router-dom";
+import Paper from "@material-ui/core/Paper";
+import styled from "styled-components";
+import axios from "axios";
+import Product from "../Product/Product";
 
 const drawerWidth = 240;
 const image =
@@ -411,17 +411,6 @@ class Dashboard extends React.Component {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-<<<<<<< HEAD
-            <Paper className={classes.paperContainer}>
-              {/* <Route path='/dashboard/closet/upload' component={Uploader} /> */}
-              <Route path='/dashboard/closet' component={Closet}/>
-              <Route path='/dashboard/collection' component={Collection}/>
-              <Route path='/dashboard/community' component={Community} />
-              <Route path='/dashboard/shop/:shoe_id' component={Product} />
-              <Route path='/dashboard/shop' exact component={Shop} />
-            </Paper>
-
-=======
           <Paper className={classes.paperContainer}>
             {/* <Route path='/dashboard/closet/upload' component={Uploader} /> */}
             <Route path="/dashboard/closet" component={Closet} />
@@ -429,7 +418,6 @@ class Dashboard extends React.Component {
             <Route path="/dashboard/community" component={Community} />
             <Route path="/dashboard/shop" component={Shop} />
           </Paper>
->>>>>>> master
         </main>
       </div>
     );
