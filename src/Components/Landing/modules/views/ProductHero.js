@@ -57,11 +57,11 @@ function ProductHero(props) {
           alignItems: "center"
         }}
       >
-        {/* <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Logo_TV_2015.svg/1200px-Logo_TV_2015.svg.png"
+        <img
+          src="src\Components\Landing\image\logo.png"
           alt=""
-          style={{ width: "25%", margin: 0 }}
-        /> */}
+          style={{ width: "25%", margin: 0, transform: 'rotate(-18deg)' }}
+        />
         <div
           style={{
             backgroundColor: "#ffffff",
@@ -97,6 +97,7 @@ function ProductHero(props) {
         <Typography variant="body2" color="inherit" className={classes.more}>
           Discover the experience
         </Typography>
+        
       </div>
     </ProductHeroLayout>
   );

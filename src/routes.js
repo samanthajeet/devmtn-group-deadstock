@@ -12,6 +12,5 @@ export default (
     <Route path='/dashboard' component={Dashboard}/>
     <Route path='/register' component={Register} />
     <Route path='/login' component={Login} />
-    <Route path='/shop/:shoe_id' component={Product} />
   </Switch>
 )

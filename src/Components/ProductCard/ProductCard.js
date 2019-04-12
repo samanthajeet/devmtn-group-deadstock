@@ -13,14 +13,17 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
+// import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+// import MoreVertIcon from '@material-ui/icons/MoreVert';
+import styled from 'styled-components';
+import Grow from '@material-ui/core/Grow';
 
 const styles = theme => ({
   card: {
     width: '25rem',
     margin: '1rem',
+
   },
   media: {
     height: '18rem',
@@ -44,8 +47,29 @@ const styles = theme => ({
   },
 });
 
+const CardContainer = styled.div `
+  :hover{
+  animation-name: increasesize;
+  animation-duration: 0.5s;
+  transition: 0s;
+  transition-timing-function: ease;
+  animation-fill-mode: forwards;
+  cursor: pointer;
+  };
+
+  @keyframes increasesize {
+  0%   { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
+`
+
+
 class ProductCard extends React.Component {
-  state = { expanded: false };
+  state = {
+    expanded: false,
+    checked: true
+   };
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
@@ -62,9 +86,13 @@ class ProductCard extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const {checked} =  this.state
 
 
     return (
+      <CardContainer>
+
+      <Grow in={checked}>
       <Card className={classes.card}>
         <CardHeader
           // avatar={
@@ -85,7 +113,7 @@ class ProductCard extends React.Component {
           image={this.props.image}
           title={this.props.model}
           subheader={this.props.colorway}
-          onClick={() => this.props.history.push(`/shop/${this.props.shoe_id}`)}
+          onClick={() => this.props.history.push(`/dashboard/shop/${this.props.shoe_id}`)}
         />
         <CardContent>
           <Typography component="p">
@@ -119,6 +147,8 @@ class ProductCard extends React.Component {
           </CardContent>
         </Collapse>
       </Card>
+      </Grow>
+      </CardContainer>
     );
   }
 }
