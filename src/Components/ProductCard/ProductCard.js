@@ -17,6 +17,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // import MoreVertIcon from '@material-ui/icons/MoreVert';
 import styled from 'styled-components';
+import Grow from '@material-ui/core/Grow';
 
 const styles = theme => ({
   card: {
@@ -47,12 +48,6 @@ const styles = theme => ({
 });
 
 const CardContainer = styled.div `
-  /* animation-name: fade-in; */
-  /* animation-duration: 1s; */
-  /* animation-fill-mode: forwards;
-  animation-timing-function: ease-in-out;
-  transition-timing-function: ease; */
-
   :hover{
   animation-name: increasesize;
   animation-duration: 0.5s;
@@ -62,24 +57,19 @@ const CardContainer = styled.div `
   cursor: pointer;
   };
 
-
-  @keyframes fade-in {
-  0%   { opacity: 0; }
-  100% { opacity: 1; }
-  }
-
-
   @keyframes increasesize {
   0%   { transform: scale(1); }
   100% { transform: scale(1.05); }
 }
 
-
 `
 
 
 class ProductCard extends React.Component {
-  state = { expanded: false };
+  state = {
+    expanded: false,
+    checked: true
+   };
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
@@ -96,12 +86,13 @@ class ProductCard extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const {checked} =  this.state
 
 
     return (
       <CardContainer>
 
-
+      <Grow in={checked}>
       <Card className={classes.card}>
         <CardHeader
           // avatar={
@@ -122,7 +113,7 @@ class ProductCard extends React.Component {
           image={this.props.image}
           title={this.props.model}
           subheader={this.props.colorway}
-          onClick={() => this.props.history.push(`/shop/${this.props.shoe_id}`)}
+          onClick={() => this.props.history.push(`/dashboard/shop/${this.props.shoe_id}`)}
         />
         <CardContent>
           <Typography component="p">
@@ -156,6 +147,7 @@ class ProductCard extends React.Component {
           </CardContent>
         </Collapse>
       </Card>
+      </Grow>
       </CardContainer>
     );
   }

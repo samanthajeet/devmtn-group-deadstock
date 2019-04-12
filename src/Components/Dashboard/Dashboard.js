@@ -29,6 +29,7 @@ import {Route} from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components';
 import axios from 'axios';
+import Product from '../Product/Product'
 
 const drawerWidth = 240;
 const image = 'https://images.unsplash.com/photo-1494122353634-c310f45a6d3c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'
@@ -296,7 +297,8 @@ class Dashboard extends React.Component {
               <Route path='/dashboard/closet' component={Closet}/>
               <Route path='/dashboard/collection' component={Collection}/>
               <Route path='/dashboard/community' component={Community} />
-              <Route path='/dashboard/shop' component={Shop} />
+              <Route path='/dashboard/shop/:shoe_id' component={Product} />
+              <Route path='/dashboard/shop' exact component={Shop} />
             </Paper>
 
         </main>
