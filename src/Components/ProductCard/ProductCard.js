@@ -18,6 +18,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // import MoreVertIcon from '@material-ui/icons/MoreVert';
 import styled from 'styled-components';
 import Grow from '@material-ui/core/Grow';
+import axios from 'axios';
 
 const styles = theme => ({
   card: {
@@ -68,7 +69,8 @@ const CardContainer = styled.div `
 class ProductCard extends React.Component {
   state = {
     expanded: false,
-    checked: true
+    checked: true,
+    like: false
    };
 
   handleExpandClick = () => {
@@ -82,6 +84,12 @@ class ProductCard extends React.Component {
   combineModelColor(model, colorway){
     const modelColorway = model + ' - ' + colorway
     return modelColorway
+  }
+
+  handleAddFavorite(){
+    console.log('hi joe')
+    const {shoe_id} = this.props
+    axios.post(`/api/collection/favorite`, {shoe_id}).then()
   }
 
   render() {
@@ -121,8 +129,8 @@ class ProductCard extends React.Component {
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Add to favorites">
-            <FavoriteIcon />
+          <IconButton aria-label="Add to favorites" onClick={() => this.handleAddFavorite()}>
+            <FavoriteIcon  />
           </IconButton>
           {/* <IconButton aria-label="Share">
             <ShareIcon />

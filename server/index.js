@@ -64,3 +64,9 @@ app.delete(`/api/closet/delete/:shoe_id`, closetCtrl.deleteShoe);
 const shoeCtrl = require(`./Controllers/ShoeController`);
 app.get(`/api/shoes/:shoe_id`, shoeCtrl.getShoe);
 app.get(`/api/shoes`, shoeCtrl.getAllShoes);
+
+
+// Collection Endpoints
+const collCtrl = require(`./Controllers/CollectionController`);
+app.post(`/api/collection/favorite`, collCtrl.addToCollection)
+app.get(`/api/collection`,collCtrl.getCollection);
