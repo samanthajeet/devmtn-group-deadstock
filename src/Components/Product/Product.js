@@ -11,9 +11,17 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Divider from "@material-ui/core/Divider";
 import Icon from "@material-ui/core/Icon";
 import Button from "@material-ui/core/Button";
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import styled from "styled-components";
+import Fade from '@material-ui/core/Fade';
+
+const Progress = styled.div`
+  color: white;
+  margin-top: 25rem;
+`;
 
 const styles = theme => ({
   root: {
@@ -24,12 +32,10 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "center",
     border: "2px solid white",
-    width: "100%",
-
-    
+    width: "100%"
   },
   close: {
-    padding: theme.spacing.unit / 2,
+    padding: theme.spacing.unit / 2
   },
 
   demo: {
@@ -95,10 +101,12 @@ const Product = props => {
   const [image4, setImage4] = useState("");
   const [dense = false, setDense] = useState("");
   const [secondary = false, setSecondary] = useState("");
-  const [open = false, setOpen] = useState("")
+  const [open = false, setOpen] = useState("");
+  const [loading, setLoading] = useState("");
 
-  useEffect(async () => {
-    await getShoe();
+  useEffect(() => {
+    setLoading(true);
+    getShoe();
   }, []);
 
   const getShoe = async () => {
@@ -115,115 +123,125 @@ const Product = props => {
     setImage2(response.data[0].image_2_url);
     setImage3(response.data[0].image_3_url);
     setImage4(response.data[0].image_4_url);
+    setLoading(false);
 
     console.log(response.data[0]);
   };
 
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
 
-    setOpen( false);
+    setOpen(false);
   };
-
 
   return (
     <div>
-      <div className={classes.root}>
-        <div style={{ width: "50%" }}>
-          <div style={{ display: "flex" }}>
-            <Paper className={classes.paper}>
-              <img className={classes.image} src={image1} alt={model} />
-            </Paper>
-            <Paper className={classes.paper}>
-              <img className={classes.image} src={image2} alt={model} />
-            </Paper>
-          </div>
-          <div style={{ display: "flex" }}>
-            <Paper className={classes.paper}>
-              <img className={classes.image} src={image3} alt={model} />
-            </Paper>
-            <Paper className={classes.paper}>
-              <img className={classes.image} src={image4} alt={model} />
-            </Paper>
-          </div>
-        </div>
-        <div>
-          <Paper className={classes.description}>
-            <Typography variant="h4" component="h4">
-              {model}
-            </Typography>
-            <Typography component="p" style={{ marginTop: "0.5rem" }}>
-              Brand: {brand}
-              <br />
-              Release Year: {year}
-              <br />
-              Release Price: ${price}
-              <br />
-            </Typography>
-            <Divider
-              style={{ marginBottom: "0.5rem", marginTop: "0.5rem" }}
-              variant="middle"
-            />
-            <Typography component="p"> {description} </Typography>
-            <br/>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.button}
-              onClick={() => setOpen(true) }
-            >
-              <Icon className={classes.rightIcon}>add_shopping_cart</Icon>
-                 add to cart
-            </Button>
-          </Paper>
-          <Paper className={classes.sellers}>
-            <Typography variant="h5" component="h3">
-              users selling this shoe
-            </Typography>
-            <div className={classes.demo}>
-              <List dense={dense}>
-                {generate(
-                  <ListItem>
-                    <ListItemIcon>
-                      <i class="material-icons">person</i>
-                    </ListItemIcon>
-                    <ListItemText
-                      primary="user"
-                      secondary={secondary ? "Secondary text" : null}
-                    />
-                  </ListItem>
-                )}
-              </List>
+      {loading ? (
+        <Progress>
+          <CircularProgress color="white" />
+        </Progress>
+      ) : (
+        <Fade in={true} 
+        {...(true ? { timeout: 1000 } : {})}
+        >
+        <div className={classes.root}>
+          <div style={{ width: "50%" }}>
+            <div style={{ display: "flex" }}>
+              <Paper className={classes.paper}>
+                <img className={classes.image} src={image1} alt={model} />
+              </Paper>
+              <Paper className={classes.paper}>
+                <img className={classes.image} src={image2} alt={model} />
+              </Paper>
             </div>
-          </Paper>
+            <div style={{ display: "flex" }}>
+              <Paper className={classes.paper}>
+                <img className={classes.image} src={image3} alt={model} />
+              </Paper>
+              <Paper className={classes.paper}>
+                <img className={classes.image} src={image4} alt={model} />
+              </Paper>
+            </div>
+          </div>
+          <div>
+            <Paper className={classes.description}>
+              <Typography variant="h4" component="h4">
+                {model}
+              </Typography>
+              <Typography component="p" style={{ marginTop: "0.5rem" }}>
+                Brand: {brand}
+                <br />
+                Release Year: {year}
+                <br />
+                Release Price: ${price}
+                <br />
+              </Typography>
+              <Divider
+                style={{ marginBottom: "0.5rem", marginTop: "0.5rem" }}
+                variant="middle"
+              />
+              <Typography component="p"> {description} </Typography>
+              <br />
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={() => setOpen(true)}
+              >
+                <Icon className={classes.rightIcon}>add_shopping_cart</Icon>
+                add to cart
+              </Button>
+            </Paper>
+            <Paper className={classes.sellers}>
+              <Typography variant="h5" component="h3">
+                users selling this shoe
+              </Typography>
+              <div className={classes.demo}>
+                <List dense={dense}>
+                  {generate(
+                    <ListItem>
+                      <ListItemIcon>
+                        <i class="material-icons">person</i>
+                      </ListItemIcon>
+                      <ListItemText
+                        primary="user"
+                        secondary={secondary ? "Secondary text" : null}
+                      />
+                    </ListItem>
+                  )}
+                </List>
+              </div>
+            </Paper>
+          </div>
         </div>
-      </div>
+        </Fade>
+      )}
       <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          open={open}
-          autoHideDuration={6000}
-          onClose={handleClose}
-          ContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={<span id="message-id">{model} added to cart</span>}
-          action={[
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="inherit"
-              className={classes.close}
-              onClick={handleClose}
-            >
-              <CloseIcon />
-            </IconButton>,
-          ]}
-        />
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left"
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        ContentProps={{
+          "aria-describedby": "message-id"
+        }}
+        message={<span id="message-id">{model} added to cart</span>}
+        action={[
+          <IconButton
+            key="close"
+            aria-label="Close"
+            color="inherit"
+            className={classes.close}
+            onClick={handleClose}
+          >
+            <CloseIcon />
+          </IconButton>
+        ]}
+      />
     </div>
   );
 };
