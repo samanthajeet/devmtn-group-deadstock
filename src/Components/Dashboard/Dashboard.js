@@ -411,7 +411,6 @@ class Dashboard extends React.Component {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-<<<<<<< HEAD
             <Paper className={classes.paperContainer}>
               {/* <Route path='/dashboard/closet/upload' component={Uploader} /> */}
               <Route path='/dashboard/closet' component={Closet}/>
@@ -421,15 +420,6 @@ class Dashboard extends React.Component {
               <Route path='/dashboard/shop' exact component={Shop} />
             </Paper>
 
-=======
-          <Paper className={classes.paperContainer}>
-            {/* <Route path='/dashboard/closet/upload' component={Uploader} /> */}
-            <Route path="/dashboard/closet" component={Closet} />
-            <Route path="/dashboard/collection" component={Collection} />
-            <Route path="/dashboard/community" component={Community} />
-            <Route path="/dashboard/shop" component={Shop} />
-          </Paper>
->>>>>>> master
         </main>
       </div>
     );
