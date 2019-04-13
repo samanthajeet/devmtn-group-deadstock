@@ -5,6 +5,7 @@ export default class SearchItem extends Component {
     super(props);
   }
   render() {
+    console.log("getting shoe");
     const {
       shoe_id,
       shoe_model,
@@ -16,8 +17,9 @@ export default class SearchItem extends Component {
       <div
         style={{
           display: "flex",
-          margin: "2px",
-          borderBottom: "solid 1px rgba(0, 0, 0, .2) "
+          marginBottom: "2%",
+          borderBottom: "solid 1px rgba(0, 0, 0, .2) ",
+          textAlign: "left"
         }}
         onClick={() => this.props.handleSelectedShoe(this.props.shoe)}
       >
@@ -31,9 +33,7 @@ export default class SearchItem extends Component {
         >
           <img
             src={image_1_url}
-            height="20px"
-            width="20px"
-            style={{ marginRight: "5px" }}
+            style={{ marginRight: "5px", height: "5vw", width: "5vw" }}
           />
         </div>
 

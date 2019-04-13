@@ -5,6 +5,7 @@ import { v4 as randomString } from "uuid";
 import axios from "axios";
 import SearchItem from "./SearchItem";
 import { OutlinedInput } from "@material-ui/core";
+import Grow from "@material-ui/core/Grow";
 
 class Uploader extends Component {
   constructor() {
@@ -13,7 +14,8 @@ class Uploader extends Component {
       open: false,
       files: [],
       products: [],
-      selectedShoe: ""
+      selectedShoe: "",
+      boolean: true
     };
   }
 
@@ -44,7 +46,6 @@ class Uploader extends Component {
 
   getStore = async () => {
     let shoes = await axios.get("/api/shoes");
-    console.log(shoes.data);
     this.setState({
       products: shoes.data
     });
@@ -88,6 +89,14 @@ class Uploader extends Component {
     console.log("hit!", shoe);
   }
 
+  handleSwitchToCloset = async () => {
+    await this.setState({ boolean: false });
+
+    setTimeout(() => {
+      this.props.history.push("/dashboard/closet");
+    }, 500);
+  };
+
   render() {
     const mappedProducts = this.state.products
     
@@ -120,84 +129,98 @@ class Uploader extends Component {
       );
     });
     return (
-      <div
-        style={{
-          display: "flex",
-          height: 700,
-          width: 700,
-          justifyContent: "space-between"
-        }}
-      >
+      <Grow in={this.state.boolean}>
         <div
           style={{
-            height: "100%",
-            width: "40%",
-            border: "solid 1px black",
-            borderRadius: "10px"
+            display: "flex",
+            height: "calc(100% - 64px)",
+            justifyContent: "space-around",
+            backgroundColor: "transparent",
+            padding: "2%"
           }}
         >
           <div
             style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              borderBottom: "solid 1px black"
+              height: "100%",
+              width: "40%",
+              border: "solid 3px black",
+              borderRadius: "10px",
+              backgroundColor: "white",
+              boxShadow: "0 0 5px #26f7ff"
             }}
           >
-            <input
-              placeholder="Select a shoe"
-              value={this.state.selectedShoe}
-              onChange={e =>
-                this.setState({ selectedShoe: e.target.value.toLowerCase() })
-              }
+            <div
               style={{
-                width: "90%",
-                marginBottom: "10px",
-                marginTop: "10px",
-                padding: "5px",
-                borderRadius: "10px",
-                outline: "none"
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                borderBottom: "solid 1px black"
               }}
-            />
+            >
+              <input
+                placeholder="Select a shoe"
+                value={this.state.selectedShoe}
+                onChange={e =>
+                  this.setState({
+                    selectedShoe: e.target.value.toLowerCase()
+                  })
+                }
+                style={{
+                  width: "90%",
+                  marginBottom: "10px",
+                  marginTop: "10px",
+                  padding: "5px",
+                  borderRadius: "10px",
+                  outline: "none"
+                }}
+              />
+            </div>
+            <div
+              style={{
+                padding: "10px",
+                overflow: "scroll",
+                height: "92.5%"
+              }}
+            >
+              {mappedProducts}
+            </div>
           </div>
+
           <div
             style={{
-              padding: "10px",
-              overflow: "scroll",
-              height: "92.5%"
+              flexDirection: "column",
+              width: "40%",
+              alignItems: "center",
+              justifyContent: "center"
             }}
           >
-            {mappedProducts}
+            <Button onClick={this.handleOpen.bind(this)}>Add Image</Button>
+            <button
+              onClick={() => {
+                this.handleSwitchToCloset();
+              }}
+            >
+              Close Uploader
+            </button>
+
+            {img}
+            <DropzoneDialog
+              align="center"
+              open={this.state.open}
+              onSave={this.handleSave.bind(this)}
+              filesLimit={4}
+              acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
+              showPreviews={true}
+              maxFileSize={10000000}
+              onClose={this.handleClose.bind(this)}
+              height={450}
+              width={400}
+            />
+
+            <button>Add Shoe</button>
           </div>
         </div>
-
-        <div
-          style={{
-            flexDirection: "column",
-            width: "40%",
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-        >
-          <Button onClick={this.handleOpen.bind(this)}>Add Image</Button>
-
-          {img}
-          <DropzoneDialog
-            align="center"
-            open={this.state.open}
-            onSave={this.handleSave.bind(this)}
-            filesLimit={4}
-            acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
-            showPreviews={true}
-            maxFileSize={10000000}
-            onClose={this.handleClose.bind(this)}
-            height={450}
-            width={400}
-          />
-
-          <button onClick={() => {}}>Add Shoe</button>
-        </div>
-      </div>
+      </Grow>
     );
   }
 }
