@@ -22,15 +22,16 @@ import Community from "../Community/Community";
 import Shop from "../Shop/Shop";
 import Logout from "@material-ui/icons/ExitToApp";
 import Search from "@material-ui/icons/Search";
-import Chat from "@material-ui/icons/Forum";
-import Settings from "@material-ui/icons/Settings";
+import ChatIcon from "@material-ui/icons/Forum";
+import SettingsIcon from "@material-ui/icons/Settings";
 import { ListItemText, ListItemIcon, ListItem } from "@material-ui/core";
 import { Route } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import styled from "styled-components";
 import axios from "axios";
 import Product from "../Product/Product";
-import Uploader from "../Uploader/Uploader";
+import Settings from "../Settings/Settings";
+import Chat from "../Chat/Chat";
 
 const drawerWidth = 240;
 const image =
@@ -249,8 +250,12 @@ class Dashboard extends React.Component {
                 justifyContent: "space-around"
               }}
             >
-              <Chat />
-              <Settings />
+              <ChatIcon
+                onClick={() => this.props.history.push("/dashboard/chat")}
+              />
+              <SettingsIcon
+                onClick={() => this.props.history.push("/dashboard/settings")}
+              />
             </div>
             {/* <IconButton color="inherit">
               <Badge badgeContent={0} color="secondary">
@@ -418,6 +423,8 @@ class Dashboard extends React.Component {
             <Route path="/dashboard/collection" component={Collection} />
             <Route path="/dashboard/community" component={Community} />
             <Route path="/dashboard/shop" component={Shop} />
+            <Route path="/dashboard/settings" component={Settings} />
+            <Route path="/dashboard/chat" component={Chat} />
           </Paper>
         </main>
       </div>

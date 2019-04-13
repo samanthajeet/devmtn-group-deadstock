@@ -70,15 +70,19 @@ class Uploader extends Component {
     });
   };
 
-  uploadFile = (file, signedRequest, url, images) => {
+  uploadFile = async (file, signedRequest, url, images) => {
     const options = {
       headers: {
         "Content-Type": file.type
       }
     };
+    await axios.put(signedRequest, file, options).then(response => {
+      console.log(response)
+    });
     images.push(url);
+    console.log(images)
     this.setState({ files: images });
-    axios.put(signedRequest, file, options).then(response => {});
+    console.log(this.state.files)
   };
 
   handleSelectedShoe(shoe) {
@@ -95,6 +99,7 @@ class Uploader extends Component {
 
   render() {
     const mappedProducts = this.state.products
+    
       .filter(shoe => {
         console.log("hit filter", this.state.selectedShoe);
         const filterString = shoe.shoe_model + " " + shoe.brand;
@@ -110,7 +115,9 @@ class Uploader extends Component {
           />
         );
       });
+      console.log(this.state.files)
     const img = this.state.files.map(image => {
+      console.log(image,typeof image)
       return (
         <div>
           <img
