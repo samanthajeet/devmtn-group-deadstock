@@ -77,12 +77,9 @@ class Uploader extends Component {
       }
     };
     await axios.put(signedRequest, file, options).then(response => {
-      console.log(response)
     });
     images.push(url);
-    console.log(images)
     this.setState({ files: images });
-    console.log(this.state.files)
   };
 
   handleSelectedShoe(shoe) {
@@ -99,11 +96,18 @@ class Uploader extends Component {
 
   render() {
     const mappedProducts = this.state.products
-    
       .filter(shoe => {
         console.log("hit filter", this.state.selectedShoe);
-        const filterString = shoe.shoe_model + " " + shoe.brand;
-        return filterString.toLowerCase().includes(this.state.selectedShoe);
+        const {selectedShoe} = this.state;
+        const splitString = selectedShoe.toLowerCase().split(' ');
+
+        for(let i = 0; i < splitString.length; i++){
+          const term = splitString[i];
+          if(!shoe.brand.toLowerCase().includes(term) && !shoe.shoe_model.toLowerCase().includes(term)){
+            return false;
+          }
+        }
+        return true;
       })
       .map(shoe => {
         console.log("hit map");
@@ -115,17 +119,15 @@ class Uploader extends Component {
           />
         );
       });
-      console.log(this.state.files)
     const img = this.state.files.map(image => {
-      console.log(image,typeof image)
       return (
-        <div>
+        <>
           <img
             src={image}
             alt="shoe"
-            style={{ height: "25px", width: "25px" }}
+            style={{ height: "100px", width: "100px", marginTop: 0 }}
           />
-        </div>
+        </>
       );
     });
     return (
@@ -173,7 +175,7 @@ class Uploader extends Component {
                   borderRadius: "10px",
                   outline: "none"
                 }}
-              />
+                />
             </div>
             <div
               style={{
@@ -181,7 +183,7 @@ class Uploader extends Component {
                 overflow: "scroll",
                 height: "92.5%"
               }}
-            >
+              >
               {mappedProducts}
             </div>
           </div>
@@ -193,31 +195,44 @@ class Uploader extends Component {
               alignItems: "center",
               justifyContent: "center"
             }}
-          >
+            >
             <Button onClick={this.handleOpen.bind(this)}>Add Image</Button>
             <button
               onClick={() => {
                 this.handleSwitchToCloset();
               }}
-            >
+              >
               Close Uploader
             </button>
+            
 
+        <div
+          style={{
+            flexDirection: "column",
+          
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+          >
+          <Button onClick={this.handleOpen.bind(this)}>Add Image</Button>
+          <div style={{ width: '200px', background: 'red', display: 'flex', height: '200px', flexWrap: 'wrap' }}>
             {img}
-            <DropzoneDialog
-              align="center"
-              open={this.state.open}
-              onSave={this.handleSave.bind(this)}
-              filesLimit={4}
-              acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
-              showPreviews={true}
-              maxFileSize={10000000}
-              onClose={this.handleClose.bind(this)}
-              height={450}
-              width={400}
+          </div>
+          <DropzoneDialog
+            align="center"
+            open={this.state.open}
+            onSave={this.handleSave.bind(this)}
+            filesLimit={4}
+            acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
+            showPreviews={true}
+            maxFileSize={10000000}
+            onClose={this.handleClose.bind(this)}
+            height={450}
+            width={400}
             />
+            </div>
 
-            <button>Add Shoe</button>
+          <button onClick={() => { }}>Add Shoe</button>
           </div>
         </div>
       </Grow>
