@@ -30,6 +30,7 @@ import Paper from "@material-ui/core/Paper";
 import styled from "styled-components";
 import axios from "axios";
 import Product from "../Product/Product";
+import Uploader from "../Uploader/Uploader";
 
 const drawerWidth = 240;
 const image =
@@ -412,8 +413,8 @@ class Dashboard extends React.Component {
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Paper className={classes.paperContainer}>
-            {/* <Route path='/dashboard/closet/upload' component={Uploader} /> */}
-            <Route path="/dashboard/closet" component={Closet} />
+            <Route path="/dashboard/closet/upload" component={Uploader} />
+            <Route exact path="/dashboard/closet" component={Closet} />
             <Route path="/dashboard/collection" component={Collection} />
             <Route path="/dashboard/community" component={Community} />
             <Route path="/dashboard/shop" component={Shop} />
