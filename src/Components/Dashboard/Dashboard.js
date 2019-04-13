@@ -30,8 +30,9 @@ import Paper from "@material-ui/core/Paper";
 import styled from "styled-components";
 import axios from "axios";
 import Product from "../Product/Product";
-import Settings from '../Settings/Settings';
-import Chat from '../Chat/Chat';
+import Settings from "../Settings/Settings";
+import Chat from "../Chat/Chat";
+import Uploader from '../Uploader/Uploader';
 
 const drawerWidth = 240;
 const image =
@@ -250,8 +251,12 @@ class Dashboard extends React.Component {
                 justifyContent: "space-around"
               }}
             >
-              <ChatIcon onClick={()=>this.props.history.push('/dashboard/chat')}/>
-              <SettingsIcon onClick={()=>this.props.history.push('/dashboard/settings')}/>
+              <ChatIcon
+                onClick={() => this.props.history.push("/dashboard/chat")}
+              />
+              <SettingsIcon
+                onClick={() => this.props.history.push("/dashboard/settings")}
+              />
             </div>
             {/* <IconButton color="inherit">
               <Badge badgeContent={0} color="secondary">
@@ -412,10 +417,10 @@ class Dashboard extends React.Component {
           </div>
         </Drawer>
         <main className={classes.content}>
-          <div className={classes.appBarSpacer}/>
+          <div className={classes.appBarSpacer} />
           <Paper className={classes.paperContainer}>
-            {/* <Route path='/dashboard/closet/upload' component={Uploader} /> */}
-            <Route path="/dashboard/closet" component={Closet} />
+            <Route path="/dashboard/closet/upload" component={Uploader} />
+            <Route exact path="/dashboard/closet" component={Closet} />
             <Route path="/dashboard/collection" component={Collection} />
             <Route path="/dashboard/community" component={Community} />
             <Route path="/dashboard/shop" component={Shop} />
