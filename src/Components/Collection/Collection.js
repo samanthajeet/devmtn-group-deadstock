@@ -43,7 +43,7 @@ class Collection extends Component {
       return (
         <div key={shoe.shoe_id}>
           <ProductCard
-            model={shoe.model}
+            model={shoe.shoe_model}
             colorway={shoe.colorway}
             price={shoe.price}
             description={shoe.description}
