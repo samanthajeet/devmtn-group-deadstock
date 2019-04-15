@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
@@ -91,18 +91,30 @@ class ProductCard extends React.Component {
   }
 
   handleAddFavorite(){
-    console.log('hi joe')
     const {shoe_id} = this.props
     axios.post(`/api/collection/favorite`, {shoe_id}).then()
+    this.setState({
+      like: true
+    })
   }
 
-  checkFavorite(){
+  handleDeleteFavorite(){
     const {shoe_id} = this.props
-    axios.get(`/api/collection/checkFavorites`, {shoe_id}).then( response => {
-      if(response.data[0]) {
-        this.setState({ like: true})
-      }
+    console.log(shoe_id)
+    axios.delete(`/api/collection/deleteFavorite/${shoe_id}`)
+    this.setState({
+      like: false
     })
+    }
+
+  checkFavorite = async() => {
+    const {shoe_id} = this.props
+    let  response = await axios.get(`/api/collection/checkFavorites/${shoe_id}`)
+    if (response.data[0]){
+      this.setState({
+        like: true
+      })
+    }
   }
 
   render() {
@@ -143,8 +155,10 @@ class ProductCard extends React.Component {
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
 
-        {this.state.like? (
-          null
+        {this.state.like ? (
+                  <IconButton aria-label="unliked"  onClick={() => this.handleDeleteFavorite()} >
+                    <FavoriteIcon style={{color: "red"}} />
+                  </IconButton>
         ): (
           <IconButton aria-label="Add to favorites" onClick={() => this.handleAddFavorite()}>
             <FavoriteIcon  />

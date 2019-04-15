@@ -1,2 +1,2 @@
-insert into favorites(user_id, shoe_id)
-values(${user_id}, ${shoe_id})
+insert into favorites(user_id, shoe_id, date_added)
+values(${user_id}, ${shoe_id}, CURRENT_TIMESTAMP)
