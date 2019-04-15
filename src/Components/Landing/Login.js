@@ -135,7 +135,7 @@ class SignIn extends React.Component {
             </Link>
           </Typography> */}
         </AppForm>
-        <AppFooter />
+        {/* <AppFooter /> */}
       </React.Fragment>
     );
   }

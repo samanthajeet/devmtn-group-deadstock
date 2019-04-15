@@ -37,7 +37,13 @@ export default class SearchItem extends Component {
           />
         </div>
 
-        <div style={{ flexDirection: "column" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-evenly"
+          }}
+        >
           <div style={{ fontSize: ".8rem" }}>
             {brand} {shoe_model}
           </div>
