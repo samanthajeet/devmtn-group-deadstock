@@ -33,6 +33,8 @@ import Product from "../Product/Product";
 import Settings from "../Settings/Settings";
 import Chat from "../Chat/Chat";
 import Uploader from '../Uploader/Uploader';
+import {connect} from 'react-redux';
+import {clearUser} from '../../ducks/reducer';
 
 const drawerWidth = 240;
 const image =
@@ -174,6 +176,7 @@ class Dashboard extends React.Component {
   handleLogout = async () => {
     await axios.post("/api/auth/logout");
     console.log("logged out!");
+    this.props.clearUser()
     this.props.history.push("/");
   };
 
@@ -438,4 +441,10 @@ Dashboard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Dashboard);
+function mapStateToProps(reduxState){
+  return{
+    user:reduxState.user
+  }
+}
+
+export default connect(mapStateToProps,{clearUser})(withStyles(styles)(Dashboard));

@@ -15,6 +15,8 @@ import RFTextField from "./modules/form/RFTextField";
 import FormButton from "./modules/form/FormButton";
 import FormFeedback from "./modules/form/FormFeedback";
 import axios from "axios";
+import {connect} from 'react-redux';
+import {handleUser} from '../../ducks/reducer';
 
 const styles = theme => ({
   form: {
@@ -47,10 +49,11 @@ class SignIn extends React.Component {
     return errors;
   };
 
-  handleSubmit = values => {
-    axios
-      .post("/api/auth/login", values)
-      .then(this.props.history.push("/dashboard"));
+  handleSubmit = async values => {
+    const user = await axios.post("/api/auth/login", values)
+    console.log(user.data)
+    this.props.handleUser(user.data)
+    this.props.history.push("/dashboard")
   };
 
   render() {
@@ -145,7 +148,7 @@ SignIn.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default compose(
+export default connect('',{handleUser})(compose(
   withRoot,
   withStyles(styles)
-)(SignIn);
+)(SignIn));

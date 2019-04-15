@@ -1,7 +1,7 @@
 import withRoot from "./modules/withRoot";
 // --- Post bootstrap -----
 import React from "react";
-import PropTypes from "prop-types";
+import PropTypes, { func } from "prop-types";
 import compose from "recompose/compose";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -16,6 +16,8 @@ import RFTextField from "./modules/form/RFTextField";
 import FormButton from "./modules/form/FormButton";
 import FormFeedback from "./modules/form/FormFeedback";
 import axios from "axios";
+import {connect} from 'react-redux';
+import {handleUser} from '../../ducks/reducer';
 
 const styles = theme => ({
   form: {
@@ -52,10 +54,10 @@ class SignUp extends React.Component {
     return errors;
   };
 
-  handleSubmit = values => {
-    axios
-      .post("/api/auth/register", values)
-      .then(this.props.history.push("/dashboard"));
+  handleSubmit = async values => {
+    const user = await axios.post("/api/auth/register", values);
+    this.props.handleUser(user.data);
+    this.props.history.push("/dashboard");
   };
 
   render() {
@@ -163,7 +165,7 @@ SignUp.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default compose(
+export default connect('',{handleUser})(compose(
   withRoot,
   withStyles(styles)
-)(SignUp);
+)(SignUp));
