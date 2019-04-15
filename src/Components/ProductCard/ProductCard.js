@@ -93,7 +93,19 @@ class ProductCard extends React.Component {
   handleAddFavorite(){
     const {shoe_id} = this.props
     axios.post(`/api/collection/favorite`, {shoe_id}).then()
+    this.setState({
+      like: true
+    })
   }
+
+  handleDeleteFavorite(){
+    const {shoe_id} = this.props
+    console.log(shoe_id)
+    axios.delete(`/api/collection/deleteFavorite/${shoe_id}`)
+    this.setState({
+      like: false
+    })
+    }
 
   checkFavorite = async() => {
     const {shoe_id} = this.props
@@ -144,7 +156,7 @@ class ProductCard extends React.Component {
         <CardActions className={classes.actions} disableActionSpacing>
 
         {this.state.like ? (
-                  <IconButton aria-label="unliked"  >
+                  <IconButton aria-label="unliked"  onClick={() => this.handleDeleteFavorite()} >
                     <FavoriteIcon style={{color: "red"}} />
                   </IconButton>
         ): (
