@@ -32,7 +32,7 @@ import axios from "axios";
 import Product from "../Product/Product";
 import Settings from "../Settings/Settings";
 import Chat from "../Chat/Chat";
-import Uploader from '../Uploader/Uploader';
+import Uploader from "../Uploader/Uploader";
 
 const drawerWidth = 240;
 const image =

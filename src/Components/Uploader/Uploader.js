@@ -1,15 +1,29 @@
 import React, { Component } from "react";
-import { DropzoneDialog } from "material-ui-dropzone";
+import { DropzoneArea } from "material-ui-dropzone";
 import Button from "@material-ui/core/Button";
 import { v4 as randomString } from "uuid";
 import axios from "axios";
 import SearchItem from "./SearchItem";
 import { OutlinedInput } from "@material-ui/core";
 import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import TextFieldForm from "./TextFieldForm";
+
+const styles = theme => ({
+  root: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2
+  }
+});
 
 class Uploader extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       open: false,
       files: [],
@@ -97,6 +111,8 @@ class Uploader extends Component {
   };
 
   render() {
+    const hello = "hello";
+    const { classes } = this.props;
     const mappedProducts = this.state.products
       .filter(shoe => {
         const { selectedShoe } = this.state;
@@ -139,80 +155,26 @@ class Uploader extends Component {
           style={{
             display: "flex",
             height: "calc(100% - 64px)",
-            justifyContent: "space-around",
-            backgroundColor: "transparent",
-            padding: "2%"
+            justifyContent: "space-evenly",
+            padding: "1%"
           }}
         >
-          <div
+          <Paper
+            elevation={5}
             style={{
-              height: "100%",
-              width: "40%",
-              border: "solid 3px black",
-              borderRadius: "20px",
-              backgroundColor: "white",
-              boxShadow: "0 0 5px #26f7ff"
-            }}
-          >
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                borderBottom: "solid 1px black",
-                height: "5vh",
-                alignItems: "center"
-              }}
-            >
-              <input
-                placeholder="Find and select a shoe"
-                value={this.state.selectedShoe}
-                onChange={e =>
-                  this.setState({
-                    selectedShoe: e.target.value.toLowerCase()
-                  })
-                }
-                style={{
-                  width: "93%",
-                  marginBottom: "10px",
-                  marginTop: "10px",
-                  padding: "5px",
-                  borderRadius: "10px",
-                  height: "3vh",
-                  outline: "none"
-                }}
-              />
-            </div>
-            <div
-              style={{
-                padding: "10px",
-                overflow: "scroll",
-                height: "91.5%"
-              }}
-            >
-              {mappedProducts}
-            </div>
-          </div>
-
-          <div
-            style={{
-              flexDirection: "column",
-              width: "40%",
+              display: "flex",
+              justifyContent: "space-around",
+              width: "100%",
               alignItems: "center",
-              justifyContent: "center",
-              height: "100%",
-              width: "40%",
-              border: "solid 3px black",
-              borderRadius: "20px",
-              backgroundColor: "white",
-              boxShadow: "0 0 5px #26f7ff"
+              position: "relative",
+              backgroundImage: "linear-gradient(black, #26f7ff)"
             }}
           >
             <button
               style={{
                 position: "absolute",
-                right: ".75%",
-                top: "-.75%",
+                right: ".2%",
+                top: "-1%",
                 background: "transparent",
                 border: "none",
                 outline: "none"
@@ -224,66 +186,148 @@ class Uploader extends Component {
               <h1
                 style={{
                   color: "white",
-                  fontSize: "1.75rem",
+                  fontSize: "1rem",
                   fontWeight: "bolder"
                 }}
               >
-                X
+                Close
               </h1>
             </button>
-
-            <div
+            <Paper
+              elevation={10}
               style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-around",
-                alignItems: "center"
+                height: "80vh",
+                width: "40%"
               }}
             >
-              <div style={{ width: "90%" }}>
-                <SearchItem shoe={this.state.clickedShoe} />
-              </div>
               <div
                 style={{
-                  width: "200px",
+                  width: "100%",
                   display: "flex",
-                  border: "dashed 1px black",
-                  height: "200px",
-                  flexWrap: "wrap"
+                  justifyContent: "center",
+                  borderBottom: "solid 1px rgba(0, 0, 0, .2)",
+                  alignItems: "center",
+                  boxSizing: "border-box"
                 }}
               >
-                <div>{img}</div>
-              </div>
-              <Button onClick={this.handleOpen.bind(this)}>Add Image</Button>
-              <div>
-                <DropzoneDialog
-                  align="center"
-                  open={this.state.open}
-                  onSave={this.handleSave.bind(this)}
-                  filesLimit={4}
-                  acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
-                  showPreviews={true}
-                  maxFileSize={10000000}
-                  onClose={this.handleClose.bind(this)}
-                  height={450}
-                  width={400}
+                <TextField
+                  id="outlined-search"
+                  label="Search for your shoe"
+                  type="search"
+                  className={classes.textField}
+                  margin="normal"
+                  variant="outlined"
+                  placeholder="Find and select a shoe"
+                  value={this.state.selectedShoe}
+                  onChange={e =>
+                    this.setState({
+                      selectedShoe: e.target.value.toLowerCase()
+                    })
+                  }
+                  style={{ width: "93%" }}
+                  padding={0}
                 />
               </div>
               <div
                 style={{
-                  height: "20vh",
-                  width: "90%",
-                  backgroundColor: "blue"
+                  paddingRight: "10px",
+                  paddingLeft: "10px",
+                  overflow: "scroll",
+                  height: "calc(99% - 81px)"
                 }}
               >
-                Text Field
+                {mappedProducts}
               </div>
-            </div>
-          </div>
+            </Paper>
+
+            <Paper
+              elevation={10}
+              style={{
+                // flexDirection: "column",
+                width: "40%",
+                // alignItems: "center",
+                // justifyContent: "center",
+                height: "80vh",
+                overflow: "scroll"
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  height: "100%",
+                  overflow: "scroll"
+                }}
+              >
+                <div
+                  style={{
+                    width: "100%",
+                    minHeight: "81px",
+                    maxHeight: "81px",
+                    borderBottom: "solid 1px rgba(0, 0, 0, .2)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
+                >
+                  <h3 style={{ margin: "0", padding: "0" }}>
+                    Tell Us About Your Shoe
+                  </h3>
+                </div>
+                <div style={{ width: "90%", marginTop: "2%" }}>
+                  <SearchItem shoe={this.state.clickedShoe} />
+                </div>
+                {/* <div
+                  style={{
+                    width: "200px",
+                    display: "flex",
+                    border: "dashed 1px black",
+                    height: "200px",
+                    flexWrap: "wrap"
+                  }}
+                >
+                  <div>{img}</div>
+                </div> */}
+                {/* <Button onClick={this.handleOpen.bind(this)}>Add Image</Button> */}
+                <div
+                  style={{
+                    width: "90%"
+                  }}
+                >
+                  <DropzoneArea
+                    align="center"
+                    // open={this.state.open}
+                    onSave={this.handleSave.bind(this)}
+                    filesLimit={4}
+                    acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
+                    showPreviews={false}
+                    maxFileSize={10000000}
+                    // onClose={this.handleClose.bind(this)}
+                  />
+                </div>
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "3%"
+                  }}
+                >
+                  <TextFieldForm />
+                </div>
+              </div>
+            </Paper>
+          </Paper>
         </div>
       </Grow>
     );
   }
 }
 
-export default Uploader;
+Uploader.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(Uploader);
