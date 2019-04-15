@@ -18,7 +18,7 @@ module.exports = {
   checkFavorite: async (req, res) => {
     const db = req.app.get('db')
     const {user_id} = req.session.user
-    const {shoe_id} = req.body
+    const {shoe_id} = req.params
     const response = await db.collection.check_favorites({user_id, shoe_id})
     res.status(200).send(response)
   }
