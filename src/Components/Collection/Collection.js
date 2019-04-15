@@ -10,13 +10,11 @@ class Collection extends Component {
     }
 
     componentDidMount(){
-        console.log('collection component')
         this.getCollection();
     }
 
     getCollection = async () =>{
         const response = await axios.get(`/api/collection`)
-        console.log(response.data)
         this.setState({ collection: response.data })
     }
 

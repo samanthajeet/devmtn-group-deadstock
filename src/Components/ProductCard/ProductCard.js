@@ -73,6 +73,10 @@ class ProductCard extends React.Component {
     like: false
    };
 
+   componentDidMount(){
+     this.checkFavorite()
+   }
+
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
@@ -90,6 +94,15 @@ class ProductCard extends React.Component {
     console.log('hi joe')
     const {shoe_id} = this.props
     axios.post(`/api/collection/favorite`, {shoe_id}).then()
+  }
+
+  checkFavorite(){
+    const {shoe_id} = this.props
+    axios.get(`/api/collection/checkFavorites`, {shoe_id}).then( response => {
+      if(response.data[0]) {
+        this.setState({ like: true})
+      }
+    })
   }
 
   render() {
@@ -129,9 +142,14 @@ class ProductCard extends React.Component {
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
+
+        {this.state.like? (
+          null
+        ): (
           <IconButton aria-label="Add to favorites" onClick={() => this.handleAddFavorite()}>
             <FavoriteIcon  />
           </IconButton>
+        )}
           {/* <IconButton aria-label="Share">
             <ShareIcon />
           </IconButton> */}
