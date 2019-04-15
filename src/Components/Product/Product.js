@@ -30,8 +30,7 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit * 2,
     flexGrow: 1,
     display: "flex",
-    justifyContent: "center",
-    border: "2px solid white",
+    justifyContent: "space-around",
     width: "100%"
   },
   close: {
@@ -61,7 +60,7 @@ const styles = theme => ({
   },
 
   image: {
-    width: "15rem",
+    width: "18rem",
     marginTop: "25%"
   },
   control: {
