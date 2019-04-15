@@ -105,5 +105,6 @@ app.get(`/api/shoes`, shoeCtrl.getAllShoes);
 // Collection Endpoints
 const collCtrl = require(`./Controllers/CollectionController`);
 app.post(`/api/collection/favorite`, collCtrl.addToCollection);
-app.get(`/api/collection/checkFavorites`, collCtrl.checkFavorite)
+app.get(`/api/collection/checkFavorites/:shoe_id`, collCtrl.checkFavorite)
+app.delete(`/api/collection/deleteFavorite/:shoe_id`, collCtrl.deleteFromCollection)
 app.get(`/api/collection`,collCtrl.getCollection);

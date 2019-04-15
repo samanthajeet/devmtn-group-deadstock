@@ -427,9 +427,10 @@ class Dashboard extends React.Component {
             <Route exact path="/dashboard/closet" component={Closet} />
             <Route path="/dashboard/collection" component={Collection} />
             <Route path="/dashboard/community" component={Community} />
-            <Route path="/dashboard/shop" component={Shop} />
             <Route path="/dashboard/settings" component={Settings} />
             <Route path="/dashboard/chat" component={Chat} />
+            <Route path="/dashboard/shop/:shoe_id" component={Product} />
+            <Route exact path="/dashboard/shop" component={Shop} />
           </Paper>
         </main>
       </div>
