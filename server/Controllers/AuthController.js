@@ -83,7 +83,16 @@ module.exports = {
     }
   },
 
-  editProfile: (req, res) => {},
+  editProfile: (req, res) => {
+    const {first_name, last_name, email, profile_pic} = req.body;
+    const {user_id} = req.session.user;
+    const user = {user_id, first_name, last_name, email, profile_pic}
+    const db = req.app.get('db');
+
+    db.auth.editProfile(user).then((newUser) => {
+      res.status(200).send(newUser)
+    })
+  },
 
   deleteProfile: (req, res) => {
     const db = req.app.get.get("db");
