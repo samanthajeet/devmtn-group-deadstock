@@ -396,7 +396,7 @@ class Dashboard extends React.Component {
               <ListItem
                 button
                 className={classes.iconButtons}
-                onClick={this.handleLogout}
+                onClick={() => this.handleLogout()}
               >
                 <ListItemIcon>
                   <Logout className={classes.drawerButtonContent} />
