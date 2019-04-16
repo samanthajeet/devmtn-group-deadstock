@@ -42,7 +42,7 @@ const image =
 
 const StyledButton = styled.div`
   :hover{
-    animation-name: increasesize;
+    animation-name: increaseDashSize;
     animation-duration: 0.5s;
     transition: 0s;
     transition-timing-function: ease;
@@ -50,7 +50,7 @@ const StyledButton = styled.div`
     cursor: pointer;
     };
 
-    @keyframes increasesize {
+    @keyframes increaseDashSize {
     0%   { transform: scale(1); }
     100% { transform: scale(1.5); }
 }

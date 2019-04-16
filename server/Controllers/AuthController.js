@@ -84,7 +84,7 @@ module.exports = {
   },
 
   editProfile: async (req, res) => {
-    let {first_name, last_name, email, profile_pic, password} = req.body;
+    let {first_name, last_name, email, profile_pic, password, bio} = req.body;
     const {user_id} = req.session.user;
     const db = req.app.get('db');
     if(password == ''){
@@ -95,7 +95,7 @@ module.exports = {
       let hash = bcrypt.hashSync(password, salt);
       password = hash
     }
-    const user = {user_id, first_name, last_name, email, profile_pic, password}
+    const user = {user_id, first_name, last_name, email, profile_pic, password, bio}
     db.auth.edit_profile(user).then((editUser) => {
       res.status(200).send(editUser)
     })
