@@ -10,6 +10,13 @@ const Progress = styled.div`
 `;
 
 class Community extends Component {
+    constructor(){
+        super()
+        this.state={
+            loading:true
+        }
+
+    }
     render() {
         console.log(this.props.users)
         const { users } = this.props
@@ -29,23 +36,11 @@ class Community extends Component {
                         <CircularProgress color="white" />
                     </Progress>
                 ) : (
-                        <div style={{ color: 'white' }}>{mappedUsers}</div>)}
+                        <div style={{ color: 'white' }}>{mappedUsers}</div>
+                        )}
 
             </>
         )
-
-
-        return (
-            <>
-                {this.state.loading ? (
-                    <Progress>
-                        <CircularProgress color="white" />
-                    </Progress>
-                ) : (
-                        <div>Hello Community</div>
-                    )}
-            </>
-        );
     }
 }
 
