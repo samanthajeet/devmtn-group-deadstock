@@ -276,6 +276,7 @@ class Dashboard extends React.Component {
                 onClick={() => this.props.history.push("/dashboard/chat")}
               />
               <SettingsIcon
+                className={classes.drawerButtonContent}
                 onClick={() => this.props.history.push("/dashboard/settings")}
               />
             </div>
