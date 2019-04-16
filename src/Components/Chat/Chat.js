@@ -16,7 +16,7 @@ class Chat extends Component {
 
 
     render() {
-        console.log(this.props.user)
+        console.log(this.props.users)
         const { first_name, last_name, profile_pic } = this.props.user
         const ConditionalComp = this.state.compRendered
         return (
@@ -44,7 +44,7 @@ class Chat extends Component {
                                 padding={0}
                             />
                         </div>
-                        <ConditionalComp />
+                        <ConditionalComp users={this.props.users}/>
                     </div>
 
                     <div style={{ width: '50%', height: '100%', background: 'orange' }}>
