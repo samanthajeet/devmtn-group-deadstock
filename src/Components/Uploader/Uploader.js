@@ -86,6 +86,7 @@ class Uploader extends Component {
   };
 
   uploadFile = async (file, signedRequest, url, images) => {
+    console.log('upload file hit',file)
     const options = {
       headers: {
         "Content-Type": file.type
@@ -299,7 +300,7 @@ class Uploader extends Component {
                   <DropzoneArea
                     align="center"
                     // open={this.state.open}
-                    onSave={this.handleSave.bind(this)}
+                    onChange={this.handleSave.bind(this)}
                     filesLimit={4}
                     acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
                     showPreviews={false}

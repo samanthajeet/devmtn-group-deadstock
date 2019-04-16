@@ -10,44 +10,43 @@ const Progress = styled.div`
 `;
 
 class Community extends Component {
-  state = {
-    users: [],
-    loading: true
-  };
-
-  componentDidMount() {
-    this.getAllUsers();
-  }
-
-  getAllUsers = async () => {
-    const response = await axios.get(`/api/users`);
-    this.setState({
-      users: response.data,
-      loading: false
-    });
-  };
-
-  render() {
-    const mappedUsers = this.state.users.map( user => {
+    render() {
+        console.log(this.props.users)
+        const { users } = this.props
+        let mappedUsers = users.map(user => {
+            return (
+                <div>
+                    <h1>{user.first_name} {user.last_name}</h1>
+                    <h3>{user.email}</h3>
+                    <img src={user.profile_pic} height='25px' width='25px' />
+                </div>
+            )
+        })
         return (
-            <div key={user.email}>
-                
-            </div>
-        )
-    })
+            <>
+                {this.state.loading ? (
+                    <Progress>
+                        <CircularProgress color="white" />
+                    </Progress>
+                ) : (
+                        <div style={{ color: 'white' }}>{mappedUsers}</div>)}
 
-    return (
-      <>
-        {this.state.loading ? (
-          <Progress>
-            <CircularProgress color="white" />
-          </Progress>
-        ) : (
-          <div>Hello Community</div>
-        )}
-      </>
-    );
-  }
+            </>
+        )
+
+
+        return (
+            <>
+                {this.state.loading ? (
+                    <Progress>
+                        <CircularProgress color="white" />
+                    </Progress>
+                ) : (
+                        <div>Hello Community</div>
+                    )}
+            </>
+        );
+    }
 }
 
 export default Community;
