@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
@@ -160,10 +160,22 @@ const styles = theme => ({
   }
 });
 
+// const [open,setOpen] = useState(true)
+// const [users,setUsers] =useState([])
+
 class Dashboard extends React.Component {
-  state = {
-    open: true
-  };
+  constructor(){
+    super()
+    this.state = {
+      open: true,
+      users:[]
+    };
+  }
+
+  componentDidMount(){
+    this.getContacts()
+
+  }
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -175,15 +187,18 @@ class Dashboard extends React.Component {
 
   handleLogout = async () => {
     await axios.post("/api/auth/logout");
-    console.log("logged out!");
     this.props.clearUser();
     this.props.history.push("/");
   };
 
-  
-
+  getContacts=async()=>{
+    let users = await axios.get('/api/users')
+    console.log(users.data)
+    this.setState({users:users.data})
+}
 
   render() {
+    console.log(this.state.users)
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -428,9 +443,9 @@ class Dashboard extends React.Component {
             <Route path="/dashboard/closet/upload" component={Uploader} />
             <Route exact path="/dashboard/closet" component={Closet} />
             <Route path="/dashboard/collection" component={Collection} />
-            <Route path="/dashboard/community" component={Community} />
+            <Route path="/dashboard/community" render={(props)=> <Community {...props} users={this.state.users}/>}/>
             <Route path="/dashboard/settings" component={Settings} />
-            <Route path="/dashboard/chat" component={Chat} />
+            <Route path="/dashboard/chat" render={(props)=> <Chat {...props} users={this.state.users}/>}/>
             <Route path="/dashboard/shop/:shoe_id" component={Product} />
             <Route exact path="/dashboard/shop" component={Shop} />
           </Paper>
