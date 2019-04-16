@@ -25,8 +25,7 @@ class Settings extends Component {
             last_name: '',
             profile_pic: '',
             password: '',
-            loading: true
-
+            loading: true,
         }
     }
 
@@ -35,12 +34,13 @@ class Settings extends Component {
     }
 
     handleGetUser= async() => {
-        await axios.post(`/api/auth/checkuser`).then(response => {
+        await axios.get(`/api/auth/getuser`).then(response => {
+            console.log(response.data)
             this.setState({
-                email: response.data.email,
-                first_name: response.data.first_name,
-                last_name: response.data.last_name,
-                profile_pic: response.data.profile_pic
+                email: response.data[0].email,
+                first_name: response.data[0].first_name,
+                last_name: response.data[0].last_name,
+                profile_pic: response.data[0].profile_pic
             })
           }
         )
@@ -75,18 +75,19 @@ class Settings extends Component {
     }
 
     updateUser(){
-        const {first_name, last_name, email, profile_pic} = this.state;
-        const userBody = {first_name, last_name, email, profile_pic}
+        const {first_name, last_name, email, profile_pic, password} = this.state;
+        const userBody = {first_name, last_name, email, profile_pic, password}
         axios.put(`/api/auth/editprofile`, userBody).then((resp) => {
+            console.log(resp.data)
             this.setState({
                 first_name: resp.data[0].first_name,
                 last_name: resp.data[0].last_name,
                 email: resp.data[0].email,
                 profile_pic: resp.data[0].profile_pic
             })
+            console.log(this.state)
             window.history.back()
         })
-        console.log(this.state)
     }
 
 
@@ -116,9 +117,10 @@ class Settings extends Component {
                             
                         }}
                     >
-                        <Paper
+                        <div
                             style={{
-                                width: "50%"
+                                width: "50%",
+                                backgroundColor:'rgba(0,0,0,.1)'
                             }}
 
                         >
@@ -136,16 +138,21 @@ class Settings extends Component {
                                 height={450}
                                 width={400}
                             />
-                        </Paper>
-                        <Paper
+                        </div>
+                        <div
                             style={{
                                 width: "50%",
                                 display: "flex",
                                 flexDirection: "column",
-                                justifyContent: "space-around"
+                                justifyContent: "space-around",
+                                alignItems:'center',
+                                borderLeft: 'solid 1px rgba(0,0,0,.2)'
                             }}
                         >
                             <TextField
+                                style={{
+                                    width:'90%'
+                                }}
                                 id="outlined-name"
                                 label="First Name"
                                 // className={classes.textField}
@@ -155,6 +162,9 @@ class Settings extends Component {
                                 variant="outlined"
                             />
                             <TextField
+                                style={{
+                                    width:'90%'
+                                }}
                                 id="outlined-name"
                                 label="Last Name"
                                 // className={classes.textField}
@@ -164,6 +174,9 @@ class Settings extends Component {
                                 variant="outlined"
                             />
                             <TextField
+                                style={{
+                                    width:'90%'
+                                }}
                                 id="outlined-name"
                                 label="Email"
                                 // className={classes.textField}
@@ -172,18 +185,23 @@ class Settings extends Component {
                                 margin="normal"
                                 variant="outlined"
                             />
-                            {/* <TextField
+                            <TextField
+                                style={{
+                                    width:'90%'
+                                }}
                                 id="outlined-name"
                                 label="New Password"
                                 // className={classes.textField}
-                                value={this.state.email}
                                 onChange={(e) => this.handleInputChange('password', e.target.value)}
                                 margin="normal"
                                 variant="outlined"
-                            /> */}
-                            <Button variant="contained" color="primary" onClick={() => this.updateUser()}>Update</Button>
+                                type='password'
+                            />
+                            <div style={{display:'flex', width:"90%", justifyContent:'flex-end'}}>
+                                <Button style={{width:'33%', padding:'3%'}}variant="contained" color="primary" onClick={() => this.updateUser()}>Save Changes</Button>
+                            </div>
 
-                        </Paper>
+                        </div>
                         
                     </Paper>    
                 )

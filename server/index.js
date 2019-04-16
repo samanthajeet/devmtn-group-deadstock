@@ -75,6 +75,7 @@ app.get('/api/signs3', (req, res) => {
 
 // Auth Endpoints
 const authCtrl = require("./Controllers/AuthController");
+app.get(`/api/auth/getuser`, authCtrl.getUser)
 app.post(`/api/auth/register`, authCtrl.register);
 app.post(`/api/auth/login`, authCtrl.login);
 app.post(`/api/auth/logout`, authCtrl.logout);
