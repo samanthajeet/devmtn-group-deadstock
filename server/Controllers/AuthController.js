@@ -96,7 +96,7 @@ module.exports = {
       password = hash
     }
     const user = {user_id, first_name, last_name, email, profile_pic, password}
-    db.auth.editProfile(user).then((editUser) => {
+    db.auth.edit_profile(user).then((editUser) => {
       res.status(200).send(editUser)
     })
   },
