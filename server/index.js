@@ -86,8 +86,9 @@ app.delete(`/api/auth/deleteprofile`, authCtrl.deleteProfile);
 // User Endpoints
 const userCtrl = require(`./Controllers/UserController`);
 app.get(`/api/users`, userCtrl.getAllUsers);
+app.post(`/api/following/add/:followed_user_id`, userCtrl.addFollower);
 app.get(`/api/following`, userCtrl.following);
-app.post("/api/following/add/:user_id", userCtrl.addFollower);
+app.get(`/api/checkFollowing/:followed_user_id`, userCtrl.checkFollowing);
 app.delete(`/api/unfollow/:user_id`, userCtrl.unfollow);
 
 // Closet Endpoints
