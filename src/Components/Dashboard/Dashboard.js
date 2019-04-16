@@ -40,6 +40,22 @@ const drawerWidth = 240;
 const image =
   '"https://images.unsplash.com/photo-1518692118831-d2b55f1d014c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1379&q=80"';
 
+const StyledButton = styled.div`
+  :hover{
+    animation-name: increasesize;
+    animation-duration: 0.5s;
+    transition: 0s;
+    transition-timing-function: ease;
+    animation-fill-mode: forwards;
+    cursor: pointer;
+    };
+
+    @keyframes increasesize {
+    0%   { transform: scale(1); }
+    100% { transform: scale(1.5); }
+}
+`
+
 const styles = theme => ({
   root: {
     boxSizing: "borderBox",
@@ -158,6 +174,7 @@ const styles = theme => ({
     backgroundSize: "cover",
     overflowX: "hidden"
   }
+    
 });
 
 // const [open,setOpen] = useState(true)
@@ -272,13 +289,18 @@ class Dashboard extends React.Component {
                 justifyContent: "space-around"
               }}
             >
-              <ChatIcon
-                onClick={() => this.props.history.push("/dashboard/chat")}
-              />
-              <SettingsIcon
-                className={classes.drawerButtonContent}
-                onClick={() => this.props.history.push("/dashboard/settings")}
-              />
+              <StyledButton>
+                <ChatIcon
+                  onClick={() => this.props.history.push("/dashboard/chat")}
+                />
+              </StyledButton>
+              
+              <StyledButton>
+                <SettingsIcon
+                  onClick={() => this.props.history.push("/dashboard/settings")}
+                />
+              </StyledButton>
+              
             </div>
             {/* <IconButton color="inherit">
               <Badge badgeContent={0} color="secondary">
