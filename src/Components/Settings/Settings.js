@@ -25,27 +25,28 @@ class Settings extends Component {
             last_name: '',
             profile_pic: '',
             password: '',
-            loading: true
-
+            bio: '',
+            loading: true,
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.handleGetUser();
     }
 
-    handleGetUser= async() => {
-        await axios.post(`/api/auth/checkuser`).then(response => {
+    handleGetUser = async () => {
+        await axios.get(`/api/auth/getuser`).then(response => {
             this.setState({
-                email: response.data.email,
-                first_name: response.data.first_name,
-                last_name: response.data.last_name,
-                profile_pic: response.data.profile_pic
+                email: response.data[0].email,
+                first_name: response.data[0].first_name,
+                last_name: response.data[0].last_name,
+                profile_pic: response.data[0].profile_pic,
+                bio: response.data[0].bio
             })
-          }
+        }
         )
         this.setState({
-            loading:false
+            loading: false
         })
     }
 
@@ -68,27 +69,26 @@ class Settings extends Component {
         })
     }
 
-    handleInputChange(prop, val){
+    handleInputChange(prop, val) {
         this.setState({
             [prop]: val
         })
     }
 
-    updateUser(){
-        const {first_name, last_name, email, profile_pic} = this.state;
-        const userBody = {first_name, last_name, email, profile_pic}
+    updateUser() {
+        const { first_name, last_name, email, profile_pic, password, bio } = this.state;
+        const userBody = { first_name, last_name, email, profile_pic, password, bio }
         axios.put(`/api/auth/editprofile`, userBody).then((resp) => {
             this.setState({
                 first_name: resp.data[0].first_name,
                 last_name: resp.data[0].last_name,
                 email: resp.data[0].email,
-                profile_pic: resp.data[0].profile_pic
+                profile_pic: resp.data[0].profile_pic,
+                bio: resp.data[0].bio
             })
             window.history.back()
         })
-        console.log(this.state)
     }
-
 
     render() {
         console.log()
@@ -102,93 +102,120 @@ class Settings extends Component {
                         padding: '3%'
                     }}
                 >
-                {this.state.loading ? (
-                  <Progress>
-                    <CircularProgress color="white" />
-                  </Progress>
-                ) : (
-                <Paper
-                        style={{
-                            height: "82vh",
-                            width: "80%",
-                            display: "flex",
-                            justifyContent: "center",
-                            
-                        }}
-                    >
-                        <Paper
-                            style={{
-                                width: "50%"
-                            }}
+                    {this.state.loading ? (
+                        <Progress>
+                            <CircularProgress color="white" />
+                        </Progress>
+                    ) : (
+                            <Paper
+                                style={{
+                                    height: "82vh",
+                                    width: "80%",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    
 
-                        >
-                            <img src={this.state.profile_pic} alt='profile picture' style={{width: '100%'}}/>
-                            <Button onClick={() => this.handleOpen()}>Edit Photo</Button>
-                            <DropzoneDialog
-                                align="center"
-                                open={this.state.open}
-                                onSave={this.handleSave.bind(this)}
-                                filesLimit={4}
-                                acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
-                                showPreviews={true}
-                                maxFileSize={10000000}
-                                onClose={this.handleClose.bind(this)}
-                                height={450}
-                                width={400}
-                            />
-                        </Paper>
-                        <Paper
-                            style={{
-                                width: "50%",
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "space-around"
-                            }}
-                        >
-                            <TextField
-                                id="outlined-name"
-                                label="First Name"
-                                // className={classes.textField}
-                                value={this.state.first_name}
-                                onChange={(e) => this.handleInputChange('first_name', e.target.value)}
-                                margin="normal"
-                                variant="outlined"
-                            />
-                            <TextField
-                                id="outlined-name"
-                                label="Last Name"
-                                // className={classes.textField}
-                                value={this.state.last_name}
-                                onChange={(e) => this.handleInputChange('last_name', e.target.value)}
-                                margin="normal"
-                                variant="outlined"
-                            />
-                            <TextField
-                                id="outlined-name"
-                                label="Email"
-                                // className={classes.textField}
-                                value={this.state.email}
-                                onChange={(e) => this.handleInputChange('email', e.target.value)}
-                                margin="normal"
-                                variant="outlined"
-                            />
-                            {/* <TextField
-                                id="outlined-name"
-                                label="New Password"
-                                // className={classes.textField}
-                                value={this.state.email}
-                                onChange={(e) => this.handleInputChange('password', e.target.value)}
-                                margin="normal"
-                                variant="outlined"
-                            /> */}
-                            <Button variant="contained" color="primary" onClick={() => this.updateUser()}>Update</Button>
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        width: "50%",
+                                        backgroundColor: 'rgba(0,0,0,.1)'
+                                    }}
+                                >
+                                    <img src={this.state.profile_pic} alt='profile picture' style={{ width: '100%' }} />
+                                    <Button onClick={() => this.handleOpen()}>Edit Photo</Button>
+                                    <DropzoneDialog
+                                        align="center"
+                                        open={this.state.open}
+                                        onSave={this.handleSave.bind(this)}
+                                        filesLimit={4}
+                                        acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
+                                        showPreviews={true}
+                                        maxFileSize={10000000}
+                                        onClose={this.handleClose.bind(this)}
+                                        height={450}
+                                        width={400}
+                                    />
+                                    <TextField
+                                        id="standard-multiline-fixed"
+                                        label="Multiline Placeholder"
+                                        multiline
+                                        rows={8}
+                                        value={this.state.bio}
+                                        onChange={(e) => this.handleInputChange('bio', e.target.value)}
+                                        style={{ marginTop: "10px", width: "90%" }}
+                                        variant='outlined'
+                                    />
+                                </div>
+                                <div
+                                    style={{
+                                        width: "50%",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        justifyContent: "space-around",
+                                        alignItems: 'center',
+                                        borderLeft: 'solid 1px rgba(0,0,0,.2)'
+                                    }}
+                                >
+                                    <TextField
+                                        style={{
+                                            width: '90%'
+                                        }}
+                                        id="outlined-name"
+                                        label="First Name"
+                                        // className={classes.textField}
+                                        value={this.state.first_name}
+                                        onChange={(e) => this.handleInputChange('first_name', e.target.value)}
+                                        margin="normal"
+                                        variant="outlined"
+                                    />
+                                    <TextField
+                                        style={{
+                                            width: '90%'
+                                        }}
+                                        id="outlined-name"
+                                        label="Last Name"
+                                        // className={classes.textField}
+                                        value={this.state.last_name}
+                                        onChange={(e) => this.handleInputChange('last_name', e.target.value)}
+                                        margin="normal"
+                                        variant="outlined"
+                                    />
+                                    <TextField
+                                        style={{
+                                            width: '90%'
+                                        }}
+                                        id="outlined-name"
+                                        label="Email"
+                                        // className={classes.textField}
+                                        value={this.state.email}
+                                        onChange={(e) => this.handleInputChange('email', e.target.value)}
+                                        margin="normal"
+                                        variant="outlined"
+                                    />
+                                    <TextField
+                                        style={{
+                                            width: '90%'
+                                        }}
+                                        id="outlined-name"
+                                        label="New Password"
+                                        // className={classes.textField}
+                                        onChange={(e) => this.handleInputChange('password', e.target.value)}
+                                        margin="normal"
+                                        variant="outlined"
+                                        type='password'
+                                    />
+                                    <div style={{ display: 'flex', width: "90%", justifyContent: 'flex-end' }}>
+                                        <Button style={{ width: '33%', padding: '3%' }} variant="contained" color="primary" onClick={() => this.updateUser()}>Save Changes</Button>
+                                    </div>
 
-                        </Paper>
-                        
-                    </Paper>    
-                )
-            }
-                    
+                                </div>
+
+                            </Paper>
+                        )
+                    }
+
                 </div>
             </Grow>
         )

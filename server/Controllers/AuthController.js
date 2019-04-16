@@ -83,14 +83,21 @@ module.exports = {
     }
   },
 
-  editProfile: (req, res) => {
-    const {first_name, last_name, email, profile_pic} = req.body;
+  editProfile: async (req, res) => {
+    let {first_name, last_name, email, profile_pic, password, bio} = req.body;
     const {user_id} = req.session.user;
-    const user = {user_id, first_name, last_name, email, profile_pic}
     const db = req.app.get('db');
-
-    db.auth.editProfile(user).then((newUser) => {
-      res.status(200).send(newUser)
+    if(password == ''){
+      let resp = await db.auth.get_password({user_id})
+      password = resp[0].password
+    } else {
+      let salt = bcrypt.genSaltSync(10);
+      let hash = bcrypt.hashSync(password, salt);
+      password = hash
+    }
+    const user = {user_id, first_name, last_name, email, profile_pic, password, bio}
+    db.auth.edit_profile(user).then((editUser) => {
+      res.status(200).send(editUser)
     })
   },
 
@@ -101,5 +108,15 @@ module.exports = {
     db.auth.delete_profile({ user_id }).then(resp => {
       res.sendStatus(200);
     });
+  },
+  getUser: (req, res) => {
+    const db = req.app.get("db");
+    const { user_id } = req.session.user;
+
+    db.auth.get_user({user_id}).then(resp => {
+      let user = resp;
+      delete user.password;
+      res.status(200).send(user)
+    })
   }
 };
