@@ -5,7 +5,6 @@ export default class SearchItem extends Component {
     super(props);
   }
   render() {
-    console.log("getting shoe");
     const {
       shoe_id,
       shoe_model,

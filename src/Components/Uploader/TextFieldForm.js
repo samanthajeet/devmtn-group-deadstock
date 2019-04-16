@@ -11,6 +11,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Button from "@material-ui/core/Button";
+import axios from "axios";
 
 class TextFieldForm extends Component {
   state = {
@@ -31,11 +32,13 @@ class TextFieldForm extends Component {
     });
   };
 
+  handleSubmitUpload = () => {
+    console.log("hit submit", this.state, this.props);
+
+    // axios.post("/api/closet/addShoe", {});
+  };
+
   render() {
-    // console.log("shoe size: ", this.state.shoeSize);
-    // console.log("bought price: ", this.state.boughtPrice);
-    // console.log("selling price: ", this.state.sellingPrice);
-    console.log(this.state.shoeDetails);
     const { classes } = this.props;
 
     return (
@@ -129,7 +132,9 @@ class TextFieldForm extends Component {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => {}}
+          onClick={() => {
+            this.handleSubmitUpload();
+          }}
           style={{ width: "90%", marginTop: "3%", marginBottom: "2%" }}
         >
           Add Shoe to Closet
