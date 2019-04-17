@@ -25,7 +25,6 @@ class Uploader extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
       files: [],
       products: [],
       selectedShoe: "",
@@ -38,37 +37,18 @@ class Uploader extends Component {
     this.getStore();
   }
 
-  handleOpen() {
-    this.setState({
-      open: true
-    });
-  }
-
-  handleClose() {
-    this.setState({
-      open: false
-    });
-  }
-
-  handleSave(files) {
+  handleSave(file) {
+    console.log("hit handleSave", file);
     //Saving files to state for further use and closing Modal.
-    this.setState({
-      files: files,
-      open: false
-    });
-    this.getSignedRequest(files);
+    if (file.length == 4) {
+      this.getSignedRequest(file);
+    }
   }
 
-  getStore = async () => {
-    let shoes = await axios.get("/api/shoes");
-    this.setState({
-      products: shoes.data
-    });
-  };
+  getSignedRequest = file => {
+    console.log("goobergoobergoober", file);
 
-  getSignedRequest = files => {
-    const images = [];
-    files.map(file => {
+    file.map(file => {
       let fileName = `${randomString()}-${file.name.replace(/\s/g, "-")}`;
       axios
         .get("/api/signs3", {
@@ -79,27 +59,37 @@ class Uploader extends Component {
         })
         .then(response => {
           const { signedRequest, url } = response.data;
-
-          this.uploadFile(file, signedRequest, url, images);
+          console.log("got signed request response,", response.data);
+          this.uploadFile(file, signedRequest);
+          this.setState({ files: [...this.state.files, url] });
         });
     });
   };
 
-  uploadFile = async (file, signedRequest, url, images) => {
-    console.log('upload file hit',file)
+  uploadFile = (file, signedRequest) => {
+    console.log("hit upload", file, signedRequest);
     const options = {
       headers: {
         "Content-Type": file.type
       }
     };
-    await axios.put(signedRequest, file, options).then(response => {});
-    images.push(url);
-    this.setState({ files: images });
+    axios.put(signedRequest, file, options).then(resp => {
+      console.log("upload success");
+    });
+
+    // this.setState({ files: images });
   };
 
   handleSelectedShoe = shoe => {
     this.setState({
       clickedShoe: shoe
+    });
+  };
+
+  getStore = async () => {
+    let shoes = await axios.get("/api/shoes");
+    this.setState({
+      products: shoes.data
     });
   };
 
@@ -112,7 +102,6 @@ class Uploader extends Component {
   };
 
   render() {
-    const hello = "hello";
     const { classes } = this.props;
     const mappedProducts = this.state.products
       .filter(shoe => {
@@ -139,17 +128,7 @@ class Uploader extends Component {
           />
         );
       });
-    const img = this.state.files.map(image => {
-      return (
-        <>
-          <img
-            src={image}
-            alt="shoe"
-            style={{ height: "100px", width: "100px", marginTop: 0 }}
-          />
-        </>
-      );
-    });
+
     return (
       <Grow in={this.state.boolean}>
         <div
@@ -244,12 +223,8 @@ class Uploader extends Component {
             <Paper
               elevation={10}
               style={{
-                // flexDirection: "column",
                 width: "40%",
-                // alignItems: "center",
-                // justifyContent: "center",
-                height: "80vh",
-                overflow: "scroll"
+                height: "80vh"
               }}
             >
               <div
@@ -273,25 +248,18 @@ class Uploader extends Component {
                     alignItems: "center"
                   }}
                 >
-                  <h3 style={{ margin: "0", padding: "0" }}>
+                  <h3
+                    style={{
+                      margin: "0",
+                      padding: "0"
+                    }}
+                  >
                     Tell Us About Your Shoe
                   </h3>
                 </div>
                 <div style={{ width: "90%", marginTop: "2%" }}>
                   <SearchItem shoe={this.state.clickedShoe} />
                 </div>
-                {/* <div
-                  style={{
-                    width: "200px",
-                    display: "flex",
-                    border: "dashed 1px black",
-                    height: "200px",
-                    flexWrap: "wrap"
-                  }}
-                >
-                  <div>{img}</div>
-                </div> */}
-                {/* <Button onClick={this.handleOpen.bind(this)}>Add Image</Button> */}
                 <div
                   style={{
                     width: "90%"
@@ -299,13 +267,11 @@ class Uploader extends Component {
                 >
                   <DropzoneArea
                     align="center"
-                    // open={this.state.open}
                     onChange={this.handleSave.bind(this)}
                     filesLimit={4}
                     acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
                     showPreviews={false}
-                    maxFileSize={10000000}
-                    // onClose={this.handleClose.bind(this)}
+                    maxFileSize={20000000}
                   />
                 </div>
                 <div
@@ -316,7 +282,10 @@ class Uploader extends Component {
                     marginTop: "3%"
                   }}
                 >
-                  <TextFieldForm />
+                  <TextFieldForm
+                    images={this.state.files}
+                    shoe={this.state.clickedShoe}
+                  />
                 </div>
               </div>
             </Paper>

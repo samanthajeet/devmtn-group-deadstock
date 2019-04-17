@@ -1,4 +1,4 @@
-import React, {memo} from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
@@ -42,20 +42,24 @@ const image =
   '"https://images.unsplash.com/photo-1518692118831-d2b55f1d014c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1379&q=80"';
 
 const StyledButton = styled.div`
-  :hover{
+  :hover {
     animation-name: increaseDashSize;
     animation-duration: 0.5s;
     transition: 0s;
     transition-timing-function: ease;
     animation-fill-mode: forwards;
     cursor: pointer;
-    };
+  }
 
-    @keyframes increaseDashSize {
-    0%   { transform: scale(1); }
-    100% { transform: scale(1.5); }
-}
-`
+  @keyframes increaseDashSize {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.5);
+    }
+  }
+`;
 
 const styles = theme => ({
   root: {
@@ -175,15 +179,14 @@ const styles = theme => ({
     backgroundSize: "cover",
     overflowX: "hidden"
   }
-    
 });
 
 // const [open,setOpen] = useState(true)
 // const [users,setUsers] =useState([])
 
 class Dashboard extends React.Component {
-  constructor(){
-    super()
+  constructor() {
+    super();
     this.state = {
       open: true,
       users:[],
@@ -303,13 +306,12 @@ class Dashboard extends React.Component {
                   onClick={() => this.props.history.push("/dashboard/chat")}
                 />
               </StyledButton>
-              
+
               <StyledButton>
                 <SettingsIcon
                   onClick={this.handleSettingsToggle}
                 />
               </StyledButton>
-              
             </div>
             {/* <IconButton color="inherit">
               <Badge badgeContent={0} color="secondary">

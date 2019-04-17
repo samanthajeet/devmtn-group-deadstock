@@ -1,47 +1,47 @@
 import React, { Component } from "react";
-import axios from "axios";
-import CircularProgress from "@material-ui/core/CircularProgress";
+// import CircularProgress from "@material-ui/core/CircularProgress";
+import CommunityCard from '../CommunityCard/CommunityCard'
 import styled from "styled-components";
 
 
-const Progress = styled.div`
-  color: white;
-  margin-top: 25rem;
-`;
+const UserCards = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: flex-start;
+    height: 100%;
+`
 
 class Community extends Component {
-    constructor(){
-        super()
-        this.state={
-            loading:true
-        }
+  state = {
+    loading: false
+  };
 
-    }
-    render() {
-        console.log(this.props.users)
-        const { users } = this.props
-        let mappedUsers = users.map(user => {
-            return (
-                <div>
-                    <h1>{user.first_name} {user.last_name}</h1>
-                    <h3>{user.email}</h3>
-                    <img src={user.profile_pic} height='25px' width='25px' />
-                </div>
-            )
-        })
-        return (
-            <>
-                {this.state.loading ? (
-                    <Progress>
-                        <CircularProgress color="white" />
-                    </Progress>
-                ) : (
-                        <div style={{ color: 'white' }}>{mappedUsers}</div>
-                        )}
+  render() {
+    const { users } = this.props;
+    let mappedUsers = users.map(user => {
+      return (
+        <div key={user.user_id}>
+          <CommunityCard
+            profile_pic={user.profile_pic}
+            first_name={user.first_name}
+            last_name={user.last_name}
+            email={user.email}
+            user_id={user.user_id}
+            
+            />
+        </div>
+      );
+    });
 
-            </>
-        )
-    }
+    return (
+      <>
+            <UserCards>
+                {mappedUsers}
+            </UserCards>
+      </>
+    );
+  }
 }
 
 export default Community;
