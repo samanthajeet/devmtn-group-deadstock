@@ -1,31 +1,36 @@
 import React, {Component, memo} from 'react';
 import axios from 'axios';
+import {connect} from 'react-redux';
+import {handleFriend} from '../../ducks/reducer';
 
 class Contacts extends Component {
-    constructor(){
-        super()
-        this.state={
-            user:{}
-        }
+    selectUser(friend){
+        this.props.handleFriend(friend)
+        this.props.startChat(friend)
     }
 
     render(){
         const {users} = this.props;
-        console.log(this.props.users)
-        let mappedUsers = users.map(user=>{
+        let mappedFriends = users.map(friend=>{
             return(
-                <div key={user.user_id}>
-                    <h3>{user.first_name} {user.last_name}</h3>
+                <div key={friend.user_id} onClick={()=>this.selectUser(friend)}>
+                    <h3>{friend.first_name} {friend.last_name}</h3>
                 </div>
             )
         })
         
         return(
             <div>
-                {mappedUsers}
+                {mappedFriends}
             </div>
         )
     }
 }
 
-export default memo(Contacts) 
+function mapStateToProps(reduxState){
+    return{
+        user:reduxState.user
+    }
+}
+
+export default memo(connect(mapStateToProps,{handleFriend})(Contacts)) 
