@@ -7,7 +7,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import CircularProgress from '@material-ui/core/CircularProgress';
+// import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
   card: {
@@ -47,7 +47,7 @@ const styles = theme => ({
 class CommunityCard extends Component {
   state = { 
     following: false,
-    loading: true
+    // loading: true
    }
 
    componentDidMount(){
@@ -55,21 +55,20 @@ class CommunityCard extends Component {
    }
 
 
-  checkFollowing = async() =>  {
+  checkFollowing = async() => {
     const followed_user_id = this.props.user_id
-    let response = await axios.get(`/api/checkFollowing/${followed_user_id}`)
-    console.log(followed_user_id)
-    if(response.data){
-      this.setState({
-        following: true
-      })
-    }
-    this.setState({
-      loading: false
+    await axios.get(`/api/checkFollowing/${followed_user_id}`).then( response => {
+      if(response.data != ''){
+        console.log(response.data)
+        this.setState({
+          following: true
+        })
+      }
     })
+  
   }
 
-  followUser(){
+  followUser() {
     const followed_user_id = this.props.user_id
     axios.post(`/api/following/add/${followed_user_id}`)    
     this.setState({
@@ -82,6 +81,7 @@ class CommunityCard extends Component {
   }
   render() { 
     const { classes, theme } = this.props;
+    const {following} = this.state
     return ( 
       <>
         <Card className={classes.card}>
@@ -93,7 +93,7 @@ class CommunityCard extends Component {
               <Typography variant="subtitle1" color="textSecondary">
                 50 Pairs of Shoes
               </Typography>
-              {this.state.follwing ? (
+              { following ? (
                 <Button variant="outlined" className={classes.button} onClick={() => this.toggleFollow()}  >
                   unfollow
                 </Button>
@@ -108,7 +108,6 @@ class CommunityCard extends Component {
           <CardMedia
             className={classes.cover}
             image={this.props.profile_pic}
-            title="Live from space album cover"
           />
         </Card>
 
