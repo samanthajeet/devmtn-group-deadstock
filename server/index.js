@@ -89,7 +89,8 @@ app.get(`/api/users`, userCtrl.getAllUsers);
 app.post(`/api/following/add/:followed_user_id`, userCtrl.addFollower);
 app.get(`/api/following`, userCtrl.following);
 app.get(`/api/checkFollowing/:followed_user_id`, userCtrl.checkFollowing);
-app.delete(`/api/unfollow/:user_id`, userCtrl.unfollow);
+app.delete(`/api/unfollow/:followed_user_id`, userCtrl.unfollow);
+
 
 // Closet Endpoints
 const closetCtrl = require("./Controllers/ClosetController");

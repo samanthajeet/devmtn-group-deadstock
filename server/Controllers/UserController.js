@@ -18,8 +18,12 @@ module.exports = {
     res.sendStatus(200)
   },
 
-  unfollow: (req, res) => {
-
+  unfollow: async (req, res) => {
+    const db = req.app.get('db')
+    const {user_id} = req.session.user
+    const {followed_user_id} = req.params
+    await db.user.unfollow_user({user_id, followed_user_id})
+    res.sendStatus(200)
   },
 
   checkFollowing: async (req, res) => {

@@ -7,7 +7,10 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-// import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Fade from '@material-ui/core/Fade';
+
+
 
 const styles = theme => ({
   card: {
@@ -47,7 +50,8 @@ const styles = theme => ({
 class CommunityCard extends Component {
   state = { 
     following: false,
-    // loading: true
+    checked: true,
+    loading: true
    }
 
    componentDidMount(){
@@ -59,11 +63,14 @@ class CommunityCard extends Component {
     const followed_user_id = this.props.user_id
     await axios.get(`/api/checkFollowing/${followed_user_id}`).then( response => {
       if(response.data != ''){
-        console.log(response.data)
+        // console.log(response.data)
         this.setState({
           following: true
         })
       }
+    })
+    this.setState({
+      loading: false
     })
   
   }
@@ -76,14 +83,22 @@ class CommunityCard extends Component {
     })
   }
 
-  toggleFollow(){
-    
+  unfollowUser(){
+    const followed_user_id = this.props.user_id
+    // console.log(followed_user_id)
+    axios.delete(`/api/unfollow/${followed_user_id}`)
+    this.setState({
+      following: false
+    })
   }
+
   render() { 
     const { classes, theme } = this.props;
-    const {following} = this.state
+    const {following, checked, loading} = this.state
     return ( 
       <>
+
+        <Fade in={checked} >
         <Card className={classes.card}>
           <div className={classes.details}>
             <CardContent className={classes.content}>
@@ -93,14 +108,22 @@ class CommunityCard extends Component {
               <Typography variant="subtitle1" color="textSecondary">
                 50 Pairs of Shoes
               </Typography>
-              { following ? (
-                <Button variant="outlined" className={classes.button} onClick={() => this.toggleFollow()}  >
-                  unfollow
-                </Button>
-              ) : (
-                <Button variant="outlined"  className={classes.button} onClick={() => this.followUser()} >
-                  follow
-                </Button>
+              {loading ? (
+                null
+              ):(
+                 following ? (
+                   <Fade in={checked}>
+                      <Button variant="outlined" className={classes.button} onClick={() => this.unfollowUser()}  >
+                        unfollow
+                      </Button>
+                   </Fade>
+                ) : (
+                  <Fade in={checked}>
+                    <Button variant="outlined"  className={classes.button} onClick={() => this.followUser()} >
+                      follow
+                    </Button>
+                  </Fade>
+                )
               )}
             </CardContent>
             <div className={classes.controls} />
@@ -110,6 +133,8 @@ class CommunityCard extends Component {
             image={this.props.profile_pic}
           />
         </Card>
+        </Fade>
+
 
     </>
      );
