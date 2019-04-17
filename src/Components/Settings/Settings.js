@@ -98,7 +98,7 @@ class Settings extends Component {
             <div className={hidden ? "settings-modal hidden" : show ? 'settings-modal show' : 'settings-modal no-show'}>
                 <div
                     style={{
-                        height: "100%",
+                        height: "calc(100% - 64px)",
                         display: 'flex',
                         justifyContent: 'center',
                  
