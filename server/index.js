@@ -121,8 +121,12 @@ app.get(`/api/collection/checkFavorites/:shoe_id`, collCtrl.checkFavorite)
 app.delete(`/api/collection/deleteFavorite/:shoe_id`, collCtrl.deleteFromCollection)
 app.get(`/api/collection`, collCtrl.getCollection);
 
-//Socket Endpoints
+// Chat Endpoints
 const sockCtrl = require('./Controllers/SocketsController');
+app.get(`/api/chats`,sockCtrl.getChats)
+
+
+//Socket Endpoints
 io.on('connection',function(socket){
   socket.on('endChat',function(room){
     socket.leave(room)

@@ -2,7 +2,8 @@ const initialState = {
     user: {},
     friend:{},
     room:'',
-    chat:[]
+    chat:[],
+    list:[]
 }
 
 const HANDLE_USER = 'HANDLE_USER';
@@ -10,6 +11,7 @@ const HANDLE_FRIEND = 'HANDLE_FRIEND';
 const CLEAR_USER = 'CLEAR_USER';
 const HANDLE_ROOM = 'HANDLE_ROOM';
 const HANDLE_CHAT = 'HANDLE_CHAT';
+const HANDLE_LIST = 'HANDLE_LIST';
 
 export function handleUser(user) {
     return {
@@ -32,10 +34,16 @@ export function handleRoom(room){
 }
 
 export function handleChat(chat){
-    console.log(chat)
     return {
         type: HANDLE_CHAT,
         payload: chat
+    }
+}
+
+export function handleList(list){
+    return {
+        type: HANDLE_LIST,
+        payload: list
     }
 }
 
@@ -55,8 +63,10 @@ export default function reducer(state = initialState, action) {
             return { ...state, room: action.payload }
         case HANDLE_CHAT:
             return { ...state, chat: action.payload }
+        case HANDLE_LIST:
+            return { ...state, list: action.payload }
         case CLEAR_USER:
-            return { ...state, user: {} }
+            return { ...state, user: {}, friend:{}, room:'', chat:[] }
         default:
             return state
     }
