@@ -36,6 +36,7 @@ import Uploader from "../Uploader/Uploader";
 import { connect } from "react-redux";
 import { clearUser } from "../../ducks/reducer";
 
+
 const drawerWidth = 240;
 const image =
   '"https://images.unsplash.com/photo-1518692118831-d2b55f1d014c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1379&q=80"';
@@ -185,13 +186,14 @@ class Dashboard extends React.Component {
     super()
     this.state = {
       open: true,
-      users:[]
+      users:[],
+      hidden: true,
+      show: false
     };
   }
 
   componentDidMount(){
     this.getContacts()
-
   }
 
   handleDrawerOpen = () => {
@@ -212,10 +214,17 @@ class Dashboard extends React.Component {
     let users = await axios.get('/api/users')
     console.log(users.data)
     this.setState({users:users.data})
-}
+  }
+
+  handleSettingsToggle = () => {
+    this.setState({
+      hidden:false,
+      show:!this.state.show
+    })
+  }
 
   render() {
-    console.log(this.state.users)
+    const {hidden, show} = this.state;
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -297,7 +306,7 @@ class Dashboard extends React.Component {
               
               <StyledButton>
                 <SettingsIcon
-                  onClick={() => this.props.history.push("/dashboard/settings")}
+                  onClick={this.handleSettingsToggle}
                 />
               </StyledButton>
               
@@ -462,12 +471,12 @@ class Dashboard extends React.Component {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <Paper className={classes.paperContainer}>
+          <Paper className={classes.paperContainer + ' modal-container'}>
+            <Settings hidden={hidden} show={show}/>
             <Route path="/dashboard/closet/upload" component={Uploader} />
             <Route exact path="/dashboard/closet" component={Closet} />
             <Route path="/dashboard/collection" component={Collection} />
             <Route path="/dashboard/community" render={(props)=> <Community {...props} users={this.state.users}/>}/>
-            <Route path="/dashboard/settings" component={Settings} />
             <Route path="/dashboard/chat" render={(props)=> <Chat {...props} users={this.state.users}/>}/>
             <Route path="/dashboard/shop/:shoe_id" component={Product} />
             <Route exact path="/dashboard/shop" component={Shop} />
