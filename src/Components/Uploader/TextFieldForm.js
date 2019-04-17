@@ -35,6 +35,12 @@ class TextFieldForm extends Component {
   handleSubmitUpload = () => {
     console.log("hit submit", this.state, this.props);
 
+    if (this.props.shoe && this.props.images.length == 4) {
+      console.log("successful submit ");
+    } else {
+      console.log("need shoe and images");
+    }
+
     // axios.post("/api/closet/addShoe", {});
   };
 
