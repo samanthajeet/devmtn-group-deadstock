@@ -1,4 +1,4 @@
-import React, {memo} from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
@@ -41,20 +41,24 @@ const image =
   '"https://images.unsplash.com/photo-1518692118831-d2b55f1d014c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1379&q=80"';
 
 const StyledButton = styled.div`
-  :hover{
+  :hover {
     animation-name: increaseDashSize;
     animation-duration: 0.5s;
     transition: 0s;
     transition-timing-function: ease;
     animation-fill-mode: forwards;
     cursor: pointer;
-    };
+  }
 
-    @keyframes increaseDashSize {
-    0%   { transform: scale(1); }
-    100% { transform: scale(1.5); }
-}
-`
+  @keyframes increaseDashSize {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.5);
+    }
+  }
+`;
 
 const styles = theme => ({
   root: {
@@ -174,24 +178,22 @@ const styles = theme => ({
     backgroundSize: "cover",
     overflowX: "hidden"
   }
-    
 });
 
 // const [open,setOpen] = useState(true)
 // const [users,setUsers] =useState([])
 
 class Dashboard extends React.Component {
-  constructor(){
-    super()
+  constructor() {
+    super();
     this.state = {
       open: true,
-      users:[]
+      users: []
     };
   }
 
-  componentDidMount(){
-    this.getContacts()
-
+  componentDidMount() {
+    this.getContacts();
   }
 
   handleDrawerOpen = () => {
@@ -208,10 +210,10 @@ class Dashboard extends React.Component {
     this.props.history.push("/");
   };
 
-  getContacts=async()=>{
-    let users = await axios.get('/api/users')
-    this.setState({users:users.data})
-}
+  getContacts = async () => {
+    let users = await axios.get("/api/users");
+    this.setState({ users: users.data });
+  };
 
   render() {
     const { classes } = this.props;
@@ -292,13 +294,12 @@ class Dashboard extends React.Component {
                   onClick={() => this.props.history.push("/dashboard/chat")}
                 />
               </StyledButton>
-              
+
               <StyledButton>
                 <SettingsIcon
                   onClick={() => this.props.history.push("/dashboard/settings")}
                 />
               </StyledButton>
-              
             </div>
             {/* <IconButton color="inherit">
               <Badge badgeContent={0} color="secondary">
@@ -464,9 +465,17 @@ class Dashboard extends React.Component {
             <Route path="/dashboard/closet/upload" component={Uploader} />
             <Route exact path="/dashboard/closet" component={Closet} />
             <Route path="/dashboard/collection" component={Collection} />
-            <Route path="/dashboard/community" render={(props)=> <Community {...props} users={this.state.users}/>}/>
+            <Route
+              path="/dashboard/community"
+              render={props => (
+                <Community {...props} users={this.state.users} />
+              )}
+            />
             <Route path="/dashboard/settings" component={Settings} />
-            <Route path="/dashboard/chat" render={(props)=> <Chat {...props} users={this.state.users}/>}/>
+            <Route
+              path="/dashboard/chat"
+              render={props => <Chat {...props} users={this.state.users} />}
+            />
             <Route path="/dashboard/shop/:shoe_id" component={Product} />
             <Route exact path="/dashboard/shop" component={Shop} />
           </Paper>
