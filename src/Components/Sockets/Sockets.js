@@ -1,4 +1,6 @@
-// import React from 'react';
-// import io from 'scokets.io-client';
+import React from 'react';
+import io from 'socket.io-client';
 
-// export const sockets = io()
+const sockets = io()
+
+export default sockets
