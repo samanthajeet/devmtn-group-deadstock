@@ -38,6 +38,16 @@ CREATE TABLE user_shoes(
     image_4_url text
 );
 
+create table rooms (
+room_id varchar primary key
+)
+
+create table chats (
+chat_id serial primary key,
+message text,
+user_id int, 
+room_id varchar
+)
 
 CREATE TABLE FAVORITES(
     favorite_id SERIAL PRIMARY KEY NOT NULL,

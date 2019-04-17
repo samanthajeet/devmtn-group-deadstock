@@ -7,7 +7,7 @@ pg = require("pg");
 pgSession = require("connect-pg-simple")(session);
 
 const app = express();
-const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET} = process.env;
+const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env;
 
 app.use(express.json());
 
@@ -32,10 +32,17 @@ app.use(
 
 massive(CONNECTION_STRING).then(db => {
   app.set("db", db);
-  app.listen(SERVER_PORT, () => {
-    console.log(`DeadStock on ${SERVER_PORT}`);
-  });
 });
+
+// Sockets 
+const socket = require('socket.io');
+const io = socket(
+  app.listen(SERVER_PORT, () => {
+    console.log(`DeadStock on ${SERVER_PORT}`)
+  })
+)
+
+
 
 const aws = require('aws-sdk');
 
@@ -72,6 +79,8 @@ app.get('/api/signs3', (req, res) => {
     return res.send(returnData);
   });
 });
+
+
 
 // Auth Endpoints
 const authCtrl = require("./Controllers/AuthController");
@@ -110,4 +119,29 @@ const collCtrl = require(`./Controllers/CollectionController`);
 app.post(`/api/collection/favorite`, collCtrl.addToCollection);
 app.get(`/api/collection/checkFavorites/:shoe_id`, collCtrl.checkFavorite)
 app.delete(`/api/collection/deleteFavorite/:shoe_id`, collCtrl.deleteFromCollection)
-app.get(`/api/collection`,collCtrl.getCollection);
+app.get(`/api/collection`, collCtrl.getCollection);
+
+//Socket Endpoints
+const sockCtrl = require('./Controllers/SocketsController');
+io.on('connection',function(socket){
+  socket.on('endChat',function(room){
+    socket.leave(room)
+  })
+
+  socket.on('startChat', async function(room){
+    const db = app.get('db')
+    const checkedRoom = await db.chats.check_room({room})
+    !checkedRoom[0] && await db.chats.create_room({room}) 
+    const messages = await db.chats.get_chats({room})
+    socket.join(room)
+    io.to(room).emit('returnJoin',messages)  
+  })
+
+  socket.on('sendMessage',async function (data){
+    const db = app.get('db')
+    const {message,user_id,room} = data;
+    const messages = await db.chats.create_message({message,user_id,room})
+    console.log(messages)
+    io.to(room).emit('returnMessages',messages)
+  })
+})
