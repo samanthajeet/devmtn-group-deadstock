@@ -40,38 +40,41 @@ class Uploader extends Component {
   handleSave(file) {
     console.log("hit handleSave", file);
     //Saving files to state for further use and closing Modal.
-    if (file.length) {
-      this.getSignedRequest(file[file.length - 1]);
+    if (file.length == 4) {
+      this.getSignedRequest(file);
     }
   }
 
   getSignedRequest = file => {
     console.log("goobergoobergoober", file);
-    let fileName = `${randomString()}-${file.name.replace(/\s/g, "-")}`;
-    axios
-      .get("/api/signs3", {
-        params: {
-          "file-name": fileName,
-          "file-type": file.type
-        }
-      })
-      .then(response => {
-        const { signedRequest, url } = response.data;
-        console.log("got signed request response,", response.data);
-        this.state.files.push(url);
-        this.uploadFile(file, signedRequest);
-      });
+
+    file.map(file => {
+      let fileName = `${randomString()}-${file.name.replace(/\s/g, "-")}`;
+      axios
+        .get("/api/signs3", {
+          params: {
+            "file-name": fileName,
+            "file-type": file.type
+          }
+        })
+        .then(response => {
+          const { signedRequest, url } = response.data;
+          console.log("got signed request response,", response.data);
+          this.uploadFile(file, signedRequest);
+          this.setState({ files: [...this.state.files, url] });
+        });
+    });
   };
 
-  uploadFile = async (file, signedRequest) => {
+  uploadFile = (file, signedRequest) => {
     console.log("hit upload", file, signedRequest);
     const options = {
       headers: {
         "Content-Type": file.type
       }
     };
-    await axios.put(signedRequest, file, options).then(response => {
-      console.log("from upload file", response);
+    axios.put(signedRequest, file, options).then(resp => {
+      console.log("upload success");
     });
 
     // this.setState({ files: images });

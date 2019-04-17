@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import LayoutBody from "../components/LayoutBody";
 import Typography from "../components/Typography";
+import {Link} from 'react-router-dom';
 
 const styles = theme => ({
   root: {
@@ -92,42 +93,49 @@ function ProductCategories(props) {
       url:
         "https://stockx-360.imgix.net/Reebok-Alien-Stomper-Mid-Final-Scene-Pack/Images/Reebok-Alien-Stomper-Mid-Final-Scene-Pack/Lv2/img01.jpg?auto=format,compress&q=90&updated_at=1546757226&w=2200",
       title: "Alien Stomper Mid Final Scene Pack",
+      link: '/dashboard/shop/17',
       width: "60%"
     },
     {
       url:
         "https://stockx-360.imgix.net/Adidas-ZX-4000-4D-Carbon/Images/Adidas-ZX-4000-4D-Carbon/Lv2/img01.jpg?auto=format,compress&q=90&updated_at=1551111806&w=2200",
       title: "ZX 4000 4D Carbon",
+      link: '/dashboard/shop/35',
       width: "40%"
     },
     {
       url:
         "https://stockx-360.imgix.net/asics-gel-diablo-ronnie-fieg-volcano-2-0_TruView/Images/asics-gel-diablo-ronnie-fieg-volcano-2-0_TruView/Lv2/img01.jpg?auto=format,compress&q=90&updated_at=1538080256&w=2200",
       title: "Gel-Diablo",
+      link: '/dashboard/shop/38',
       width: "38%"
     },
     {
       url:
         "https://stockx-360.imgix.net/Asics-Gel-Lyte-III-Titolo-Papercut/Images/Asics-Gel-Lyte-III-Titolo-Papercut/Lv2/img30.jpg?auto=format,compress&q=90&updated_at=1546679336&w=2200",
       title: `Gel Lyte 3 Titolo "Papercut"`,
+      link: '/dashboard/shop/43',
       width: "38%"
     },
     {
       url:
         "https://stockx-360.imgix.net/Air-Jordan-4-Retro-UNDFTD_TruView/Images/Air-Jordan-4-Retro-UNDFTD_TruView/Lv2/img12.jpg?auto=format,compress&q=90&updated_at=1538080256&w=2200",
       title: "Jordan 4 Retro UNDFTD",
+      link: '/dashboard/shop/48',
       width: "24%"
     },
     {
       url:
         "https://stockx-360.imgix.net/Nike-Cortez-Basic-Leather-Forrest-Gump-2017/Images/Nike-Cortez-Basic-Leather-Forrest-Gump-2017/Lv2/img24.jpg?auto=format,compress&q=90&updated_at=1545966773&w=1300",
-      title: "Cortez",
+      title: "Cortez Forrest Gump",
+      link: '/dashboard/shop/2',
       width: "40%"
     },
     {
       url:
         "https://assets.reebok.com/images/w_840,h_840,f_auto,q_auto:sensitive,fl_lossy/f66b4a0987b34c59bed9a44c0189064c_9366/Freestyle_Hi_White_70_01_standard.jpg",
-      title: "Freestyle HI",
+        title: "Freestyle HI",
+        link: '/dashboard/shop/12',
       width: "60%"
     }
   ];
@@ -160,17 +168,20 @@ function ProductCategories(props) {
             />
             <div className={classes.imageBackdrop} />
             <div className={classes.imageButton}>
+            <Link to={`${image.link}`} style={{textDecoration:'none', color: 'white'}}>
               <Typography
                 component="h3"
                 variant="h6"
                 color="inherit"
                 className={classes.imageTitle}
-              >
+                >
                 {image.title}
                 <div className={classes.imageMarked} />
               </Typography>
+              </Link>
             </div>
           </ButtonBase>
+          
         ))}
       </div>
     </LayoutBody>

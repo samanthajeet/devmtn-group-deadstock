@@ -3,19 +3,20 @@ import Paper from '@material-ui/core/Paper';
 import { DropzoneDialog } from 'material-ui-dropzone';
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Grow from "@material-ui/core/Grow";
 import axios from "axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import styled from "styled-components";
+import './Settings.css';
 
 const Progress = styled.div`
   color: white;
   margin-top: 15rem;
 `;
 
+
 class Settings extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             open: false,
             files: [],
@@ -92,14 +93,15 @@ class Settings extends Component {
 
     render() {
         console.log()
+        const {hidden, show} = this.props;
         return (
-            <Grow in={this.state.boolean}>
+            <div className={hidden ? "settings-modal hidden" : show ? 'settings-modal show' : 'settings-modal no-show'}>
                 <div
                     style={{
-                        height: "calc(100%-64px)",
+                        height: "calc(100% - 64px)",
                         display: 'flex',
                         justifyContent: 'center',
-                        padding: '3%'
+                 
                     }}
                 >
                     {this.state.loading ? (
@@ -109,11 +111,10 @@ class Settings extends Component {
                     ) : (
                             <Paper
                                 style={{
-                                    height: "82vh",
-                                    width: "80%",
+                                    height: "100%",
+                                    width: "100%",
                                     display: "flex",
                                     justifyContent: "center",
-                                    
 
                                 }}
                             >
@@ -123,8 +124,10 @@ class Settings extends Component {
                                         backgroundColor: 'rgba(0,0,0,.1)'
                                     }}
                                 >
-                                    <img src={this.state.profile_pic} alt='profile picture' style={{ width: '100%' }} />
-                                    <Button onClick={() => this.handleOpen()}>Edit Photo</Button>
+                                    <div style={{width:'80%', height:'60%', display: 'flex', flexDirection:'column', alignItems:'center', justifyContent:'center'}}>
+                                        <img src={this.state.profile_pic} alt='profile picture' style={{ width:'100%', height:'100%', backgroundSize:'cover' }} />
+                                        <Button onClick={() => this.handleOpen()}>Edit Photo</Button>
+                                    </div>
                                     <DropzoneDialog
                                         align="center"
                                         open={this.state.open}
@@ -157,7 +160,7 @@ class Settings extends Component {
                                         alignItems: 'center',
                                         borderLeft: 'solid 1px rgba(0,0,0,.2)'
                                     }}
-                                >
+                                > Profile
                                     <TextField
                                         style={{
                                             width: '90%'
@@ -217,7 +220,7 @@ class Settings extends Component {
                     }
 
                 </div>
-            </Grow>
+            </div>
         )
     }
 }

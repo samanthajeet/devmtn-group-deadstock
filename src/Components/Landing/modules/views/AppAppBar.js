@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
 import AppBar from "../components/AppBar";
 import Toolbar, { styles as toolbarStyles } from "../components/Toolbar";
+import logo from '../../image/logo-white.png'
 
 const styles = theme => ({
   title: {
@@ -52,7 +53,10 @@ function AppAppBar(props) {
             style={{ fontSize: "2rem" }}
             href="/"
           >
-            {"DeadStock"}
+            {<img src={logo} 
+              style={{
+                width: '10%'
+              }}/>}
           </Link>
           <div className={classes.right}>
             <Link
