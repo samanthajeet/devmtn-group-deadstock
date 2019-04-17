@@ -1,4 +1,4 @@
-import React, { Component, lazy, Suspense } from "react";
+import React, { Component } from "react";
 // import CircularProgress from "@material-ui/core/CircularProgress";
 import CommunityCard from '../CommunityCard/CommunityCard'
 import styled from "styled-components";
@@ -18,7 +18,7 @@ class Community extends Component {
   };
 
   render() {
-    console.log(this.props.users);
+    // console.log(this.props.users);
     const { users } = this.props;
     let mappedUsers = users.map(user => {
       return (
