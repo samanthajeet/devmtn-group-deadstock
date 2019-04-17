@@ -18,7 +18,6 @@ class Community extends Component {
   };
 
   render() {
-    // console.log(this.props.users);
     const { users } = this.props;
     let mappedUsers = users.map(user => {
       return (
@@ -29,8 +28,8 @@ class Community extends Component {
             last_name={user.last_name}
             email={user.email}
             user_id={user.user_id}
-          
-          />
+            
+            />
         </div>
       );
     });
