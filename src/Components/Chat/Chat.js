@@ -4,20 +4,51 @@ import Paper from "@material-ui/core/Paper";
 import Contacts from './Contacts';
 import List from './List';
 import TextField from "@material-ui/core/TextField";
+import ChatMessages from './ChatMessages';
+import sockets from './Sockets';
+import {handleRoom} from '../../ducks/reducer';
 
 class Chat extends Component {
     constructor() {
         super()
         this.state = {
-            compRendered: List
+            compRendered: List,
+            search:'',
+            message:''
         }
     }
 
+    
+
+    startChat=(friend)=>{
+        sockets.emit('endChat',this.props.room)
+        const user_id = this.props.user.user_id;
+        const {user_id:friend_id} = friend;
+        let big
+        let small 
+        if(user_id > friend_id){
+            big = user_id;
+            small = friend_id
+        } else {
+            big = friend_id;
+            small = user_id
+        }
+        let room = big + ':' + small;
+        this.props.handleRoom(room)
+        sockets.emit('startChat',room)
+    }
+
+    sendMessage=()=>{
+        console.log(this.state.message,this.props.user.user_id,this.props.room)
+        const {message} = this.state;
+        const {user_id} = this.props.user;
+        const {room} = this.props
+        sockets.emit('sendMessage',{message,user_id,room})
+    }
 
 
     render() {
-        console.log(this.props.users)
-        const { first_name, last_name, profile_pic } = this.props.user
+        const { first_name, last_name, profile_pic, user_id } = this.props.friend
         const ConditionalComp = this.state.compRendered
         return (
             <div style={{ height: 'calc(100% - 64px)', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -39,17 +70,23 @@ class Chat extends Component {
                                 margin="normal"
                                 variant="outlined"
                                 placeholder={this.state.compRendered == List ? "Search Messages":"Search Contacts"}
-                                value={this.state.selectedShoe}
+                                value={this.state.search}
                                 style={{ width: "93%" }}
+                                onChange={(e)=>this.setState({message:e.target.value})}
                                 padding={0}
                             />
                         </div>
-                        <ConditionalComp users={this.props.users}/>
+                        <ConditionalComp users={this.props.users} startChat={this.startChat}/>
                     </div>
 
                     <div style={{ width: '50%', height: '100%', background: 'orange' }}>
-                        <div style={{ height: '15%', background: 'yellow' }}>Chat Name and Pic</div>
-                        <div style={{ height: '73%' }}>Chat History</div>
+                        <div style={{ height: '15%', background: 'yellow', display:'flex',alignItems:'center',justifyContent:'space-evenly' }}>
+                            <img src={profile_pic} height='50px' width='50px' style={{borderRadius:'50%'}}/>
+                            <h1>{first_name} {last_name}</h1>
+                        </div>
+                        <div style={{ maxHeight: '73%', minHeight:'73%', overflowY:'scroll' }}>
+                            <ChatMessages/>
+                        </div>
                         <div style={{ height: '12%', background: 'purple',display:'flex',justifyContent:'space-evenly',alignItems:'center'}}>
                             <TextField
                                     id="outlined-search"
@@ -58,19 +95,16 @@ class Chat extends Component {
                                     // className={classes.textField}
                                     variant="outlined"
                                     placeholder='Type Message...'
-                                    value={this.state.selectedShoe}
+                                    value={this.state.message}
                                     style={{ width: "85%", justifyContent:'center'}}
                                     padding={0}
+                                    onChange={(e)=>this.setState({message:e.target.value})}
                                 />
-                            <button style={{height:'75%'}}>Send</button>
+                            <button style={{height:'75%'}} onClick={this.sendMessage}>Send</button>
                         </div>
 
                     </div>
                 </Paper>
-
-
-
-
 
             </div>
         )
@@ -79,8 +113,10 @@ class Chat extends Component {
 
 function mapStateToProps(reduxState) {
     return {
-        user: reduxState.user
+        user: reduxState.user,
+        friend:reduxState.friend,
+        room: reduxState.room
     }
 }
 
-export default connect(mapStateToProps)(Chat)
+export default connect(mapStateToProps, {handleRoom})(Chat)
