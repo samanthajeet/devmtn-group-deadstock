@@ -7,6 +7,9 @@ import axios from "axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import styled from "styled-components";
 import './Settings.css';
+import {handleUser} from '../../ducks/reducer';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 
 const Progress = styled.div`
   color: white;
@@ -37,6 +40,8 @@ class Settings extends Component {
 
     handleGetUser = async () => {
         await axios.get(`/api/auth/getuser`).then(response => {
+            console.log(response.data)
+            this.props.handleUser(response.data)
             this.setState({
                 email: response.data[0].email,
                 first_name: response.data[0].first_name,
@@ -50,6 +55,12 @@ class Settings extends Component {
             loading: false
         })
     }
+
+    // componentDidUpdate(prevProps,prevState){
+    //     if(prevState === this.state){
+
+    //     }
+    // }
 
     handleClose() {
         this.setState({
@@ -80,6 +91,8 @@ class Settings extends Component {
         const { first_name, last_name, email, profile_pic, password, bio } = this.state;
         const userBody = { first_name, last_name, email, profile_pic, password, bio }
         axios.put(`/api/auth/editprofile`, userBody).then((resp) => {
+            console.log(resp.data)
+            this.props.handleUser(resp.data)
             this.setState({
                 first_name: resp.data[0].first_name,
                 last_name: resp.data[0].last_name,
@@ -87,12 +100,14 @@ class Settings extends Component {
                 profile_pic: resp.data[0].profile_pic,
                 bio: resp.data[0].bio
             })
-            window.history.back()
+            if(this.props.match.params != '/'){
+                window.history.back()
+            }
         })
     }
 
     render() {
-        console.log()
+        console.log(this.props)
         const {hidden, show} = this.props;
         return (
             <div className={hidden ? "settings-modal hidden" : show ? 'settings-modal show' : 'settings-modal no-show'}>
@@ -225,4 +240,4 @@ class Settings extends Component {
     }
 }
 
-export default Settings
+export default withRouter(connect('',{handleUser})(Settings))
