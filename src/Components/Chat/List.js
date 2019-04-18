@@ -24,7 +24,7 @@ class List extends Component {
         console.log(this.props.list)
         const mappedName = this.props.list.map(name=>{
             return(
-                <div onClick={()=>this.selectUser(name)} style={{display:'flex',maxHeight:'100%',alignItems:'center',border:'solid black 1px',margin:'2px'}}>
+                <div onClick={()=>this.selectUser(name)} style={{display:'flex',maxHeight:'100%',alignItems:'center',border:'solid black 1px',margin:'5px',background:'orange',borderRadius:'15px'}}>
                     <img src={name.profile_pic} style={{height:'25px',width:'25px',borderRadius:'50%',marginLeft:'5px',marginRight:'5px'}}/>
                     <h3 style={{fontSize:'1rem'}}>{name.first_name} {name.last_name}</h3>
                 </div>
