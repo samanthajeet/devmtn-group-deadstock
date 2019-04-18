@@ -35,10 +35,38 @@ class TextFieldForm extends Component {
   handleSubmitUpload = () => {
     console.log("hit submit", this.state, this.props);
 
-    if (this.props.shoe && this.props.images.length == 4) {
-      console.log("successful submit ");
+    if (
+      this.props.shoe &&
+      this.props.images.length == 4 &&
+      this.state.shoeSize != "" &&
+      this.state.shoeDetails != "" &&
+      this.state.sellingPrice != "" &&
+      this.state.boughtPrice != "" &&
+      this.state.isForSale != ""
+    ) {
+      let { shoe, images } = this.props;
+      let { shoe_id } = shoe;
+
+      let {
+        shoeSize,
+        shoeDetails,
+        sellingPrice,
+        boughtPrice,
+        isForSale
+      } = this.state;
+      console.log("hit submit");
+      console.log("shoe:", this.props.shoe);
+      axios.post("/api/closet/addshoe", {
+        shoe_id,
+        images,
+        shoe,
+        shoeDetails,
+        sellingPrice,
+        boughtPrice,
+        isForSale
+      });
     } else {
-      console.log("need shoe and images");
+      alert(" please add all info");
     }
 
     // axios.post("/api/closet/addShoe", {});
@@ -150,8 +178,8 @@ class TextFieldForm extends Component {
   }
 }
 
-TextFieldForm.propTypes = {
-  classes: PropTypes.object.isRequired
-};
+// TextFieldForm.propTypes = {
+//   classes: PropTypes.object.isRequired
+// };
 
 export default TextFieldForm;

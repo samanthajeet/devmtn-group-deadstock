@@ -251,10 +251,11 @@ class Uploader extends Component {
                   <h3
                     style={{
                       margin: "0",
-                      padding: "0"
+                      padding: "0",
+                      color: "rgba(0,0,0, .8)"
                     }}
                   >
-                    Tell Us About Your Shoe
+                    Upload a New Shoe
                   </h3>
                 </div>
                 <div style={{ width: "90%", marginTop: "2%" }}>
@@ -265,6 +266,9 @@ class Uploader extends Component {
                     width: "90%"
                   }}
                 >
+                  <h4 style={{ color: "rgba(0,0,0,.4)" }}>
+                    Upload Photos of Your Shoe
+                  </h4>
                   <DropzoneArea
                     align="center"
                     onChange={this.handleSave.bind(this)}
@@ -272,6 +276,7 @@ class Uploader extends Component {
                     acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
                     showPreviews={false}
                     maxFileSize={20000000}
+                    dropzoneText="hello"
                   />
                 </div>
                 <div
@@ -279,7 +284,7 @@ class Uploader extends Component {
                     width: "100%",
                     display: "flex",
                     justifyContent: "center",
-                    marginTop: "3%"
+                    marginTop: "4%"
                   }}
                 >
                   <TextFieldForm
