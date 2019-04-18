@@ -12,6 +12,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import TextFieldForm from "./TextFieldForm";
+import SelectedItem from "./SelectedItem";
 
 const styles = theme => ({
   root: {
@@ -259,7 +260,7 @@ class Uploader extends Component {
                   </h3>
                 </div>
                 <div style={{ width: "90%", marginTop: "2%" }}>
-                  <SearchItem shoe={this.state.clickedShoe} />
+                  <SelectedItem shoe={this.state.clickedShoe} />
                 </div>
                 <div
                   style={{

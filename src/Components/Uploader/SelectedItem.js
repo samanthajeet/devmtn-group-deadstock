@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export default class SearchItem extends Component {
+export default class SelectedItem extends Component {
   constructor(props) {
     super(props);
   }
@@ -20,9 +20,7 @@ export default class SearchItem extends Component {
           borderBottom: "solid 1px rgba(0, 0, 0, .2) ",
           textAlign: "left"
         }}
-        onClick={() =>
-          this.props.shoe && this.props.handleSelectedShoe(this.props.shoe)
-        }
+        onClick={() => {}}
       >
         <div
           style={{
