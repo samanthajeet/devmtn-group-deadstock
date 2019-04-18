@@ -5,6 +5,7 @@ module.exports = {
 
   addShoe: async (req, res) => {
     console.log("hit addShoe");
+    const db = req.app.get('db')
     const { user_id } = req.session.user;
 
     let {
@@ -35,7 +36,7 @@ module.exports = {
       image_3_url,
       image_4_url
     });
-    console.log(resp);
+    console.log(size);
     res.sendStatus(200);
   },
 

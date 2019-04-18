@@ -60,6 +60,7 @@ class TextFieldForm extends Component {
         shoe_id,
         images,
         shoe,
+        shoeSize,
         shoeDetails,
         sellingPrice,
         boughtPrice,
