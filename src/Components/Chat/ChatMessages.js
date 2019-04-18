@@ -1,69 +1,83 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import sockets from './Sockets';
-import {handleChat} from '../../ducks/reducer';
+import { handleChat } from '../../ducks/reducer';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-class ChatMessages extends Component{
-    //get the chat history onComponentDidMount
-    //sockets should have been opened on each name push
-    state={
-        messages:[],
-        message:''
+class ChatMessages extends Component {
+    state = {
+        messages: [],
+        message: '',
+        loading: false
     }
 
-    componentDidMount(){
-        sockets.on('returnJoin', messages=>{
-            console.log(messages)
+    componentDidMount() {
+        sockets.on('returnJoin', messages => {
             this.props.handleChat(messages)
-            // this.setState({
-            //     messages
-            // })
+            this.setState({
+                loading: true
+            })
+
         })
-        sockets.on('returnMessages',messages=>{
-            console.log(messages)
+        sockets.on('returnMessages', messages => {
             this.props.handleChat(messages)
-            // this.setState({
-            //     messages
-            // })
         })
     }
 
-    render(){
-        console.log(this.props.chat)
-        const mappedMessages = this.props.chat.map(message=>{
+    render() {
+        const mappedMessages = this.props.chat.map(message => {
             let color
             let position
-            if(message.user_id == this.props.user.user_id){
+            if (message.user_id == this.props.user.user_id) {
                 color = 'lightblue';
-                position = 'flex-start'
+                position = 'flex-end'
+                return (
+                    <div style={{ width: '98%', display: 'flex', justifyContent: `${position}`, marginRight: '5px' }}>
+                        <div key={message.chat_id} style={{ background: `${color}`, display: 'flex', alignItems: 'center', marginBottom: '5px', maxWidth: '60%', justifyContent: 'flex-end', borderRadius: '15px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center' ,height:'45px'}}>
+                                <p style={{ marginLeft: '5px' }}>{message.message}</p>
+                                <img src={message.profile_pic} style={{ height: '25px', width: '25px', borderRadius: '50%', marginRight: '5px', marginLeft: '10px' }} />
+                            </div>
+                        </div>
+                    </div>
+                )
+
             } else {
                 color = 'lightgrey';
-                position = 'flex-end'
+                position = 'flex-start'
+                return (
+                    <div style={{ width: '98%', display: 'flex', justifyContent: `${position}`, marginLeft: '5px' }}>
+                        <div key={message.chat_id} style={{ background: `${color}`, display: 'flex', alignItems: 'center', marginBottom: '5px', maxWidth: '60%', justifyContent: 'flex-start', borderRadius: '15px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', textAlign: 'left' ,height:'45px'}}>
+                                <img src={message.profile_pic} style={{ height: '25px', width: '25px', borderRadius: '50%', marginLeft: '5px', marginRight: '10px' }} />
+                                <p style={{ marginRight: '5px' }}>{message.message}</p>
+                            </div>
+                        </div>
+                    </div>
+                )
             }
 
-            return (
-                <div key={message.chat_id} style={{background:`${color}`,display:'flex',alignItems:'center',justifyContent:`${position}`, marginBottom:'5px',marginRight:'20%',marginLeft:'1%'}}>
-                    <img src={message.profile_pic} style={{height:'25px',width:'25px',borderRadius:'50%',margin:'5px'}}/>
-                    <h3>{message.message}</h3>
-                    {/* <h3>{message.first_name} {message.last_name}</h3> */}
-                </div>
-            )
+
         })
 
-        return(
-            <div style={{marginTop:'5px'}}>
-                {mappedMessages}
-            </div>
+        return (
+            <>
+                {this.state.loading &&
+                    <div style={{ marginTop: '5px' }}>
+                        {mappedMessages}
+                    </div>
+                }
+            </>
         )
     }
 
 }
 
-function mapStateToProps(reduxState){
-    return{
-        user:reduxState.user,
-        friend:reduxState.friend,
-        chat:reduxState.chat
+function mapStateToProps(reduxState) {
+    return {
+        user: reduxState.user,
+        friend: reduxState.friend,
+        chat: reduxState.chat
     }
 }
-export default connect(mapStateToProps, {handleChat})(ChatMessages) 
+export default connect(mapStateToProps, { handleChat })(ChatMessages) 

@@ -5,6 +5,7 @@ import Link from "@material-ui/core/Link";
 import Button from "../components/Button";
 import Typography from "../components/Typography";
 import ProductHeroLayout from "./ProductHeroLayout";
+import logo from '../../image/logo-black.png'
 
 const backgroundImage =
   "https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80";
@@ -55,26 +56,27 @@ function ProductHero(props) {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center"
+          
         }}
       >
-        <img
-          src="src\Components\Landing\image\logo.png"
-          alt=""
-          style={{ width: "25%", margin: 0, transform: 'rotate(-18deg)' }}
-        />
-        <div
+        {/* <div
           style={{
             backgroundColor: "#ffffff",
             height: "33%",
-            width: "33%",
+            width: "50%",
             color: "#000000",
             display: "flex",
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
-          DEADSTOCK LOGO GOES HERE
-        </div>
+          
+        </div> */}
+          <img
+            src={logo}
+            alt=""
+            style={{ width: "60%", marginTop: '6rem', transform: 'rotate(-3deg)'}}
+          />
         <Typography
           color="inherit"
           align="center"

@@ -22,12 +22,12 @@ import axios from 'axios';
 
 const styles = theme => ({
   card: {
-    width: '25rem',
+    width: '20rem',
     margin: '1rem',
 
   },
   media: {
-    height: '18rem',
+    height: '60%',
     paddingTop: '56.25%', // 16:9
   },
   actions: {

@@ -14,11 +14,10 @@ class Chat extends Component {
         this.state = {
             compRendered: List,
             search:'',
-            message:''
+            message:'',
+            loading:true
         }
     }
-
-    
 
     startChat=(friend)=>{
         sockets.emit('endChat',this.props.room)
@@ -46,6 +45,16 @@ class Chat extends Component {
         sockets.emit('sendMessage',{message,user_id,room})
     }
 
+    search=(value)=>{
+        this.handleSearch(value);
+
+    }
+
+    handleSearch=(value)=>{
+        this.setState({
+            search:value
+        })
+    }
 
     render() {
         const { first_name, last_name, profile_pic, user_id } = this.props.friend
@@ -61,7 +70,7 @@ class Chat extends Component {
                     </div>
 
                     <div style={{ width: '40%', height: '100%', background: 'green' }}>
-                        <div style={{ height: '15%', background: 'red' }}>
+                        <div style={{ height: '15%', background: 'gray' }}>
                             <TextField
                                 id="outlined-search"
                                 label={this.state.compRendered == List ? "Search Messages":"Search Contacts"}
@@ -72,24 +81,26 @@ class Chat extends Component {
                                 placeholder={this.state.compRendered == List ? "Search Messages":"Search Contacts"}
                                 value={this.state.search}
                                 style={{ width: "93%" }}
-                                onChange={(e)=>this.setState({message:e.target.value})}
+                                onChange={(e)=>this.search(e.target.value)}
                                 padding={0}
                             />
                         </div>
-                        <ConditionalComp users={this.props.users} startChat={this.startChat}/>
+                        <div style={{maxHeight:'85%',minHeight:'85%',background:'white', overflowY: "scroll"}}>
+                            <ConditionalComp users={this.props.users} startChat={this.startChat} style={{maxHeight:'100%',minHeight:'100%',overflowY:'scroll'}}/>
+                        </div>
                     </div>
 
-                    <div style={{ width: '50%', height: '100%', background: 'orange' }}>
+                    <div style={{ width: '50%', height: '100%', background: 'white' }}>
                         <div style={{ height: '15%', background: 'yellow', display:'flex',alignItems:'center',justifyContent:'space-evenly' }}>
-                            <img src={profile_pic} height='50px' width='50px' style={{borderRadius:'50%'}}/>
+                            <img src={profile_pic} height='100px' width='100px' style={{borderRadius:'50%'}}/>
                             <h1>{first_name} {last_name}</h1>
                         </div>
                         <div style={{ maxHeight: '73%', minHeight:'73%', overflowY:'scroll' }}>
-                            <ChatMessages/>
+                            <ChatMessages/>                            
                         </div>
                         <div style={{ height: '12%', background: 'purple',display:'flex',justifyContent:'space-evenly',alignItems:'center'}}>
                             <TextField
-                                    id="outlined-search"
+                                    id="message"
                                     label='Type Message...'
                                     type="text"
                                     // className={classes.textField}

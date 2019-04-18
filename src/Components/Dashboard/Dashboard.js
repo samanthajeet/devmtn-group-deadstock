@@ -35,6 +35,7 @@ import Chat from "../Chat/Chat";
 import Uploader from "../Uploader/Uploader";
 import { connect } from "react-redux";
 import { clearUser } from "../../ducks/reducer";
+import logo from '../Landing/image/logo-white.png';
 
 const drawerWidth = 240;
 const image =
@@ -48,6 +49,7 @@ const StyledButton = styled.div`
     transition-timing-function: ease;
     animation-fill-mode: forwards;
     cursor: pointer;
+    color: #26f7ff
   }
 
   @keyframes increaseDashSize {
@@ -188,12 +190,14 @@ class Dashboard extends React.Component {
     super();
     this.state = {
       open: true,
-      users: []
+      users:[],
+      hidden: true,
+      show: false
     };
   }
 
-  componentDidMount() {
-    this.getContacts();
+  componentDidMount(){
+    this.getContacts()
   }
 
   handleDrawerOpen = () => {
@@ -210,12 +214,21 @@ class Dashboard extends React.Component {
     this.props.history.push("/");
   };
 
-  getContacts = async () => {
-    let users = await axios.get("/api/users");
-    this.setState({ users: users.data });
-  };
+  getContacts=async()=>{
+    let users = await axios.get('/api/users')
+    console.log(users.data)
+    this.setState({users:users.data})
+  }
+
+  handleSettingsToggle = () => {
+    this.setState({
+      hidden:false,
+      show:!this.state.show
+    })
+  }
 
   render() {
+    const {hidden, show} = this.state;
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -280,7 +293,9 @@ class Dashboard extends React.Component {
               style={{ fontSize: "45px" }}
               className={classes.title}
             >
-              DeadStock
+              <div className='deadstock-logo-background' style={{width: '100%', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                <img src={logo} alt='logo-white' style={{width:'25%'}}/>
+              </div>
             </Typography>
             <div
               style={{
@@ -297,7 +312,7 @@ class Dashboard extends React.Component {
 
               <StyledButton>
                 <SettingsIcon
-                  onClick={() => this.props.history.push("/dashboard/settings")}
+                  onClick={this.handleSettingsToggle}
                 />
               </StyledButton>
             </div>
@@ -461,21 +476,13 @@ class Dashboard extends React.Component {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <Paper className={classes.paperContainer}>
+          <Paper className={classes.paperContainer + ' modal-container'}>
+            <Settings hidden={hidden} show={show}/>
             <Route path="/dashboard/closet/upload" component={Uploader} />
             <Route exact path="/dashboard/closet" component={Closet} />
             <Route path="/dashboard/collection" component={Collection} />
-            <Route
-              path="/dashboard/community"
-              render={props => (
-                <Community {...props} users={this.state.users} />
-              )}
-            />
-            <Route path="/dashboard/settings" component={Settings} />
-            <Route
-              path="/dashboard/chat"
-              render={props => <Chat {...props} users={this.state.users} />}
-            />
+            <Route path="/dashboard/community" render={(props)=> <Community {...props} users={this.state.users}/>}/>
+            <Route path="/dashboard/chat" render={(props)=> <Chat {...props} users={this.state.users}/>}/>
             <Route path="/dashboard/shop/:shoe_id" component={Product} />
             <Route exact path="/dashboard/shop" component={Shop} />
           </Paper>
