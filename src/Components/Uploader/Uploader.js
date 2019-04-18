@@ -195,7 +195,7 @@ class Uploader extends Component {
                   id="outlined-search"
                   label="Search for your shoe"
                   type="search"
-                  className={classes.textField}
+                  // className={classes.textField}
                   margin="normal"
                   variant="outlined"
                   placeholder="Find and select a shoe"
