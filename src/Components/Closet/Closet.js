@@ -1,13 +1,28 @@
 import React, { Component } from "react";
-import Uploader from "../Uploader/Uploader";
-import Modal from "react-responsive-modal";
+import axios from 'axios';
+import { connect } from "react-redux";
+// import Uploader from "../Uploader/Uploader";
+// import Modal from "react-responsive-modal";
 
 class Closet extends Component {
   constructor() {
     super();
     this.state = {
-      open: false
+      open: false,
+      user_shoes:[]
     };
+  }
+
+  componentDidMount(){
+    this.getCloset()
+  }
+
+  getCloset= async() => { 
+    let {user_id} = this.props
+    let response = await axios.get(`/api/closet/${user_id}`)
+    this.setState({
+      user_shoes: response.data
+    })
   }
 
   onOpenModal = () => {
@@ -19,6 +34,7 @@ class Closet extends Component {
   };
 
   render() {
+    // console.log(this.props)
     return (
       <div
         style={{
@@ -36,4 +52,8 @@ class Closet extends Component {
   }
 }
 
-export default Closet;
+const mapStateToProps = reduxState => {
+  return reduxState.user;
+};
+
+export default connect(mapStateToProps)(Closet);

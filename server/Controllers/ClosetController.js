@@ -1,5 +1,10 @@
 module.exports = {
-  getCloset: (req, res) => {},
+  getCloset: async (req, res) => {
+    const db = req.app.get('db');
+    const { user_id } = req.params
+    response = await db.closet.get_closet({user_id})
+    res.status(200).send(response)
+  },
 
   getStats: (req, res) => {},
 

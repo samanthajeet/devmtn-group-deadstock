@@ -41,8 +41,7 @@ class TextFieldForm extends Component {
       this.state.shoeSize != "" &&
       this.state.shoeDetails != "" &&
       this.state.sellingPrice != "" &&
-      this.state.boughtPrice != "" &&
-      this.state.isForSale != ""
+      this.state.boughtPrice != ""
     ) {
       let { shoe, images } = this.props;
       let { shoe_id } = shoe;

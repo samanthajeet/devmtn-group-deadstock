@@ -106,7 +106,7 @@ class Settings extends Component {
                 >
                     {this.state.loading ? (
                         <Progress>
-                            <CircularProgress color="white" />
+                            <CircularProgress />
                         </Progress>
                     ) : (
                             <Paper

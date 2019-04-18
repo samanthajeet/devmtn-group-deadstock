@@ -36,7 +36,7 @@ import Chat from "../Chat/Chat";
 import Uploader from "../Uploader/Uploader";
 import { connect } from "react-redux";
 import { clearUser } from "../../ducks/reducer";
-import logo from '../Landing/image/logo-white.png';
+import logo from "../Landing/image/logo-white.png";
 
 const drawerWidth = 240;
 const image =
@@ -45,12 +45,12 @@ const image =
 const StyledButton = styled.div`
   :hover {
     animation-name: increaseDashSize;
-    animation-duration: 0.5s;
+    animation-duration: 0.25s;
     transition: 0s;
-    transition-timing-function: ease;
+    transition-timing-function: ease-in;
     animation-fill-mode: forwards;
     cursor: pointer;
-    color: #26f7ff
+    color: #26f7ff;
   }
 
   @keyframes increaseDashSize {
@@ -58,7 +58,7 @@ const StyledButton = styled.div`
       transform: scale(1);
     }
     100% {
-      transform: scale(1.5);
+      transform: scale(1.2);
     }
   }
 `;
@@ -191,14 +191,14 @@ class Dashboard extends React.Component {
     super();
     this.state = {
       open: true,
-      users:[],
+      users: [],
       hidden: true,
       show: false
     };
   }
 
-  componentDidMount(){
-    this.getContacts()
+  componentDidMount() {
+    this.getContacts();
   }
 
   handleDrawerOpen = () => {
@@ -215,21 +215,21 @@ class Dashboard extends React.Component {
     this.props.history.push("/");
   };
 
-  getContacts=async()=>{
-    let users = await axios.get('/api/users')
-    console.log(users.data)
-    this.setState({users:users.data})
-  }
+  getContacts = async () => {
+    let users = await axios.get("/api/users");
+    console.log(users.data);
+    this.setState({ users: users.data });
+  };
 
   handleSettingsToggle = () => {
     this.setState({
-      hidden:false,
-      show:!this.state.show
-    })
-  }
+      hidden: false,
+      show: !this.state.show
+    });
+  };
 
   render() {
-    const {hidden, show} = this.state;
+    const { hidden, show } = this.state;
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -257,7 +257,8 @@ class Dashboard extends React.Component {
               <MenuIcon style={{ color: "white" }} />
             </IconButton>
 
-            <form
+            <div style={{ width: "15%" }} />
+            {/* <form
               style={{
                 borderRadius: "16px",
                 width: "20vw",
@@ -285,7 +286,7 @@ class Dashboard extends React.Component {
               >
                 <Search style={{ color: "white" }} />
               </button>
-            </form>
+            </form> */}
             <Typography
               component="h1"
               variant="h5"
@@ -294,8 +295,16 @@ class Dashboard extends React.Component {
               style={{ fontSize: "45px" }}
               className={classes.title}
             >
-              <div className='deadstock-logo-background' style={{width: '100%', display:'flex', alignItems:'center', justifyContent:'center'}}>
-                <img src={logo} alt='logo-white' style={{width:'25%'}}/>
+              <div
+                className="deadstock-logo-background"
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <img src={logo} alt="logo-white" style={{ width: "25%" }} />
               </div>
             </Typography>
             <div
@@ -312,9 +321,7 @@ class Dashboard extends React.Component {
               </StyledButton>
 
               <StyledButton>
-                <SettingsIcon
-                  onClick={this.handleSettingsToggle}
-                />
+                <SettingsIcon onClick={this.handleSettingsToggle} />
               </StyledButton>
             </div>
             {/* <IconButton color="inherit">
@@ -497,13 +504,21 @@ class Dashboard extends React.Component {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <Paper className={classes.paperContainer + ' modal-container'}>
-            <Settings hidden={hidden} show={show}/>
+          <Paper className={classes.paperContainer + " modal-container"}>
+            <Settings hidden={hidden} show={show} />
             <Route path="/dashboard/closet/upload" component={Uploader} />
             <Route exact path="/dashboard/closet" component={Closet} />
             <Route path="/dashboard/collection" component={Collection} />
-            <Route path="/dashboard/community" render={(props)=> <Community {...props} users={this.state.users}/>}/>
-            <Route path="/dashboard/chat" render={(props)=> <Chat {...props} users={this.state.users}/>}/>
+            <Route
+              path="/dashboard/community"
+              render={props => (
+                <Community {...props} users={this.state.users} />
+              )}
+            />
+            <Route
+              path="/dashboard/chat"
+              render={props => <Chat {...props} users={this.state.users} />}
+            />
             <Route path="/dashboard/shop/:shoe_id" component={Product} />
             <Route exact path="/dashboard/shop" component={Shop} />
           </Paper>
