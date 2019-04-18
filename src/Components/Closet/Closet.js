@@ -7,12 +7,33 @@ import ClosetCard from "../ClosetCard/ClosetCard";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import skull from "../Landing/image/skull-white.png";
+import Paper from '@material-ui/core/Paper';
 
 const MappedUserShoes = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 `;
+
+const UserInfo = styled.div`
+  display: flex;
+  width: 100%;
+  height: 20rem;
+  justifyContent: space-around;
+`
+
+const ChartJS = styled.div`
+  width: 70%;
+  background-color: white;
+  display: flex,
+  align-items: center;
+  flex-direction: column
+`
+
+const PaperContainer = styled.div`
+  width: 30%;
+  height: 100%;
+`
 
 const SkullProgress = styled.div`
   animation-name: spin;
@@ -71,6 +92,7 @@ class Closet extends Component {
   };
 
   render() {
+    console.log(this.props)
     let mappedUserShoes = this.state.user_shoes.map(shoe => {
       return (
         <div key={shoe.user_shoe_id}>
@@ -100,13 +122,28 @@ class Closet extends Component {
             <p>LOADING</p>
           </Progress>
         ) : (
-          <div>
-            <button onClick={() => this.props.history.push("closet/upload")}>
-              Add Shoe
-            </button>
-            <MappedUserShoes>{mappedUserShoes}</MappedUserShoes>
-          </div>
-        )}
+            <div>
+              <UserInfo>
+                <ChartJS>
+                  <p>ChartJS goes here</p>
+                  <button onClick={() => this.props.history.push("closet/upload")}>
+                    Add Shoe
+                  </button>
+                </ChartJS>
+                <PaperContainer>
+                  <Paper style={{ height: '100%', padding: '0.5rem', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                    <div style={{ height: '50%', width: '50%' }}>
+                      <img src={this.props.profile_pic} alt="" style={{ width: '100%', height: "100%", objectFit: 'cover' }} />
+                    </div>
+                    <p>
+                      {this.props.bio}
+                    </p>
+                  </Paper>
+                </PaperContainer>
+              </UserInfo>
+              <MappedUserShoes>{mappedUserShoes}</MappedUserShoes>
+            </div>
+          )}
       </div>
     );
   }
