@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import sockets from './Sockets';
 import { handleChat } from '../../ducks/reducer';
-import CircularProgress from "@material-ui/core/CircularProgress";
+// import CircularProgress from "@material-ui/core/CircularProgress";
 
 class ChatMessages extends Component {
     state = {

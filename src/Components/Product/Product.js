@@ -139,7 +139,7 @@ const Product = props => {
     <div>
       {loading ? (
         <Progress>
-          <CircularProgress color="white" />
+          <CircularProgress />
         </Progress>
       ) : (
         <Fade in={true} 

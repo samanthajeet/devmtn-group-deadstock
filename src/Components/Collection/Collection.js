@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import axios from "axios";
 import ProductCard from "../ProductCard/ProductCard";
 import { withRouter } from "react-router";
-import CircularProgress from "@material-ui/core/CircularProgress";
+// import CircularProgress from "@material-ui/core/CircularProgress";
 import styled from "styled-components";
+import skull from '../Landing/image/skull-white.png'
 
 const MappedCollection = styled.div`
   display: flex;
@@ -18,10 +19,29 @@ const CollectionContainer = styled.div `
     }
 `
 
+const SkullProgress = styled.div `
+  animation-name: spin;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear; 
+  
+
+  @keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
+`
+
 const Progress = styled.div`
+  margin-top: 25%;
   color: white;
-  margin-top: 25rem;
-`;
+  letter-spacing: 0.2rem;
+
+`
 
 class Collection extends Component {
   state = {
@@ -58,7 +78,11 @@ class Collection extends Component {
       <>
         {this.state.loading ? (
           <Progress>
-            <CircularProgress color="white" />
+
+            <SkullProgress>
+              <img src={skull} alt='loading' />
+              </SkullProgress>
+            <p>LOADING</p>
           </Progress>
         ) : (
             <CollectionContainer>
