@@ -70,7 +70,7 @@ class Chat extends Component {
                     </div>
 
                     <div style={{ width: '40%', height: '100%', background: 'green' }}>
-                        <div style={{ height: '15%', background: 'red' }}>
+                        <div style={{ height: '15%', background: 'gray' }}>
                             <TextField
                                 id="outlined-search"
                                 label={this.state.compRendered == List ? "Search Messages":"Search Contacts"}
@@ -85,7 +85,7 @@ class Chat extends Component {
                                 padding={0}
                             />
                         </div>
-                        <div style={{maxHeight:'85%',minHeight:'85%',background:'orange', overflowY: "scroll"}}>
+                        <div style={{maxHeight:'85%',minHeight:'85%',background:'white', overflowY: "scroll"}}>
                             <ConditionalComp users={this.props.users} startChat={this.startChat} style={{maxHeight:'100%',minHeight:'100%',overflowY:'scroll'}}/>
                         </div>
                     </div>
