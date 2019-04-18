@@ -92,7 +92,7 @@ class Chat extends Component {
 
                     <div style={{ width: '50%', height: '100%', background: 'white' }}>
                         <div style={{ height: '15%', background: 'yellow', display:'flex',alignItems:'center',justifyContent:'space-evenly' }}>
-                            <img src={profile_pic} height='50px' width='50px' style={{borderRadius:'50%'}}/>
+                            <img src={profile_pic} height='100px' width='100px' style={{borderRadius:'50%'}}/>
                             <h1>{first_name} {last_name}</h1>
                         </div>
                         <div style={{ maxHeight: '73%', minHeight:'73%', overflowY:'scroll' }}>

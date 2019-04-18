@@ -5,7 +5,8 @@ import { withStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
 import AppBar from "../components/AppBar";
 import Toolbar, { styles as toolbarStyles } from "../components/Toolbar";
-import logo from '../../image/logo-white.png'
+import logo from '../../image/logo-white.png';
+import whiteskull from '../../image/skull-white.png'
 
 const styles = theme => ({
   title: {
@@ -13,18 +14,23 @@ const styles = theme => ({
   },
   placeholder: toolbarStyles(theme).root,
   toolbar: {
-    justifyContent: "space-between"
+    justifyContent: "space-around"
   },
   left: {
-    flex: 1
+    width: '20%',
+    display: "flex",
+    justifyContent: "flex-start"
   },
   leftLinkActive: {
     color: theme.palette.common.white
   },
+  ceter: {
+    width: '60%'
+  },
   right: {
-    flex: 1,
+    width: '20%',
     display: "flex",
-    justifyContent: "flex-end"
+    justifyContent: "space-around"
   },
   rightLink: {
     fontSize: 16,
@@ -43,20 +49,28 @@ function AppAppBar(props) {
     <div>
       <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
-          <div className={classes.left} />
+        <div className={classes.left}>
+        <img src={whiteskull} 
+              style={{
+                width: '15%',
+                height: '80%'
+              }}
+              />
+        </div>
+          <div className={classes.center} />
           <Link
             variant="h6"
             underline="none"
             color="inherit"
             // className={classes.title}
             className="test-css"
-            style={{ fontSize: "2rem" }}
             href="/"
           >
             {<img src={logo} 
               style={{
-                width: '10%'
+                width: '15%'
               }}/>}
+
           </Link>
           <div className={classes.right}>
             <Link

@@ -35,7 +35,7 @@ import Chat from "../Chat/Chat";
 import Uploader from "../Uploader/Uploader";
 import { connect } from "react-redux";
 import { clearUser } from "../../ducks/reducer";
-
+import logo from '../Landing/image/logo-white.png';
 
 const drawerWidth = 240;
 const image =
@@ -49,6 +49,7 @@ const StyledButton = styled.div`
     transition-timing-function: ease;
     animation-fill-mode: forwards;
     cursor: pointer;
+    color: #26f7ff
   }
 
   @keyframes increaseDashSize {
@@ -292,7 +293,9 @@ class Dashboard extends React.Component {
               style={{ fontSize: "45px" }}
               className={classes.title}
             >
-              DeadStock
+              <div className='deadstock-logo-background' style={{width: '100%', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                <img src={logo} alt='logo-white' style={{width:'25%'}}/>
+              </div>
             </Typography>
             <div
               style={{
