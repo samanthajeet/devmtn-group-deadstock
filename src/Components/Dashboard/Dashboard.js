@@ -24,6 +24,7 @@ import Logout from "@material-ui/icons/ExitToApp";
 import Search from "@material-ui/icons/Search";
 import ChatIcon from "@material-ui/icons/Forum";
 import SettingsIcon from "@material-ui/icons/Settings";
+import HomeIcon from "@material-ui/icons/Home";
 import { ListItemText, ListItemIcon, ListItem } from "@material-ui/core";
 import { Route } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
@@ -363,6 +364,26 @@ class Dashboard extends React.Component {
             }}
           >
             <div>
+            <ListItem
+                button
+                className={classes.iconButtons}
+                onClick={() => this.props.history.push("/dashboard/")}
+              >
+                <ListItemIcon>
+                  <HomeIcon className={classes.drawerButtonContent} />
+                </ListItemIcon>
+                <ListItemText
+                  primary={
+                    <Typography
+                      className={classes.drawerButtonContent}
+                      style={{ fontSize: "25px" }}
+                    >
+                      {" "}
+                      Home{" "}
+                    </Typography>
+                  }
+                />
+              </ListItem>
               <ListItem
                 button
                 className={classes.iconButtons}
