@@ -193,7 +193,9 @@ class Dashboard extends React.Component {
       open: true,
       users: [],
       hidden: true,
-      show: false
+      show: false,
+      hidden2: true,
+      show2: false
     };
   }
 
@@ -221,15 +223,29 @@ class Dashboard extends React.Component {
     this.setState({ users: users.data });
   };
 
-  handleSettingsToggle = () => {
+  handleSettingsToggle = async () => {
+    if (this.state.show2) {
+      await this.setState({ show2: false });
+    }
+
     this.setState({
       hidden: false,
       show: !this.state.show
     });
   };
 
+  handleChatToggle = async () => {
+    if (this.state.show) {
+      await this.setState({ show: false });
+    }
+    this.setState({
+      hidden2: false,
+      show2: !this.state.show2
+    });
+  };
+
   render() {
-    const { hidden, show } = this.state;
+    const { hidden, show, hidden2, show2 } = this.state;
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -315,9 +331,7 @@ class Dashboard extends React.Component {
               }}
             >
               <StyledButton>
-                <ChatIcon
-                  onClick={() => this.props.history.push("/dashboard/chat")}
-                />
+                <ChatIcon onClick={this.handleChatToggle} />
               </StyledButton>
 
               <StyledButton>
@@ -364,7 +378,7 @@ class Dashboard extends React.Component {
             }}
           >
             <div>
-            <ListItem
+              <ListItem
                 button
                 className={classes.iconButtons}
                 onClick={() => this.props.history.push("/dashboard/")}
@@ -505,6 +519,7 @@ class Dashboard extends React.Component {
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Paper className={classes.paperContainer + " modal-container"}>
+            <Chat hidden={hidden2} show={show2} users={this.state.users} />
             <Settings hidden={hidden} show={show} />
             <Route path="/dashboard/closet/upload" component={Uploader} />
             <Route exact path="/dashboard/closet" component={Closet} />
@@ -515,10 +530,10 @@ class Dashboard extends React.Component {
                 <Community {...props} users={this.state.users} />
               )}
             />
-            <Route
+            {/* <Route
               path="/dashboard/chat"
               render={props => <Chat {...props} users={this.state.users} />}
-            />
+            /> */}
             <Route path="/dashboard/shop/:shoe_id" component={Product} />
             <Route exact path="/dashboard/shop" component={Shop} />
           </Paper>
