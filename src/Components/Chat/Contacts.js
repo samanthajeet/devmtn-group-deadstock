@@ -13,14 +13,15 @@ class Contacts extends Component {
         const {users} = this.props;
         let mappedFriends = users.map(friend=>{
             return(
-                <div key={friend.user_id} onClick={()=>this.selectUser(friend)}>
-                    <h3>{friend.first_name} {friend.last_name}</h3>
+                <div key={friend.user_id} onClick={()=>this.selectUser(friend)} style={{display:'flex',maxHeight:'100%',alignItems:'center',border:'solid black 1px',margin:'2px'}}>
+                    <img src={friend.profile_pic} style={{height:'25px',width:'25px',borderRadius:'50%',marginLeft:'5px',marginRight:'5px'}}/>
+                    <h3 style={{fontSize:'1rem'}}>{friend.first_name} {friend.last_name}</h3>
                 </div>
             )
         })
         
         return(
-            <div>
+            <div style={{height: "100%"}}>
                 {mappedFriends}
             </div>
         )
