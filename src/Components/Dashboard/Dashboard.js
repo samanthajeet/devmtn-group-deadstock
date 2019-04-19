@@ -248,6 +248,7 @@ class Dashboard extends React.Component {
   render() {
     const { hidden, show, hidden2, show2 } = this.state;
     const { classes } = this.props;
+    console.log(this.props, 88888888888)
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -378,143 +379,171 @@ class Dashboard extends React.Component {
               justifyContent: "space-between"
             }}
           >
-            <div>
-              <ListItem
-                button
-                className={classes.iconButtons}
-                onClick={() => this.props.history.push("/dashboard/home")}
-              >
-                <ListItemIcon>
-                  <HomeIcon className={classes.drawerButtonContent} />
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography
-                      className={classes.drawerButtonContent}
-                      style={{ fontSize: "25px" }}
-                    >
-                      {" "}
-                      Home{" "}
+            {this.props.user.first_name ? (
+              <>
+                <div>
+                  <ListItem
+                    button
+                    className={classes.iconButtons}
+                    onClick={() => this.props.history.push("/dashboard/home")}
+                  >
+                    <ListItemIcon>
+                      <HomeIcon className={classes.drawerButtonContent} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          className={classes.drawerButtonContent}
+                          style={{ fontSize: "25px" }}
+                        >
+                          {" "}
+                          Home{" "}
+                        </Typography>
+                      }
+                    />
+                  </ListItem>
+                  <ListItem
+                    button
+                    className={classes.iconButtons}
+                    onClick={() => this.props.history.push("/dashboard/closet")}
+                  >
+                    <ListItemIcon>
+                      <i
+                        className={
+                          classes.drawerButtonContent + " " + "fas fa-door-closed"
+                        }
+                        style={{ fontSize: "20px" }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          className={classes.drawerButtonContent}
+                          style={{ fontSize: "25px" }}
+                        >
+                          {" "}
+                          Closet
                     </Typography>
-                  }
-                />
-              </ListItem>
-              <ListItem
-                button
-                className={classes.iconButtons}
-                onClick={() => this.props.history.push("/dashboard/closet")}
-              >
-                <ListItemIcon>
-                  <i
-                    className={
-                      classes.drawerButtonContent + " " + "fas fa-door-closed"
-                    }
-                    style={{ fontSize: "20px" }}
-                  />
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography
-                      className={classes.drawerButtonContent}
-                      style={{ fontSize: "25px" }}
-                    >
-                      {" "}
-                      Closet
-                    </Typography>
-                  }
-                />
-              </ListItem>
+                      }
+                    />
+                  </ListItem>
 
-              {/* <Divider /> */}
+                  {/* <Divider /> */}
 
-              <ListItem
-                button
-                className={classes.iconButtons}
-                onClick={() => this.props.history.push("/dashboard/collection")}
-              >
-                <ListItemIcon>
-                  <Favorite className={classes.drawerButtonContent} />
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography
-                      className={classes.drawerButtonContent}
-                      style={{ fontSize: "25px" }}
-                    >
-                      {" "}
-                      Collection{" "}
-                    </Typography>
-                  }
-                />
-              </ListItem>
+                  <ListItem
+                    button
+                    className={classes.iconButtons}
+                    onClick={() => this.props.history.push("/dashboard/collection")}
+                  >
+                    <ListItemIcon>
+                      <Favorite className={classes.drawerButtonContent} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          className={classes.drawerButtonContent}
+                          style={{ fontSize: "25px" }}
+                        >
+                          {" "}
+                          Collection{" "}
+                        </Typography>
+                      }
+                    />
+                  </ListItem>
 
-              {/* <Divider /> */}
+                  {/* <Divider /> */}
 
-              <ListItem
-                button
-                className={classes.iconButtons}
-                onClick={() => this.props.history.push("/dashboard/community")}
-              >
-                <ListItemIcon>
-                  <Public className={classes.drawerButtonContent} />
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography
-                      className={classes.drawerButtonContent}
-                      style={{ fontSize: "25px" }}
-                    >
-                      {" "}
-                      Community
+                  <ListItem
+                    button
+                    className={classes.iconButtons}
+                    onClick={() => this.props.history.push("/dashboard/community")}
+                  >
+                    <ListItemIcon>
+                      <Public className={classes.drawerButtonContent} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          className={classes.drawerButtonContent}
+                          style={{ fontSize: "25px" }}
+                        >
+                          {" "}
+                          Community
                     </Typography>
-                  }
-                />
-              </ListItem>
-              {/* <Divider /> */}
+                      }
+                    />
+                  </ListItem>
+                  {/* <Divider /> */}
 
-              <ListItem
-                button
-                className={classes.iconButtons}
-                onClick={() => this.props.history.push("/dashboard/shop")}
-              >
-                <ListItemIcon>
-                  <ShoppingCart className={classes.drawerButtonContent} />
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography
-                      className={classes.drawerButtonContent}
-                      style={{ fontSize: "25px" }}
-                    >
-                      {" "}
-                      Shop
+                  <ListItem
+                    button
+                    className={classes.iconButtons}
+                    onClick={() => this.props.history.push("/dashboard/shop")}
+                  >
+                    <ListItemIcon>
+                      <ShoppingCart className={classes.drawerButtonContent} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          className={classes.drawerButtonContent}
+                          style={{ fontSize: "25px" }}
+                        >
+                          {" "}
+                          Shop
                     </Typography>
-                  }
-                />
-              </ListItem>
-            </div>
-            <div>
-              <ListItem
-                button
-                className={classes.iconButtons}
-                onClick={() => this.handleLogout()}
-              >
-                <ListItemIcon>
-                  <Logout className={classes.drawerButtonContent} />
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography
-                      className={classes.drawerButtonContent}
-                      style={{ fontSize: "25px" }}
-                    >
-                      {" "}
-                      Logout
+                      }
+                    />
+                  </ListItem>
+                </div>
+                <div>
+                  <ListItem
+                    button
+                    className={classes.iconButtons}
+                    onClick={() => this.handleLogout()}
+                  >
+                    <ListItemIcon>
+                      <Logout className={classes.drawerButtonContent} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          className={classes.drawerButtonContent}
+                          style={{ fontSize: "25px" }}
+                        >
+                          {" "}
+                          Logout
                     </Typography>
-                  }
-                />
-              </ListItem>
-            </div>
+                      }
+                    />
+                  </ListItem>
+                </div>
+              </>
+            ) : (
+                <div>
+                  <ListItem
+                    button
+                    className={classes.iconButtons}
+                    onClick={() => this.props.history.push('/login')}
+                  >
+                    <ListItemIcon>
+                      <Logout className={classes.drawerButtonContent} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          className={classes.drawerButtonContent}
+                          style={{ fontSize: "25px" }}
+                        >
+                          {" "}
+                          Login
+                    </Typography>
+                      }
+                    />
+                  </ListItem>
+                </div>
+              )}
+
           </div>
         </Drawer>
         <main className={classes.content}>
