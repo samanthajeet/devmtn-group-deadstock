@@ -51,7 +51,6 @@ class SignIn extends React.Component {
 
   handleSubmit = async values => {
     const user = await axios.post("/api/auth/login", values)
-    console.log(user.data)
     this.props.handleUser(user.data)
     this.props.history.push("/dashboard/home")
   };

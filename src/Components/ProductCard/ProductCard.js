@@ -122,7 +122,6 @@ class ProductCard extends React.Component {
 
   handleDeleteFavorite(){
     const {shoe_id} = this.props
-    console.log(shoe_id)
     axios.delete(`/api/collection/deleteFavorite/${shoe_id}`)
     this.setState({
       like: false

@@ -36,7 +36,6 @@ class Settings extends Component {
 
   handleGetUser = async () => {
     await axios.get(`/api/auth/getuser`).then(response => {
-      console.log(response.data);
       this.setState({
         email: response.data[0].email,
         first_name: response.data[0].first_name,

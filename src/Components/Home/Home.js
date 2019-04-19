@@ -59,7 +59,6 @@ class Home extends Component {
 
     render() {
         const { feed } = this.state;
-        console.log(feed)
         let mappedFeed = feed.map(follower => {
             return (
                 <Paper key={follower.user_shoe_id} style={{ height: '40rem', width: '40rem', display: 'flex', justifyContent: 'center', flexDirection: 'column', margin: '20px' }}>

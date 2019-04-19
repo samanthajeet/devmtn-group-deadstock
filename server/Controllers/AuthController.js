@@ -4,7 +4,6 @@ module.exports = {
   register: async (req, res) => {
     const db = req.app.get("db");
     let account_creation_date = new Date();
-    console.log(req.body);
 
     let {
       password,
@@ -12,7 +11,6 @@ module.exports = {
       firstName: first_name,
       lastName: last_name
     } = req.body;
-    console.log(email);
     let profile_pic =
       "https://banner2.kisspng.com/20180722/gfc/kisspng-user-profile-2018-in-sight-user-conference-expo-5b554c0968c377.0307553315323166814291.jpg";
 
