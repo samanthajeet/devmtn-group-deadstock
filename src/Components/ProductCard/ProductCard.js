@@ -19,6 +19,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import styled from 'styled-components';
 import Grow from '@material-ui/core/Grow';
 import axios from 'axios';
+import skull from "../Landing/image/skull-white.png";
+
 
 const styles = theme => ({
   card: {
@@ -62,9 +64,29 @@ const CardContainer = styled.div `
   0%   { transform: scale(1); }
   100% { transform: scale(1.05); }
 }
+`;
 
-`
+const SkullProgress = styled.div`
+  animation-name: spin;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+const Progress = styled.div`
+  margin-top: 25%;
+  color: white;
+  letter-spacing: 0.2rem;
+`;
 
 class ProductCard extends React.Component {
   state = {
@@ -123,6 +145,15 @@ class ProductCard extends React.Component {
 
 
     return (
+      <>
+      {this.state.loading ? (
+        <Progress>
+            <SkullProgress>
+                <img src={skull} alt="loading" />
+            </SkullProgress>
+            <p>LOADING</p>
+        </Progress>
+    ) : (
       <CardContainer>
 
       <Grow in={checked}>
@@ -189,6 +220,8 @@ class ProductCard extends React.Component {
       </Card>
       </Grow>
       </CardContainer>
+      )}
+      </>
     );
   }
 }

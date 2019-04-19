@@ -53,7 +53,7 @@ class SignIn extends React.Component {
     const user = await axios.post("/api/auth/login", values)
     console.log(user.data)
     this.props.handleUser(user.data)
-    this.props.history.push("/dashboard")
+    this.props.history.push("/dashboard/home")
   };
 
   render() {
