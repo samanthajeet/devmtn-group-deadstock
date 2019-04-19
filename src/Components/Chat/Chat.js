@@ -40,7 +40,6 @@ class Chat extends Component {
   };
 
   sendMessage = async () => {
-    console.log(this.state.message, this.props.user.user_id, this.props.room);
     const { message } = this.state;
     const { user_id } = this.props.user;
     const { room } = this.props;

@@ -119,10 +119,12 @@ const Product = props => {
   const [secondary = false, setSecondary] = useState("");
   const [open = false, setOpen] = useState("");
   const [loading, setLoading] = useState("");
+  const [sellers, setSellers] = useState({});
 
   useEffect(() => {
     setLoading(true);
     getShoe();
+    getSellers();
   }, []);
 
   const getShoe = async () => {
@@ -141,8 +143,13 @@ const Product = props => {
     setImage4(response.data[0].image_4_url);
     setLoading(false);
 
-    console.log(response.data[0]);
   };
+
+  const getSellers= async() => {
+    const shoe_id = props.match.params.shoe_id;
+    const response = await axios.get(`/api/sellers/${shoe_id}`)
+    await setSellers(response.data)
+  }
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -215,7 +222,7 @@ const Product = props => {
             </Paper>
             <Paper className={classes.sellers}>
               <Typography variant="h5" component="h3">
-                users selling this shoe
+                Sellers
               </Typography>
               <div className={classes.demo}>
                 <List dense={dense}>

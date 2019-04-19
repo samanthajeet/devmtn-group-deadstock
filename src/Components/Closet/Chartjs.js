@@ -140,7 +140,6 @@ class Chart extends Component {
   //   }
 
   render() {
-    // console.log(this.state.width, this.state.height);
     // const showLabels = this.state.width > 678 ? true : false;
     const showLabels = true;
     return (

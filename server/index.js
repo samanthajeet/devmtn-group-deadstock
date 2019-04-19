@@ -110,6 +110,7 @@ app.delete(`/api/closet/delete/:shoe_id`, closetCtrl.deleteShoe);
 // Shoe Endpoints
 const shoeCtrl = require(`./Controllers/ShoeController`);
 app.get(`/api/shoes/:shoe_id`, shoeCtrl.getShoe);
+app.get(`/api/sellers/:shoe_id`, shoeCtrl.getSellers)
 app.get(`/api/shoes`, shoeCtrl.getAllShoes);
 
 // Collection Endpoints
@@ -145,7 +146,6 @@ io.on("connection", function(socket) {
     const db = app.get("db");
     const { message, user_id, room } = data;
     const messages = await db.chats.create_message({ message, user_id, room });
-    console.log(messages);
     io.to(room).emit("returnMessages", messages);
   });
 });

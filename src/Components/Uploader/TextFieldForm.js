@@ -33,8 +33,6 @@ class TextFieldForm extends Component {
   };
 
   handleSubmitUpload = () => {
-    console.log("hit submit", this.state, this.props);
-
     if (
       this.props.shoe &&
       this.props.images.length == 4 &&
@@ -53,8 +51,6 @@ class TextFieldForm extends Component {
         boughtPrice,
         isForSale
       } = this.state;
-      console.log("hit submit");
-      console.log("shoe:", this.props.shoe);
       axios.post("/api/closet/addshoe", {
         shoe_id,
         images,
