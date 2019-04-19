@@ -48,29 +48,36 @@ class ChatMessages extends Component {
                 marginBottom: "5px",
                 maxWidth: "60%",
                 justifyContent: "flex-end",
-                borderRadius: "15px"
+                borderRadius: "10px",
+                padding: "4px"
               }}
             >
               <div
                 style={{
                   display: "flex",
-                  alignItems: "center",
-                  height: "10vh"
+                  alignItems: "center"
                 }}
               >
-                <p style={{ marginLeft: "5px", textAlign: "left" }}>
+                <p
+                  style={{
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "left",
+                    marginLeft: "2px"
+                  }}
+                >
                   {message.message}
                 </p>
-                <img
-                  src={message.profile_pic}
-                  style={{
-                    height: "25px",
-                    width: "25px",
-                    borderRadius: "50%",
-                    marginRight: "5px",
-                    marginLeft: "10px"
-                  }}
-                />
+                {/* <div style={{}}>
+                  <img
+                    src={message.profile_pic}
+                    style={{
+                      height: "2rem",
+                      width: "2rem",
+                      borderRadius: "50%"
+                    }}
+                  />
+                </div> */}
               </div>
             </div>
           </div>
@@ -96,28 +103,45 @@ class ChatMessages extends Component {
                 marginBottom: "5px",
                 maxWidth: "60%",
                 justifyContent: "flex-start",
-                borderRadius: "15px"
+                borderRadius: "10px",
+                padding: "4px"
               }}
             >
               <div
                 style={{
                   display: "flex",
-                  alignItems: "center",
                   textAlign: "left",
-                  height: "45px"
+                  padding: "2px"
                 }}
               >
-                <img
-                  src={message.profile_pic}
+                {/* <div
                   style={{
-                    height: "25px",
-                    width: "25px",
-                    borderRadius: "50%",
-                    marginLeft: "5px",
-                    marginRight: "10px"
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    height: "100%"
                   }}
-                />
-                <p style={{ marginRight: "5px" }}>{message.message}</p>
+                >
+                  <img
+                    src={message.profile_pic}
+                    style={{
+                      height: "2rem",
+                      width: "2rem",
+                      borderRadius: "50%"
+                    }}
+                  />
+                </div> */}
+                <p
+                  style={{
+                    margin: 0,
+                    padding: 0,
+                    textAlign: "left",
+                    marginLeft: "2px"
+                  }}
+                >
+                  {message.message}
+                </p>
               </div>
             </div>
           </div>
