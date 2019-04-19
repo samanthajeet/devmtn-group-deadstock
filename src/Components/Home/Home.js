@@ -4,6 +4,14 @@ import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import skull from "../Landing/image/skull-white.png";
 import styled from 'styled-components';
+import {Link} from 'react-router-dom';
+
+const Shoe = styled.div`
+    :hover {
+        color: #26f7ff;
+        background: gray;
+    }
+`
 
 const SkullProgress = styled.div`
   animation-name: spin;
@@ -71,7 +79,11 @@ class Home extends Component {
 
                     </div>
                     <div style={{ width:'100%', height: '20%', display:'flex', alignItems:'center', flexDirection:'column' }}>
-                        <div>{follower.shoe_brand} {follower.shoe_model} {follower.colorway}</div>
+                        <Link style={{textDecoration:'none'}} to={`/dashboard/shop/${follower.shoe_id}`}>
+                            <Shoe>
+                                {follower.shoe_brand} {follower.shoe_model} {follower.colorway}   
+                            </Shoe>
+                        </Link>
                         <div style={{width: '100%', display:'flex', justifyContent:'space-evenly'}}> 
                             <div>Copped At: ${follower.bought_price}.00 </div>
                             <div>Sell Price: ${follower.sale_price}.00</div>
