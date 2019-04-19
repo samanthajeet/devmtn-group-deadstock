@@ -19,15 +19,15 @@ const UserInfo = styled.div`
   display: flex;
   width: 100%;
   height: 20rem;
-  justifyContent: space-around;
+  justify-content: space-around;
 `
 
 const ChartJS = styled.div`
   width: 70%;
   background-color: white;
-  display: flex,
+  display: flex;
   align-items: center;
-  flex-direction: column
+  flex-direction: column;
 `
 
 const PaperContainer = styled.div`
@@ -72,7 +72,7 @@ class Closet extends Component {
   }
 
   getCloset = async () => {
-    let { user_id } = this.props;
+    let { user_id } = this.props[0];
     let response = await axios.get(`/api/closet/${user_id}`);
     console.log(response.data);
     this.setState({
@@ -133,10 +133,10 @@ class Closet extends Component {
                 <PaperContainer>
                   <Paper style={{ height: '100%', padding: '0.5rem', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                     <div style={{ height: '50%', width: '50%' }}>
-                      <img src={this.props.profile_pic} alt="" style={{ width: '100%', height: "100%", objectFit: 'cover' }} />
+                      <img src={this.props[0].profile_pic} alt="" style={{ width: '100%', height: "100%", objectFit: 'cover' }} />
                     </div>
                     <p>
-                      {this.props.bio}
+                      {this.props[0].bio}
                     </p>
                   </Paper>
                 </PaperContainer>
