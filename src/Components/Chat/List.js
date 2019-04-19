@@ -21,10 +21,11 @@ class List extends Component {
   };
 
   render() {
-    console.log(this.props.list);
+    // console.log(this.props.list);
     const mappedName = this.props.list.map(name => {
       return (
         <div
+          key={name.user_id}
           onClick={() => this.selectUser(name)}
           style={{
             display: "flex",

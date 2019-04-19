@@ -32,6 +32,7 @@ class ChatMessages extends Component {
         position = "flex-end";
         return (
           <div
+            key={message.chat_id}
             style={{
               width: "98%",
               display: "flex",
@@ -40,7 +41,6 @@ class ChatMessages extends Component {
             }}
           >
             <div
-              key={message.chat_id}
               style={{
                 background: `${color}`,
                 display: "flex",
@@ -87,6 +87,7 @@ class ChatMessages extends Component {
         position = "flex-start";
         return (
           <div
+            key={message.chat_id}
             style={{
               width: "98%",
               display: "flex",
@@ -95,7 +96,6 @@ class ChatMessages extends Component {
             }}
           >
             <div
-              key={message.chat_id}
               style={{
                 background: `${color}`,
                 display: "flex",

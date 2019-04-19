@@ -219,7 +219,7 @@ class Dashboard extends React.Component {
 
   getContacts = async () => {
     let users = await axios.get("/api/users");
-    console.log(users.data);
+    // console.log(users.data);
     this.setState({ users: users.data });
   };
 
