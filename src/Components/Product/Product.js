@@ -14,13 +14,30 @@ import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import styled from "styled-components";
 import Fade from '@material-ui/core/Fade';
+import skull from "../Landing/image/skull-white.png";
+
 
 const Progress = styled.div`
   color: white;
   margin-top: 25rem;
+`;
+
+const SkullProgress = styled.div`
+  animation-name: spin;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 const styles = theme => ({
@@ -139,7 +156,10 @@ const Product = props => {
     <div>
       {loading ? (
         <Progress>
-          <CircularProgress />
+          <SkullProgress>
+            <img src={skull} alt="loading" />
+              </SkullProgress>
+            <p>LOADING</p>
         </Progress>
       ) : (
         <Fade in={true} 

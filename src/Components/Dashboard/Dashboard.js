@@ -37,6 +37,7 @@ import Uploader from "../Uploader/Uploader";
 import { connect } from "react-redux";
 import { clearUser } from "../../ducks/reducer";
 import logo from "../Landing/image/logo-white.png";
+import Home from '../Home/Home';
 
 const drawerWidth = 240;
 const image =
@@ -381,7 +382,7 @@ class Dashboard extends React.Component {
               <ListItem
                 button
                 className={classes.iconButtons}
-                onClick={() => this.props.history.push("/dashboard/")}
+                onClick={() => this.props.history.push("/dashboard/home")}
               >
                 <ListItemIcon>
                   <HomeIcon className={classes.drawerButtonContent} />
@@ -521,6 +522,7 @@ class Dashboard extends React.Component {
           <Paper className={classes.paperContainer + " modal-container"}>
             <Chat hidden={hidden2} show={show2} users={this.state.users} />
             <Settings hidden={hidden} show={show} />
+            <Route path="/dashboard/home" component={Home} />
             <Route path="/dashboard/closet/upload" component={Uploader} />
             <Route exact path="/dashboard/closet" component={Closet} />
             <Route path="/dashboard/collection" component={Collection} />

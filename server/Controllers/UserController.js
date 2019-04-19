@@ -6,8 +6,11 @@ module.exports = {
       res.status(200).send(users)
   },
 
-  following: (req, res) => {
-
+  following: async (req, res) => {  
+    const db =  req.app.get('db');
+    const {user_id} = req.session.user;
+    let followers = await db.home.get_feed({user_id});
+    res.status(200).send(followers)
   },
 
   addFollower: async (req, res) => {
