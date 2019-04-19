@@ -7,7 +7,9 @@ import ClosetCard from "../ClosetCard/ClosetCard";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import skull from "../Landing/image/skull-white.png";
-import Paper from '@material-ui/core/Paper';
+import Paper from "@material-ui/core/Paper";
+import Chartjs from "./Chartjs";
+import Button from "@material-ui/core/Button";
 
 const MappedUserShoes = styled.div`
   display: flex;
@@ -20,7 +22,7 @@ const UserInfo = styled.div`
   width: 100%;
   height: 20rem;
   justify-content: space-around;
-`
+`;
 
 const ChartJS = styled.div`
   width: 70%;
@@ -28,12 +30,12 @@ const ChartJS = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-`
+`;
 
 const PaperContainer = styled.div`
   width: 30%;
   height: 100%;
-`
+`;
 
 const SkullProgress = styled.div`
   animation-name: spin;
@@ -72,7 +74,7 @@ class Closet extends Component {
   }
 
   getCloset = async () => {
-    let { user_id } = this.props[0];
+    let { user_id } = this.props;
     let response = await axios.get(`/api/closet/${user_id}`);
     console.log(response.data);
     this.setState({
@@ -92,7 +94,7 @@ class Closet extends Component {
   };
 
   render() {
-    console.log(this.props)
+    console.log(this.props);
     let mappedUserShoes = this.state.user_shoes.map(shoe => {
       return (
         <div key={shoe.user_shoe_id}>
@@ -122,28 +124,102 @@ class Closet extends Component {
             <p>LOADING</p>
           </Progress>
         ) : (
-            <div>
-              <UserInfo>
-                <ChartJS>
-                  <p>ChartJS goes here</p>
-                  <button onClick={() => this.props.history.push("closet/upload")}>
-                    Add Shoe
-                  </button>
-                </ChartJS>
-                <PaperContainer>
-                  <Paper style={{ height: '100%', padding: '0.5rem', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                    <div style={{ height: '50%', width: '50%' }}>
-                      <img src={this.props[0].profile_pic} alt="" style={{ width: '100%', height: "100%", objectFit: 'cover' }} />
+          <div>
+            <UserInfo
+              style={{ borderBottom: "solid 4px #26f7ff", height: "52vh" }}
+            >
+              <div style={{ background: "transparent", width: "66%" }}>
+                <h1 style={{ color: "white" }}>Your Closet</h1>
+                <Chartjs />
+              </div>
+              <PaperContainer
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <Paper
+                  style={{
+                    height: "50vh",
+                    padding: "0.5rem",
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "column",
+                    justifyContent: "space-around",
+                    width: "90%"
+                  }}
+                >
+                  <h3
+                    style={{
+                      margin: 0,
+                      padding: 0,
+                      textDecoration: "underline"
+                    }}
+                  >
+                    About You
+                  </h3>
+                  <div style={{ height: "66%", width: "95%" }}>
+                    <img
+                      src={this.props.profile_pic}
+                      alt=""
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover"
+                      }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                      justifyContent: "flex-start",
+                      width: "95%",
+                      height: "33%"
+                    }}
+                  >
+                    <div
+                      style={{
+                        margin: 0,
+                        padding: 0,
+                        fontSize: ".66rem",
+                        fontWeight: "bold",
+                        textDecoration: "underline"
+                      }}
+                    >
+                      Your Bio
                     </div>
-                    <p>
-                      {this.props[0].bio}
+                    <p
+                      style={{
+                        margin: 0,
+                        passing: 0,
+                        color: "black",
+                        display: "flex",
+                        width: "90%",
+                        justifyContent: "flex-start",
+                        textAlign: "left",
+                        fontSize: ".2rem"
+                      }}
+                    >
+                      {this.props.bio}
                     </p>
-                  </Paper>
-                </PaperContainer>
-              </UserInfo>
-              <MappedUserShoes>{mappedUserShoes}</MappedUserShoes>
-            </div>
-          )}
+                  </div>
+                </Paper>
+              </PaperContainer>
+            </UserInfo>
+            <h1 style={{ color: "white" }}>Your Shoes</h1>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => this.props.history.push("closet/upload")}
+            >
+              Add A New Shoe To Your Closet
+            </Button>
+            <MappedUserShoes>{mappedUserShoes}</MappedUserShoes>
+          </div>
+        )}
       </div>
     );
   }
