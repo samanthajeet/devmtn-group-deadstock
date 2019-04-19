@@ -220,7 +220,6 @@ class Dashboard extends React.Component {
 
   getContacts = async () => {
     let users = await axios.get("/api/users");
-    // console.log(users.data);
     this.setState({ users: users.data });
   };
 
@@ -248,7 +247,6 @@ class Dashboard extends React.Component {
   render() {
     const { hidden, show, hidden2, show2 } = this.state;
     const { classes } = this.props;
-    console.log(this.props, 88888888888)
     return (
       <div className={classes.root}>
         <CssBaseline />

@@ -10,5 +10,12 @@ module.exports = {
     const db = req.app.get('db');
     let response = await db.shoes.get_all_shoes();
     res.status(200).send(response)
+  },
+  getSellers: async (req, res) => {
+    const db = req.app.get('db');
+    const {shoe_id} = req.params
+    let response = await db.shoes.get_sellers({shoe_id});
+    
+    res.status(200).send(response)
   }
 }

@@ -76,7 +76,6 @@ class Closet extends Component {
   getCloset = async () => {
     let { user_id } = this.props;
     let response = await axios.get(`/api/closet/${user_id}`);
-    console.log(response.data);
     this.setState({
       user_shoes: response.data
     });
@@ -94,7 +93,6 @@ class Closet extends Component {
   };
 
   render() {
-    console.log(this.props);
     let mappedUserShoes = this.state.user_shoes.map(shoe => {
       return (
         <div key={shoe.user_shoe_id}>
@@ -140,7 +138,6 @@ class Closet extends Component {
                     <p>
                       {this.props.bio}
                     </p>
-                  </div>
                 </Paper>
               </PaperContainer>
             </UserInfo>

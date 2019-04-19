@@ -41,7 +41,6 @@ class Shop extends Component {
   };
 
   componentDidMount() {
-    console.log("rednered");
     this.getShoes();
   }
 

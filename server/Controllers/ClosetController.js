@@ -9,7 +9,6 @@ module.exports = {
   getStats: (req, res) => {},
 
   addShoe: async (req, res) => {
-    console.log("hit addShoe");
     const db = req.app.get('db')
     const { user_id } = req.session.user;
 
@@ -41,7 +40,6 @@ module.exports = {
       image_3_url,
       image_4_url
     });
-    console.log(size);
     res.sendStatus(200);
   },
 

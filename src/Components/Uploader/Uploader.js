@@ -39,7 +39,6 @@ class Uploader extends Component {
   }
 
   handleSave(file) {
-    console.log("hit handleSave", file);
     //Saving files to state for further use and closing Modal.
     if (file.length == 4) {
       this.getSignedRequest(file);
@@ -47,8 +46,6 @@ class Uploader extends Component {
   }
 
   getSignedRequest = file => {
-    console.log("goobergoobergoober", file);
-
     file.map(file => {
       let fileName = `${randomString()}-${file.name.replace(/\s/g, "-")}`;
       axios
@@ -60,7 +57,6 @@ class Uploader extends Component {
         })
         .then(response => {
           const { signedRequest, url } = response.data;
-          console.log("got signed request response,", response.data);
           this.uploadFile(file, signedRequest);
           this.setState({ files: [...this.state.files, url] });
         });
@@ -68,14 +64,13 @@ class Uploader extends Component {
   };
 
   uploadFile = (file, signedRequest) => {
-    console.log("hit upload", file, signedRequest);
     const options = {
       headers: {
         "Content-Type": file.type
       }
     };
     axios.put(signedRequest, file, options).then(resp => {
-      console.log("upload success");
+      console.log(resp)
     });
 
     // this.setState({ files: images });

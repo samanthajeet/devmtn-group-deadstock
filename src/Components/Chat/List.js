@@ -21,7 +21,6 @@ class List extends Component {
   };
 
   render() {
-    // console.log(this.props.list);
     const mappedName = this.props.list.map(name => {
       return (
         <div
