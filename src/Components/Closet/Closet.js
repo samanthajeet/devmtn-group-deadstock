@@ -7,7 +7,9 @@ import ClosetCard from "../ClosetCard/ClosetCard";
 import { withRouter } from "react-router-dom";
 import styled from "styled-components";
 import skull from "../Landing/image/skull-white.png";
-import Paper from '@material-ui/core/Paper';
+import Paper from "@material-ui/core/Paper";
+import Chartjs from "./Chartjs";
+import Button from "@material-ui/core/Button";
 
 const MappedUserShoes = styled.div`
   display: flex;
@@ -20,7 +22,7 @@ const UserInfo = styled.div`
   width: 100%;
   height: 20rem;
   justify-content: space-around;
-`
+`;
 
 const ChartJS = styled.div`
   width: 70%;
@@ -28,12 +30,12 @@ const ChartJS = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-`
+`;
 
 const PaperContainer = styled.div`
   width: 30%;
   height: 100%;
-`
+`;
 
 const SkullProgress = styled.div`
   animation-name: spin;
@@ -92,7 +94,7 @@ class Closet extends Component {
   };
 
   render() {
-    console.log(this.props)
+    console.log(this.props);
     let mappedUserShoes = this.state.user_shoes.map(shoe => {
       return (
         <div key={shoe.user_shoe_id}>
@@ -138,12 +140,21 @@ class Closet extends Component {
                     <p>
                       {this.props.bio}
                     </p>
-                  </Paper>
-                </PaperContainer>
-              </UserInfo>
-              <MappedUserShoes>{mappedUserShoes}</MappedUserShoes>
-            </div>
-          )}
+                  </div>
+                </Paper>
+              </PaperContainer>
+            </UserInfo>
+            <h1 style={{ color: "white" }}>Your Shoes</h1>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => this.props.history.push("closet/upload")}
+            >
+              Add A New Shoe To Your Closet
+            </Button>
+            <MappedUserShoes>{mappedUserShoes}</MappedUserShoes>
+          </div>
+        )}
       </div>
     );
   }
