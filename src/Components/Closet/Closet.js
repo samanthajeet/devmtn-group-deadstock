@@ -124,12 +124,12 @@ class Closet extends Component {
         ) : (
             <div>
               <UserInfo>
-                <ChartJS>
+                <Chartjs>
                   <p>ChartJS goes here</p>
                   <button onClick={() => this.props.history.push("closet/upload")}>
                     Add Shoe
                   </button>
-                </ChartJS>
+                </Chartjs>
                 <PaperContainer>
                   <Paper style={{ height: '100%', padding: '0.5rem', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
                     <div style={{ height: '50%', width: '50%' }}>
