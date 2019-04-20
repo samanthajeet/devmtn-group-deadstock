@@ -37,7 +37,7 @@ import Uploader from "../Uploader/Uploader";
 import { connect } from "react-redux";
 import { clearUser } from "../../ducks/reducer";
 import logo from "../Landing/image/logo-white.png";
-import Home from '../Home/Home';
+import Home from "../Home/Home";
 
 const drawerWidth = 240;
 const image =
@@ -141,7 +141,7 @@ const styles = theme => ({
     flexGrow: 1,
     padding: theme.spacing.unit - 8,
     maxHeight: "100vh",
-    overflow: "hidden"
+    overflow: "scroll"
   },
   chartContainer: {
     marginLeft: -22
