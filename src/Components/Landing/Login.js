@@ -50,9 +50,9 @@ class SignIn extends React.Component {
   };
 
   handleSubmit = async values => {
-    const user = await axios.post("/api/auth/login", values)
-    this.props.handleUser(user.data)
-    this.props.history.push("/dashboard/home")
+    const user = await axios.post("/api/auth/login", values);
+    this.props.handleUser(user.data);
+    this.props.history.push("/dashboard/home");
   };
 
   render() {
