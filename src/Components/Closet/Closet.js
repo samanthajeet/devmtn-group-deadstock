@@ -76,7 +76,6 @@ class Closet extends Component {
   getCloset = async () => {
     let { user_id } = this.props;
     let response = await axios.get(`/api/closet/${user_id}`);
-    console.log(response.data);
     this.setState({
       user_shoes: response.data
     });
@@ -94,7 +93,6 @@ class Closet extends Component {
   };
 
   render() {
-    console.log(this.props);
     let mappedUserShoes = this.state.user_shoes.map(shoe => {
       return (
         <div key={shoe.user_shoe_id}>
@@ -124,88 +122,22 @@ class Closet extends Component {
             <p>LOADING</p>
           </Progress>
         ) : (
-          <div>
-            <UserInfo
-              style={{ borderBottom: "solid 4px #26f7ff", height: "52vh" }}
-            >
-              <div style={{ background: "transparent", width: "66%" }}>
-                <h1 style={{ color: "white" }}>Your Closet</h1>
-                <Chartjs />
-              </div>
-              <PaperContainer
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
-                <Paper
-                  style={{
-                    height: "50vh",
-                    padding: "0.5rem",
-                    display: "flex",
-                    alignItems: "center",
-                    flexDirection: "column",
-                    justifyContent: "space-around",
-                    width: "90%"
-                  }}
-                >
-                  <h3
-                    style={{
-                      margin: 0,
-                      padding: 0,
-                      textDecoration: "underline"
-                    }}
-                  >
-                    About You
-                  </h3>
-                  <div style={{ height: "66%", width: "95%" }}>
-                    <img
-                      src={this.props.profile_pic}
-                      alt=""
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover"
-                      }}
-                    />
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                      justifyContent: "flex-start",
-                      width: "95%",
-                      height: "33%"
-                    }}
-                  >
-                    <div
-                      style={{
-                        margin: 0,
-                        padding: 0,
-                        fontSize: ".66rem",
-                        fontWeight: "bold",
-                        textDecoration: "underline"
-                      }}
-                    >
-                      Your Bio
+            <div>
+              <UserInfo>
+                <ChartJS>
+                  <p>ChartJS goes here</p>
+                  <button onClick={() => this.props.history.push("closet/upload")}>
+                    Add Shoe
+                  </button>
+                </ChartJS>
+                <PaperContainer>
+                  <Paper style={{ height: '100%', padding: '0.5rem', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                    <div style={{ height: '50%', width: '50%' }}>
+                      <img src={this.props.profile_pic} alt="" style={{ width: '100%', height: "100%", objectFit: 'cover' }} />
                     </div>
-                    <p
-                      style={{
-                        margin: 0,
-                        passing: 0,
-                        color: "black",
-                        display: "flex",
-                        width: "90%",
-                        justifyContent: "flex-start",
-                        textAlign: "left",
-                        fontSize: ".2rem"
-                      }}
-                    >
+                    <p>
                       {this.props.bio}
                     </p>
-                  </div>
                 </Paper>
               </PaperContainer>
             </UserInfo>

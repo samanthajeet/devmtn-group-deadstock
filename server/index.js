@@ -100,14 +100,17 @@ app.delete(`/api/unfollow/:followed_user_id`, userCtrl.unfollow);
 
 // Closet Endpoints
 const closetCtrl = require("./Controllers/ClosetController");
+app.get('/api/closetstats1', closetCtrl.getStats1);
+app.get('/api/closetstats2', closetCtrl.getStats2);
+app.get('/api/closetstats3', closetCtrl.getStats3);
 app.get(`/api/closet/:user_id`, closetCtrl.getCloset);
-app.get(`/api/closet/stats`, closetCtrl.getStats);
 app.post(`/api/closet/addshoe`, closetCtrl.addShoe);
 app.delete(`/api/closet/delete/:shoe_id`, closetCtrl.deleteShoe);
 
 // Shoe Endpoints
 const shoeCtrl = require(`./Controllers/ShoeController`);
 app.get(`/api/shoes/:shoe_id`, shoeCtrl.getShoe);
+app.get(`/api/sellers/:shoe_id`, shoeCtrl.getSellers)
 app.get(`/api/shoes`, shoeCtrl.getAllShoes);
 
 // Collection Endpoints
@@ -143,7 +146,35 @@ io.on("connection", function(socket) {
     const db = app.get("db");
     const { message, user_id, room } = data;
     const messages = await db.chats.create_message({ message, user_id, room });
-    console.log(messages);
     io.to(room).emit("returnMessages", messages);
   });
 });
+
+
+
+
+// chart1Data: {
+//   labels: [],
+//   datasets: [
+//     {
+//       data: [],
+//       backgroundColor: [
+//         "rgb(0, 0, 0, 1)",
+//         "rgba(154, 18, 179, 1)",
+//         "rgb(0, 17, 255, 1)",
+//         "rgb(38, 247, 255, 1)",
+//         "rgb(255, 255, 255, 1)",
+//         "rgb(163, 163, 163, 1)"
+//       ],
+//       borderColor: [
+//         "rgb(255, 255, 255, .8)",
+//         "rgb(255, 255, 255, .8)",
+//         "rgb(255, 255, 255, .8)",
+//         "rgb(255, 255, 255, .8)",
+//         "rgb(255, 255, 255, .8)",
+//         "rgb(255, 255, 255, .8)"
+//       ],
+//       borderWidth: 1
+//     }
+//   ]
+// },

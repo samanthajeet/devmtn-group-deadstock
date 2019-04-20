@@ -6,10 +6,28 @@ module.exports = {
     res.status(200).send(response)
   },
 
-  getStats: (req, res) => {},
+  getStats1: async(req, res) => {
+    // console.log('hit get stats 1!')
+    const db = req.app.get('db');
+    const {user_id} = req.session.user
+    const brands = await db.closet.get_brand_counts({user_id})
+    // console.log(brands)
+    // const value = await db.closet.get_value({user_id})
+    res.status(200).send(brands)
+  },
+
+  getStats2:async(req,res)=>{
+    console.log('hit get stats 2')
+    const db = req.app.get('db');
+    const {user_id} = req.session.user
+  },
+
+  getStats3:async(req,res)=>{
+    console.log('hit get stats 3')
+  },
+
 
   addShoe: async (req, res) => {
-    console.log("hit addShoe");
     const db = req.app.get('db')
     const { user_id } = req.session.user;
 
@@ -41,7 +59,6 @@ module.exports = {
       image_3_url,
       image_4_url
     });
-    console.log(size);
     res.sendStatus(200);
   },
 
