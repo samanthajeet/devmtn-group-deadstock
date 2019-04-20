@@ -37,10 +37,10 @@ class Chart extends Component {
         ]
       },
       chart2Data: {
-        labels: ["Adidas", "Asics", "Jordan","Nike", "Puma", "Reebok"],
+        labels: [],
         datasets: [
           {
-            data: [12, 19, 3, 5, 2, 3],
+            data: [],
             backgroundColor: [
               "rgb(0, 0, 0, 1)",
               "rgba(154, 18, 179, 1)",
@@ -62,10 +62,10 @@ class Chart extends Component {
         ]
       },
       chart3Data: {
-        labels: ["Vintage", "Regular"],
+        labels: ["Regular", "Vintage"],
         datasets: [
           {
-            data: [12, 19],
+            data: [],
             backgroundColor: ["rgb(0, 0, 0, 1)", "rgb(38, 247, 255, 1)"],
             borderColor: ["rgb(255, 255, 255, .8)", "rgb(255, 255, 255, .8)"],
             borderWidth: 1
@@ -76,40 +76,57 @@ class Chart extends Component {
   }
 
 
-  componentDidMount(){
-    this.getFirstChartStats()
-    this.getSecondChartStats()
+  componentDidMount() {
+    this.getFirstChartStats();
+    this.getSecondChartStats();
+    this.getThirdChartStats();
   }
 
-  getFirstChartStats=async()=>{
-    // console.log('hit get stats!')
+  getFirstChartStats = async () => {
     let brands = await axios.get('/api/closetstats1')
     brands = brands.data
-    // console.log(brands)
-    let chart1Data = {...this.state.chart1Data}
+    let chart1Data = { ...this.state.chart1Data }
     let labels = [...chart1Data.labels]
     let data = [...chart1Data.datasets[0].data]
-    brands.forEach((brand,i)=>{
+    brands.forEach((brand, i) => {
       labels.push(brand.brand)
       data.push(brand.count)
     })
-    // console.log(labels,data)
     chart1Data.labels = labels
     chart1Data.datasets[0].data = data
     this.setState({
       chart1Data
     })
-    console.log(chart1Data)
   }
 
-  getSecondChartStats= async()=>{
-    console.log('hit 2nd chart!')
+  getSecondChartStats = async () => {
     let value = await axios.get('api/closetstats2')
+    value = value.data;
+    let chart2Data = { ...this.state.chart2Data }
+    let labels = [...chart2Data.labels]
+    let data = [...chart2Data.datasets[0].data]
+    value.forEach((value, i) => {
+      labels.push(value.brand)
+      data.push(value.sum)
+    })
+    chart2Data.labels = labels
+    chart2Data.datasets[0].data = data
+    this.setState({
+      chart2Data
+    })
   }
-  
-  // getThirdChartStats=()=>{
 
-  // }
+  getThirdChartStats = async () => {
+    let shoes = await axios.get('/api/closetstats3')
+    shoes = shoes.data
+    let chart3Data = { ...this.state.chart3Data }
+    let data = [...chart3Data.datasets[0].data]
+    data.push(shoes[0].regular, shoes[1].vintage)
+    chart3Data.datasets[0].data = data
+    this.setState({
+      chart3Data
+    })
+  }
 
   /**
    * Calculate & Update state of new dimensions

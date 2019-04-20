@@ -7,23 +7,27 @@ module.exports = {
   },
 
   getStats1: async(req, res) => {
-    // console.log('hit get stats 1!')
     const db = req.app.get('db');
     const {user_id} = req.session.user
     const brands = await db.closet.get_brand_counts({user_id})
-    // console.log(brands)
-    // const value = await db.closet.get_value({user_id})
     res.status(200).send(brands)
   },
 
   getStats2:async(req,res)=>{
-    console.log('hit get stats 2')
     const db = req.app.get('db');
     const {user_id} = req.session.user
+    const value = await db.closet.get_value({user_id})
+    res.status(200).send(value)
   },
 
   getStats3:async(req,res)=>{
-    console.log('hit get stats 3')
+    const db = req.app.get('db');
+    const {user_id} = req.session.user;
+    const vintage = await db.closet.get_vintage({user_id})
+    const regular = await db.closet.get_regular({user_id})
+    const shoes = []
+    shoes.push(regular[0],vintage[0])
+    res.status(200).send(shoes)
   },
 
 
@@ -64,3 +68,16 @@ module.exports = {
 
   deleteShoe: (req, res) => {}
 };
+
+
+// chart3Data: {
+//   labels: [],
+//   datasets: [
+//     {
+//       data: [],
+//       backgroundColor: ["rgb(0, 0, 0, 1)", "rgb(38, 247, 255, 1)"],
+//       borderColor: ["rgb(255, 255, 255, .8)", "rgb(255, 255, 255, .8)"],
+//       borderWidth: 1
+//     }
+//   ]
+// }
