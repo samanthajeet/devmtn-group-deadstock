@@ -46,14 +46,16 @@ const aws = require("aws-sdk");
 
 const { S3_BUCKET, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } = process.env;
 
-app.get("/api/signs3", (req, res) => {
-  aws.config = {
-    region: "us-west-1",
-    accessKeyId: AWS_ACCESS_KEY_ID,
-    secretAccessKey: AWS_SECRET_ACCESS_KEY
-  };
+aws.config.update({
+  region: "us-west-1",
+  accessKeyId: AWS_ACCESS_KEY_ID,
+  secretAccessKey: AWS_SECRET_ACCESS_KEY
+})
+// console.log(aws.config)
+const s3 = new aws.S3();
 
-  const s3 = new aws.S3();
+app.get("/api/signs3", (req, res) => {
+
   const fileName = req.query["file-name"];
   const fileType = req.query["file-type"];
   const s3Params = {
@@ -64,6 +66,7 @@ app.get("/api/signs3", (req, res) => {
     ACL: "public-read"
   };
 
+  
   s3.getSignedUrl("putObject", s3Params, (err, data) => {
     if (err) {
       console.log(err);
@@ -71,14 +74,49 @@ app.get("/api/signs3", (req, res) => {
     }
     const returnData = {
       signedRequest: data,
-      url: `https://s3-${
-        aws.config.region
-      }.amazonaws.com/${S3_BUCKET}/${fileName}`
+      url: `https://s3-${aws.config.region}.amazonaws.com/${S3_BUCKET}/${fileName}`
     };
-
+    
     return res.send(returnData);
   });
 });
+
+//Todd's S3 method
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+app.post('/api/s3', (req, res) => {
+  // the body contains the string that is the photo
+  // console.log('hit post', req.body)
+  let {file,filename,filetype} = req.body;
+  // console.log(file)
+  file = file.replace(/^data:image\/\w+;base64,/, '')
+  // the photo string needs to be converted into a 'base 64' string for s3 to understand how to read the image
+  const buf = new Buffer.from(file, 'base64');
+  // this is the object that we will end to s3 with all the info about the photo, and the photo itself.
+  const params = {
+    Bucket: S3_BUCKET,
+    Body: buf,
+    Key: filename,
+    ContentType: filetype,
+    ACL: 'public-read',
+  };
+
+  // using the S3 object we made above the endpoints we will pass it the image we want uploaded and the funciton to be run when the upload is finished.
+  s3.upload(params, (err, data) => {
+    let response, code;
+    if (err) {
+      response = err;
+      code = 500;
+    } else {
+      response = data;
+      code = 200;
+    }
+    // if the upload was sucessfull give them the data, if not send them the error
+    res.status(code).send(response);
+  });
+});
+
 
 // Auth Endpoints
 const authCtrl = require("./Controllers/AuthController");

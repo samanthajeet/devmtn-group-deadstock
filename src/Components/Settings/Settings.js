@@ -7,6 +7,7 @@ import axios from "axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import styled from "styled-components";
 import "./Settings.css";
+import { v4 as randomString } from "uuid";
 
 const Progress = styled.div`
   color: white;
@@ -18,7 +19,6 @@ class Settings extends Component {
     super(props);
     this.state = {
       open: false,
-      files: [],
       boolean: true,
       email: "",
       first_name: "",
@@ -26,9 +26,65 @@ class Settings extends Component {
       profile_pic: "",
       password: "",
       bio: "",
-      loading: true
+      loading: true,
+      
+      file: '',
+      filename: '',
+      filetype: '',
+      isLoading:false
     };
+    this.handlePhoto = this.handlePhoto.bind(this);
+    // this.sendPhoto = this.sendPhoto.bind(this);
   }
+
+
+
+
+// this is the event handler for the file input field
+handlePhoto(event) {
+  // this makes a generic file reader that an convert files into strings that allows us to upload it to a server.
+  const reader = new FileReader();
+  // the file itself is located here
+  const file = event.target.files[0];
+
+  // this is an event handeler and will not actaully run untill the code on line 39 finishes running
+  reader.onload = photo => {
+    // the photo param here is the processed image from the reader.
+    this.setState({
+      file: photo.target.result,
+      filename: file.name,
+      filetype: file.type,
+      isLoading:true
+    });
+  };
+  // take the file from the input field and process it at a DataURL (a special way to interpret files)
+  console.log(file)
+ reader.readAsDataURL(file);
+
+  console.log(this.state)
+
+
+//   if(this.state.file !== '' && this.state.filename != "" && this.state.filetype != '')
+// {  axios.post('/api/s3', this.state).then(response => {
+//     console.log('hit return', response.data)
+//     this.setState({ profile_pic: response.data.Location,isLoading:false }); })}
+setTimeout(() => {  
+  
+  axios.post('/api/s3', this.state).then(response => {
+  console.log('hit return', response.data)
+  this.setState({ profile_pic: response.data.Location,isLoading:false });
+})}, 5000)
+
+}
+
+// when clicked it upload
+// sendPhoto() {
+//   console.log('hit sendPhoto')
+//   axios.post('/api/s3', this.state).then(response => {
+//     console.log('hit return', response.data)
+//     this.setState({ profile_pic: response.data.Location });
+// })
+// }
 
   componentDidMount() {
     this.handleGetUser();
@@ -49,84 +105,113 @@ class Settings extends Component {
     });
   };
 
-  handleClose() {
+handleInputChange(prop, val) {
+  this.setState({
+    [prop]: val
+  });
+}
+
+// handleOpen=()=>{
+//   this.setState({
+//     open:true
+//   })
+// }
+
+// handleClose=async()=>{
+//   console.log('hit close')
+//   await this.sendPhoto()
+//   this.setState({
+//     open:false
+//   })
+// }
+
+// sendPhoto=()=>{
+//   const {file,filename,filetype} = this.state
+//   console.log({file,filename,filetype})
+//   axios.post('/api/s3',{file,filename,filetype})
+// }
+
+// handleSave=async(file)=>{
+//   console.log(file[0],'hit upload')
+//   await this.setState({
+//     open:false,
+//     file:file[0],
+//     filename:file[0].name,
+//     filetype:file[0].type
+//   })
+//   console.log(this.state.file)
+//   this.handlePhoto()
+// }
+
+// handlePhoto=()=>{
+//   console.log('hit photo')
+//   const reader = new FileReader();
+
+
+//   reader.onload = async photo => {
+//     console.log(photo.target.result)
+//     // the photo param here is the processed image from the reader.
+//     await this.setState({
+//       file: photo.target.result
+//     });
+//   };
+//   console.log('files', this.state.file)
+//   // reader.readAsDataURL(file);
+// }
+
+updateUser() {
+  const {
+    first_name,
+    last_name,
+    email,
+    profile_pic,
+    password,
+    bio
+  } = this.state;
+  const userBody = {
+    first_name,
+    last_name,
+    email,
+    profile_pic,
+    password,
+    bio
+  };
+  axios.put(`/api/auth/editprofile`, userBody).then(resp => {
     this.setState({
-      open: false
+      first_name: resp.data[0].first_name,
+      last_name: resp.data[0].last_name,
+      email: resp.data[0].email,
+      profile_pic: resp.data[0].profile_pic,
+      bio: resp.data[0].bio,
+      password: ""
     });
-  }
+  });
+}
 
-  handleOpen() {
-    this.setState({
-      open: true
-    });
-  }
-
-  handleSave(files) {
-    this.setState({
-      files: files,
-      open: false
-    });
-  }
-
-  handleInputChange(prop, val) {
-    this.setState({
-      [prop]: val
-    });
-  }
-
-  updateUser() {
-    const {
-      first_name,
-      last_name,
-      email,
-      profile_pic,
-      password,
-      bio
-    } = this.state;
-    const userBody = {
-      first_name,
-      last_name,
-      email,
-      profile_pic,
-      password,
-      bio
-    };
-    axios.put(`/api/auth/editprofile`, userBody).then(resp => {
-      this.setState({
-        first_name: resp.data[0].first_name,
-        last_name: resp.data[0].last_name,
-        email: resp.data[0].email,
-        profile_pic: resp.data[0].profile_pic,
-        bio: resp.data[0].bio,
-        password: ""
-      });
-    });
-  }
-
-  render() {
-    const { hidden, show } = this.props;
-    return (
-      <div
-        className={
-          hidden
-            ? "settings-modal hidden"
-            : show
+render() {
+  const { hidden, show } = this.props;
+  return (
+    <div
+      className={
+        hidden
+          ? "settings-modal hidden"
+          : show
             ? "settings-modal show"
             : "settings-modal no-show"
-        }
+      }
+    >
+      <div
+        style={{
+          height: "calc(100% - 64px)",
+          display: "flex",
+          justifyContent: "center"
+        }}
       >
-        <div
-          style={{
-            height: "calc(100% - 64px)",
-            display: "flex",
-            justifyContent: "center"
-          }}
-        >
-          {this.state.loading ? (
-            <Progress>
-              <CircularProgress />
-            </Progress>
-          ) : (
+        {this.state.loading ? (
+          <Progress>
+            <CircularProgress />
+          </Progress>
+        ) : (
             <Paper
               style={{
                 height: "100%",
@@ -152,7 +237,9 @@ class Settings extends Component {
                     marginTop: "5%"
                   }}
                 >
-                  <img
+                  {this.state.isLoading?<Progress style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+            <CircularProgress />
+          </Progress>:<img
                     src={this.state.profile_pic}
                     alt="profile picture"
                     style={{
@@ -160,21 +247,26 @@ class Settings extends Component {
                       height: "100%",
                       backgroundSize: "cover"
                     }}
-                  />
-                  <Button onClick={() => this.handleOpen()}>Edit Photo</Button>
+                  />}
+                  {/* <Button onClick={() => this.handleOpen()}>Edit Photo</Button> */}
                 </div>
-                <DropzoneDialog
+                {/* <DropzoneDialog
                   align="center"
                   open={this.state.open}
                   onSave={this.handleSave.bind(this)}
-                  filesLimit={4}
+                  filesLimit={1}
                   acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
                   showPreviews={true}
                   maxFileSize={10000000}
                   onClose={this.handleClose.bind(this)}
                   height={450}
                   width={400}
-                />
+                /> */}
+          
+          <input type="file" onChange={this.handlePhoto} />
+        {/* <button onClick={this.sendPhoto}>upload</button> */}
+          {/* <img src={this.state.img} alt="none" /> */}
+
                 <TextField
                   id="standard-multiline-fixed"
                   label="About Me"
@@ -273,10 +365,18 @@ class Settings extends Component {
               </div>
             </Paper>
           )}
-        </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
 }
 
 export default Settings;
+
+
+
+
+
+   
+
+        
