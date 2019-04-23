@@ -50,12 +50,11 @@ aws.config.update({
   region: "us-west-1",
   accessKeyId: AWS_ACCESS_KEY_ID,
   secretAccessKey: AWS_SECRET_ACCESS_KEY
-})
+});
 // console.log(aws.config)
 const s3 = new aws.S3();
 
 app.get("/api/signs3", (req, res) => {
-
   const fileName = req.query["file-name"];
   const fileType = req.query["file-type"];
   const s3Params = {
@@ -66,7 +65,6 @@ app.get("/api/signs3", (req, res) => {
     ACL: "public-read"
   };
 
-  
   s3.getSignedUrl("putObject", s3Params, (err, data) => {
     if (err) {
       console.log(err);
@@ -74,32 +72,39 @@ app.get("/api/signs3", (req, res) => {
     }
     const returnData = {
       signedRequest: data,
-      url: `https://s3-${aws.config.region}.amazonaws.com/${S3_BUCKET}/${fileName}`
+      url: `https://s3-${
+        aws.config.region
+      }.amazonaws.com/${S3_BUCKET}/${fileName}`
     };
-    
+
     return res.send(returnData);
   });
 });
 
 //Todd's S3 method
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use(express.json({ limit: "8000000000000" }));
+app.use(express.urlencoded({ limit: "8000000000000", extended: true }));
 
-app.post('/api/s3', (req, res) => {
+app.post("/api/s3", (req, res) => {
   // the body contains the string that is the photo
   // console.log('hit post', req.body)
-  let {file,filename,filetype} = req.body;
+  console.log("made it to post");
+  let { file, filename, filetype } = req.body;
+
   // console.log(file)
-  file = file.replace(/^data:image\/\w+;base64,/, '')
+  file = file.replace(/^data:image\/\w+;base64,/, "");
+
+  console.log("made it to file");
   // the photo string needs to be converted into a 'base 64' string for s3 to understand how to read the image
-  const buf = new Buffer.from(file, 'base64');
+  const buf = new Buffer.from(file, "base64");
+  console.log("made it to buf");
   // this is the object that we will end to s3 with all the info about the photo, and the photo itself.
   const params = {
     Bucket: S3_BUCKET,
     Body: buf,
     Key: filename,
     ContentType: filetype,
-    ACL: 'public-read',
+    ACL: "public-read"
   };
 
   // using the S3 object we made above the endpoints we will pass it the image we want uploaded and the funciton to be run when the upload is finished.
@@ -116,7 +121,6 @@ app.post('/api/s3', (req, res) => {
     res.status(code).send(response);
   });
 });
-
 
 // Auth Endpoints
 const authCtrl = require("./Controllers/AuthController");
@@ -138,9 +142,9 @@ app.delete(`/api/unfollow/:followed_user_id`, userCtrl.unfollow);
 
 // Closet Endpoints
 const closetCtrl = require("./Controllers/ClosetController");
-app.get('/api/closetstats1', closetCtrl.getStats1);
-app.get('/api/closetstats2', closetCtrl.getStats2);
-app.get('/api/closetstats3', closetCtrl.getStats3);
+app.get("/api/closetstats1", closetCtrl.getStats1);
+app.get("/api/closetstats2", closetCtrl.getStats2);
+app.get("/api/closetstats3", closetCtrl.getStats3);
 app.get(`/api/closet/:user_id`, closetCtrl.getCloset);
 app.post(`/api/closet/addshoe`, closetCtrl.addShoe);
 app.delete(`/api/closet/delete/:shoe_id`, closetCtrl.deleteShoe);
@@ -148,7 +152,7 @@ app.delete(`/api/closet/delete/:shoe_id`, closetCtrl.deleteShoe);
 // Shoe Endpoints
 const shoeCtrl = require(`./Controllers/ShoeController`);
 app.get(`/api/shoes/:shoe_id`, shoeCtrl.getShoe);
-app.get(`/api/sellers/:shoe_id`, shoeCtrl.getSellers)
+app.get(`/api/sellers/:shoe_id`, shoeCtrl.getSellers);
 app.get(`/api/shoes`, shoeCtrl.getAllShoes);
 
 // Collection Endpoints
@@ -187,32 +191,3 @@ io.on("connection", function(socket) {
     io.to(room).emit("returnMessages", messages);
   });
 });
-
-
-
-
-// chart1Data: {
-//   labels: [],
-//   datasets: [
-//     {
-//       data: [],
-//       backgroundColor: [
-//         "rgb(0, 0, 0, 1)",
-//         "rgba(154, 18, 179, 1)",
-//         "rgb(0, 17, 255, 1)",
-//         "rgb(38, 247, 255, 1)",
-//         "rgb(255, 255, 255, 1)",
-//         "rgb(163, 163, 163, 1)"
-//       ],
-//       borderColor: [
-//         "rgb(255, 255, 255, .8)",
-//         "rgb(255, 255, 255, .8)",
-//         "rgb(255, 255, 255, .8)",
-//         "rgb(255, 255, 255, .8)",
-//         "rgb(255, 255, 255, .8)",
-//         "rgb(255, 255, 255, .8)"
-//       ],
-//       borderWidth: 1
-//     }
-//   ]
-// },
