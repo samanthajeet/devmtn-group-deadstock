@@ -12,6 +12,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import TextFieldForm from "./TextFieldForm";
+import SelectedItem from "./SelectedItem";
 
 const styles = theme => ({
   root: {
@@ -38,7 +39,6 @@ class Uploader extends Component {
   }
 
   handleSave(file) {
-    console.log("hit handleSave", file);
     //Saving files to state for further use and closing Modal.
     if (file.length == 4) {
       this.getSignedRequest(file);
@@ -46,8 +46,6 @@ class Uploader extends Component {
   }
 
   getSignedRequest = file => {
-    console.log("goobergoobergoober", file);
-
     file.map(file => {
       let fileName = `${randomString()}-${file.name.replace(/\s/g, "-")}`;
       axios
@@ -59,7 +57,6 @@ class Uploader extends Component {
         })
         .then(response => {
           const { signedRequest, url } = response.data;
-          console.log("got signed request response,", response.data);
           this.uploadFile(file, signedRequest);
           this.setState({ files: [...this.state.files, url] });
         });
@@ -67,17 +64,14 @@ class Uploader extends Component {
   };
 
   uploadFile = (file, signedRequest) => {
-    console.log("hit upload", file, signedRequest);
     const options = {
       headers: {
         "Content-Type": file.type
       }
     };
     axios.put(signedRequest, file, options).then(resp => {
-      console.log("upload success");
+      console.log(resp);
     });
-
-    // this.setState({ files: images });
   };
 
   handleSelectedShoe = shoe => {
@@ -147,7 +141,7 @@ class Uploader extends Component {
               width: "100%",
               alignItems: "center",
               position: "relative",
-              backgroundImage: "linear-gradient(black, #26f7ff)"
+              background: "transparent"
             }}
           >
             <button
@@ -194,7 +188,7 @@ class Uploader extends Component {
                   id="outlined-search"
                   label="Search for your shoe"
                   type="search"
-                  className={classes.textField}
+                  // className={classes.textField}
                   margin="normal"
                   variant="outlined"
                   placeholder="Find and select a shoe"
@@ -251,20 +245,24 @@ class Uploader extends Component {
                   <h3
                     style={{
                       margin: "0",
-                      padding: "0"
+                      padding: "0",
+                      color: "rgba(0,0,0, .8)"
                     }}
                   >
-                    Tell Us About Your Shoe
+                    Upload a New Shoe
                   </h3>
                 </div>
                 <div style={{ width: "90%", marginTop: "2%" }}>
-                  <SearchItem shoe={this.state.clickedShoe} />
+                  <SelectedItem shoe={this.state.clickedShoe} />
                 </div>
                 <div
                   style={{
                     width: "90%"
                   }}
                 >
+                  <h4 style={{ color: "rgba(0,0,0,.4)" }}>
+                    Upload Photos of Your Shoe
+                  </h4>
                   <DropzoneArea
                     align="center"
                     onChange={this.handleSave.bind(this)}
@@ -272,6 +270,7 @@ class Uploader extends Component {
                     acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
                     showPreviews={false}
                     maxFileSize={20000000}
+                    dropzoneText="hello"
                   />
                 </div>
                 <div
@@ -279,7 +278,7 @@ class Uploader extends Component {
                     width: "100%",
                     display: "flex",
                     justifyContent: "center",
-                    marginTop: "3%"
+                    marginTop: "4%"
                   }}
                 >
                   <TextFieldForm

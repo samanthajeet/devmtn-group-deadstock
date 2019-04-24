@@ -1,3 +1,3 @@
 select count(*)
 from users
-where email = ${email}
+where email ilike ${email}

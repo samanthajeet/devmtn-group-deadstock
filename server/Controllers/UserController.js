@@ -6,8 +6,11 @@ module.exports = {
       res.status(200).send(users)
   },
 
-  following: (req, res) => {
-
+  following: async (req, res) => {  
+    const db =  req.app.get('db');
+    const {user_id} = req.session.user;
+    let followers = await db.home.get_feed({user_id});
+    res.status(200).send(followers)
   },
 
   addFollower: async (req, res) => {
@@ -30,9 +33,7 @@ module.exports = {
     const db = req.app.get('db');
     const {user_id} = req.session.user
     const {followed_user_id} = req.params
-    // console.log(followed_user_id)
     let response = await db.user.check_following({user_id, followed_user_id})
-    // console.log(response[0])
     res.status(200).send(response[0])
 
   }

@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import ProductCard from '../ProductCard/ProductCard';
+import ProductCard from "../ProductCard/ProductCard";
 import { withRouter } from "react-router";
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-
+// import CircularProgress from '@material-ui/core/CircularProgress';
+import skull from "../Landing/image/skull-white.png";
 
 const MappedShoes = styled.div`
   display: flex;
@@ -13,10 +12,27 @@ const MappedShoes = styled.div`
   justify-content: center;
 `;
 
-const Progress = styled.div `
+const SkullProgress = styled.div`
+  animation-name: spin;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+const Progress = styled.div`
+  margin-top: 25%;
   color: white;
-  margin-top: 25rem;
-`
+  letter-spacing: 0.2rem;
+`;
 
 class Shop extends Component {
   state = {
@@ -25,7 +41,6 @@ class Shop extends Component {
   };
 
   componentDidMount() {
-    console.log('rednered')
     this.getShoes();
   }
 
@@ -33,14 +48,12 @@ class Shop extends Component {
     try {
       let response = await axios.get(`/api/shoes`);
       this.setState({ shoes: response.data, loading: false });
-      
     } catch (err) {
       console.log(err);
     }
   };
 
   render() {
-
     let mappedShoes = this.state.shoes.map(shoe => {
       return (
         <div key={shoe.shoe_id}>
@@ -59,17 +72,19 @@ class Shop extends Component {
     });
     return (
       <>
-      {this.state.loading ? (
-        <Progress>
-          <CircularProgress color="white"/>
-        </Progress>
-      ):(
+        {this.state.loading ? (
+          <Progress>
+            <SkullProgress>
+              <img src={skull} alt="loading" />
+            </SkullProgress>
+            <p>LOADING</p>
+          </Progress>
+        ) : (
           <MappedShoes>{mappedShoes}</MappedShoes>
-      )}
+        )}
       </>
     );
   }
 }
-
 
 export default withRouter(Shop);

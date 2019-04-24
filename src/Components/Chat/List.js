@@ -1,24 +1,24 @@
-import React, {Component} from 'react';
-import sockets from './Sockets';
-import axios from 'axios';
-import {handleList,handleFriend} from '../../ducks/reducer';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import sockets from "./Sockets";
+import axios from "axios";
+import { handleList, handleFriend } from "../../ducks/reducer";
+import { connect } from "react-redux";
 
 class List extends Component {
-    componentDidMount(){
-        this.getChats()
-    }
+  componentDidMount() {
+    this.getChats();
+  }
 
-    selectUser(friend){
-        this.props.handleFriend(friend)
-        this.props.startChat(friend)
-    }
+  selectUser(friend) {
+    this.props.handleFriend(friend);
+    this.props.startChat(friend);
+  }
 
-    getChats=async()=>{
-        let chats = await axios.get('/api/chats')
-        chats = chats.data
-        this.props.handleList(chats)
-    }
+  getChats = async () => {
+    let chats = await axios.get("/api/chats");
+    chats = chats.data;
+    this.props.handleList(chats);
+  };
 
   render() {
     let { list,search } = this.props
@@ -71,10 +71,13 @@ class List extends Component {
   }
 }
 
-function mapStateToProps (reduxState){
-    return{
-        list:reduxState.list
-    }
+function mapStateToProps(reduxState) {
+  return {
+    list: reduxState.list
+  };
 }
 
-export default connect(mapStateToProps,{handleList,handleFriend})(List) 
+export default connect(
+  mapStateToProps,
+  { handleList, handleFriend }
+)(List);

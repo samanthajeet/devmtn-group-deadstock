@@ -14,13 +14,30 @@ import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import styled from "styled-components";
 import Fade from '@material-ui/core/Fade';
+import skull from "../Landing/image/skull-white.png";
+
 
 const Progress = styled.div`
   color: white;
   margin-top: 25rem;
+`;
+
+const SkullProgress = styled.div`
+  animation-name: spin;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 const styles = theme => ({
@@ -102,10 +119,12 @@ const Product = props => {
   const [secondary = false, setSecondary] = useState("");
   const [open = false, setOpen] = useState("");
   const [loading, setLoading] = useState("");
+  const [sellers, setSellers] = useState({});
 
   useEffect(() => {
     setLoading(true);
     getShoe();
+    getSellers();
   }, []);
 
   const getShoe = async () => {
@@ -124,8 +143,13 @@ const Product = props => {
     setImage4(response.data[0].image_4_url);
     setLoading(false);
 
-    console.log(response.data[0]);
   };
+
+  const getSellers= async() => {
+    const shoe_id = props.match.params.shoe_id;
+    const response = await axios.get(`/api/sellers/${shoe_id}`)
+    await setSellers(response.data)
+  }
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -139,7 +163,10 @@ const Product = props => {
     <div>
       {loading ? (
         <Progress>
-          <CircularProgress color="white" />
+          <SkullProgress>
+            <img src={skull} alt="loading" />
+              </SkullProgress>
+            <p>LOADING</p>
         </Progress>
       ) : (
         <Fade in={true} 
@@ -195,7 +222,7 @@ const Product = props => {
             </Paper>
             <Paper className={classes.sellers}>
               <Typography variant="h5" component="h3">
-                users selling this shoe
+                Sellers
               </Typography>
               <div className={classes.demo}>
                 <List dense={dense}>

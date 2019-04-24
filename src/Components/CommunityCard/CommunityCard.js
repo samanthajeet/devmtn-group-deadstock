@@ -63,7 +63,6 @@ class CommunityCard extends Component {
     const followed_user_id = this.props.user_id
     await axios.get(`/api/checkFollowing/${followed_user_id}`).then( response => {
       if(response.data != ''){
-        // console.log(response.data)
         this.setState({
           following: true
         })
@@ -85,7 +84,6 @@ class CommunityCard extends Component {
 
   unfollowUser(){
     const followed_user_id = this.props.user_id
-    // console.log(followed_user_id)
     axios.delete(`/api/unfollow/${followed_user_id}`)
     this.setState({
       following: false

@@ -24,6 +24,7 @@ import Logout from "@material-ui/icons/ExitToApp";
 import Search from "@material-ui/icons/Search";
 import ChatIcon from "@material-ui/icons/Forum";
 import SettingsIcon from "@material-ui/icons/Settings";
+import HomeIcon from "@material-ui/icons/Home";
 import { ListItemText, ListItemIcon, ListItem } from "@material-ui/core";
 import { Route } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
@@ -35,7 +36,8 @@ import Chat from "../Chat/Chat";
 import Uploader from "../Uploader/Uploader";
 import { connect } from "react-redux";
 import { clearUser } from "../../ducks/reducer";
-import logo from '../Landing/image/logo-white.png';
+import logo from "../Landing/image/logo-white.png";
+import Home from "../Home/Home";
 
 const drawerWidth = 240;
 const image =
@@ -44,12 +46,12 @@ const image =
 const StyledButton = styled.div`
   :hover {
     animation-name: increaseDashSize;
-    animation-duration: 0.5s;
+    animation-duration: 0.25s;
     transition: 0s;
-    transition-timing-function: ease;
+    transition-timing-function: ease-in;
     animation-fill-mode: forwards;
     cursor: pointer;
-    color: #26f7ff
+    color: #26f7ff;
   }
 
   @keyframes increaseDashSize {
@@ -57,7 +59,7 @@ const StyledButton = styled.div`
       transform: scale(1);
     }
     100% {
-      transform: scale(1.5);
+      transform: scale(1.2);
     }
   }
 `;
@@ -139,7 +141,7 @@ const styles = theme => ({
     flexGrow: 1,
     padding: theme.spacing.unit - 8,
     maxHeight: "100vh",
-    overflow: "hidden"
+    overflow: "scroll"
   },
   chartContainer: {
     marginLeft: -22
@@ -190,14 +192,16 @@ class Dashboard extends React.Component {
     super();
     this.state = {
       open: true,
-      users:[],
+      users: [],
       hidden: true,
-      show: false
+      show: false,
+      hidden2: true,
+      show2: false
     };
   }
 
-  componentDidMount(){
-    this.getContacts()
+  componentDidMount() {
+    this.getContacts();
   }
 
   handleDrawerOpen = () => {
@@ -214,21 +218,34 @@ class Dashboard extends React.Component {
     this.props.history.push("/");
   };
 
-  getContacts=async()=>{
-    let users = await axios.get('/api/users')
-    console.log(users.data)
-    this.setState({users:users.data})
-  }
+  getContacts = async () => {
+    let users = await axios.get("/api/users");
+    this.setState({ users: users.data });
+  };
 
-  handleSettingsToggle = () => {
+  handleSettingsToggle = async () => {
+    if (this.state.show2) {
+      await this.setState({ show2: false });
+    }
+
     this.setState({
-      hidden:false,
-      show:!this.state.show
-    })
-  }
+      hidden: false,
+      show: !this.state.show
+    });
+  };
+
+  handleChatToggle = async () => {
+    if (this.state.show) {
+      await this.setState({ show: false });
+    }
+    this.setState({
+      hidden2: false,
+      show2: !this.state.show2
+    });
+  };
 
   render() {
-    const {hidden, show} = this.state;
+    const { hidden, show, hidden2, show2 } = this.state;
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -256,7 +273,8 @@ class Dashboard extends React.Component {
               <MenuIcon style={{ color: "white" }} />
             </IconButton>
 
-            <form
+            <div style={{ width: "15%" }} />
+            {/* <form
               style={{
                 borderRadius: "16px",
                 width: "20vw",
@@ -284,7 +302,7 @@ class Dashboard extends React.Component {
               >
                 <Search style={{ color: "white" }} />
               </button>
-            </form>
+            </form> */}
             <Typography
               component="h1"
               variant="h5"
@@ -293,8 +311,16 @@ class Dashboard extends React.Component {
               style={{ fontSize: "45px" }}
               className={classes.title}
             >
-              <div className='deadstock-logo-background' style={{width: '100%', display:'flex', alignItems:'center', justifyContent:'center'}}>
-                <img src={logo} alt='logo-white' style={{width:'25%'}}/>
+              <div
+                className="deadstock-logo-background"
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <img src={logo} alt="logo-white" style={{ width: "25%" }} />
               </div>
             </Typography>
             <div
@@ -305,15 +331,11 @@ class Dashboard extends React.Component {
               }}
             >
               <StyledButton>
-                <ChatIcon
-                  onClick={() => this.props.history.push("/dashboard/chat")}
-                />
+                <ChatIcon onClick={this.handleChatToggle} />
               </StyledButton>
 
               <StyledButton>
-                <SettingsIcon
-                  onClick={this.handleSettingsToggle}
-                />
+                <SettingsIcon onClick={this.handleSettingsToggle} />
               </StyledButton>
             </div>
             {/* <IconButton color="inherit">
@@ -355,134 +377,192 @@ class Dashboard extends React.Component {
               justifyContent: "space-between"
             }}
           >
-            <div>
-              <ListItem
-                button
-                className={classes.iconButtons}
-                onClick={() => this.props.history.push("/dashboard/closet")}
-              >
-                <ListItemIcon>
-                  <i
-                    className={
-                      classes.drawerButtonContent + " " + "fas fa-door-closed"
-                    }
-                    style={{ fontSize: "20px" }}
-                  />
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography
-                      className={classes.drawerButtonContent}
-                      style={{ fontSize: "25px" }}
-                    >
-                      {" "}
-                      Closet
+            {this.props.user.first_name ? (
+              <>
+                <div>
+                  <ListItem
+                    button
+                    className={classes.iconButtons}
+                    onClick={() => this.props.history.push("/dashboard/home")}
+                  >
+                    <ListItemIcon>
+                      <HomeIcon className={classes.drawerButtonContent} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          className={classes.drawerButtonContent}
+                          style={{ fontSize: "25px" }}
+                        >
+                          {" "}
+                          Home{" "}
+                        </Typography>
+                      }
+                    />
+                  </ListItem>
+                  <ListItem
+                    button
+                    className={classes.iconButtons}
+                    onClick={() => this.props.history.push("/dashboard/closet")}
+                  >
+                    <ListItemIcon>
+                      <i
+                        className={
+                          classes.drawerButtonContent + " " + "fas fa-door-closed"
+                        }
+                        style={{ fontSize: "20px" }}
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          className={classes.drawerButtonContent}
+                          style={{ fontSize: "25px" }}
+                        >
+                          {" "}
+                          Closet
                     </Typography>
-                  }
-                />
-              </ListItem>
+                      }
+                    />
+                  </ListItem>
 
-              {/* <Divider /> */}
+                  {/* <Divider /> */}
 
-              <ListItem
-                button
-                className={classes.iconButtons}
-                onClick={() => this.props.history.push("/dashboard/collection")}
-              >
-                <ListItemIcon>
-                  <Favorite className={classes.drawerButtonContent} />
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography
-                      className={classes.drawerButtonContent}
-                      style={{ fontSize: "25px" }}
-                    >
-                      {" "}
-                      Collection{" "}
+                  <ListItem
+                    button
+                    className={classes.iconButtons}
+                    onClick={() => this.props.history.push("/dashboard/collection")}
+                  >
+                    <ListItemIcon>
+                      <Favorite className={classes.drawerButtonContent} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          className={classes.drawerButtonContent}
+                          style={{ fontSize: "25px" }}
+                        >
+                          {" "}
+                          Collection{" "}
+                        </Typography>
+                      }
+                    />
+                  </ListItem>
+
+                  {/* <Divider /> */}
+
+                  <ListItem
+                    button
+                    className={classes.iconButtons}
+                    onClick={() => this.props.history.push("/dashboard/community")}
+                  >
+                    <ListItemIcon>
+                      <Public className={classes.drawerButtonContent} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          className={classes.drawerButtonContent}
+                          style={{ fontSize: "25px" }}
+                        >
+                          {" "}
+                          Community
                     </Typography>
-                  }
-                />
-              </ListItem>
+                      }
+                    />
+                  </ListItem>
+                  {/* <Divider /> */}
 
-              {/* <Divider /> */}
+                  <ListItem
+                    button
+                    className={classes.iconButtons}
+                    onClick={() => this.props.history.push("/dashboard/shop")}
+                  >
+                    <ListItemIcon>
+                      <ShoppingCart className={classes.drawerButtonContent} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          className={classes.drawerButtonContent}
+                          style={{ fontSize: "25px" }}
+                        >
+                          {" "}
+                          Shop
+                    </Typography>
+                      }
+                    />
+                  </ListItem>
+                </div>
+                <div>
+                  <ListItem
+                    button
+                    className={classes.iconButtons}
+                    onClick={() => this.handleLogout()}
+                  >
+                    <ListItemIcon>
+                      <Logout className={classes.drawerButtonContent} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          className={classes.drawerButtonContent}
+                          style={{ fontSize: "25px" }}
+                        >
+                          {" "}
+                          Logout
+                    </Typography>
+                      }
+                    />
+                  </ListItem>
+                </div>
+              </>
+            ) : (
+                <div>
+                  <ListItem
+                    button
+                    className={classes.iconButtons}
+                    onClick={() => this.props.history.push('/login')}
+                  >
+                    <ListItemIcon>
+                      <Logout className={classes.drawerButtonContent} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          className={classes.drawerButtonContent}
+                          style={{ fontSize: "25px" }}
+                        >
+                          {" "}
+                          Login
+                    </Typography>
+                      }
+                    />
+                  </ListItem>
+                </div>
+              )}
 
-              <ListItem
-                button
-                className={classes.iconButtons}
-                onClick={() => this.props.history.push("/dashboard/community")}
-              >
-                <ListItemIcon>
-                  <Public className={classes.drawerButtonContent} />
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography
-                      className={classes.drawerButtonContent}
-                      style={{ fontSize: "25px" }}
-                    >
-                      {" "}
-                      Community
-                    </Typography>
-                  }
-                />
-              </ListItem>
-              {/* <Divider /> */}
-
-              <ListItem
-                button
-                className={classes.iconButtons}
-                onClick={() => this.props.history.push("/dashboard/shop")}
-              >
-                <ListItemIcon>
-                  <ShoppingCart className={classes.drawerButtonContent} />
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography
-                      className={classes.drawerButtonContent}
-                      style={{ fontSize: "25px" }}
-                    >
-                      {" "}
-                      Shop
-                    </Typography>
-                  }
-                />
-              </ListItem>
-            </div>
-            <div>
-              <ListItem
-                button
-                className={classes.iconButtons}
-                onClick={() => this.handleLogout()}
-              >
-                <ListItemIcon>
-                  <Logout className={classes.drawerButtonContent} />
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    <Typography
-                      className={classes.drawerButtonContent}
-                      style={{ fontSize: "25px" }}
-                    >
-                      {" "}
-                      Logout
-                    </Typography>
-                  }
-                />
-              </ListItem>
-            </div>
           </div>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <Paper className={classes.paperContainer + ' modal-container'}>
-            <Settings hidden={hidden} show={show}/>
+          <Paper className={classes.paperContainer + " modal-container"}>
+            <Chat hidden={hidden2} show={show2} users={this.state.users} />
+            <Settings hidden={hidden} show={show} />
+            <Route path="/dashboard/home" component={Home} />
             <Route path="/dashboard/closet/upload" component={Uploader} />
             <Route exact path="/dashboard/closet" component={Closet} />
             <Route path="/dashboard/collection" component={Collection} />
-            <Route path="/dashboard/community" render={(props)=> <Community {...props} users={this.state.users}/>}/>
-            <Route path="/dashboard/chat" render={(props)=> <Chat {...props} users={this.state.users}/>}/>
+            <Route
+              path="/dashboard/community"
+              render={props => (
+                <Community {...props} users={this.state.users} />
+              )}
+            />
+            {/* <Route
+              path="/dashboard/chat"
+              render={props => <Chat {...props} users={this.state.users} />}
+            /> */}
             <Route path="/dashboard/shop/:shoe_id" component={Product} />
             <Route exact path="/dashboard/shop" component={Shop} />
           </Paper>

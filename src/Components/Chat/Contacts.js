@@ -1,13 +1,13 @@
 import React, { Component, memo } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { handleFriend} from "../../ducks/reducer";
+import { handleFriend } from "../../ducks/reducer";
 
 class Contacts extends Component {
-    selectUser(friend){
-        this.props.handleFriend(friend)
-        this.props.startChat(friend)
-    }
+  selectUser(friend) {
+    this.props.handleFriend(friend);
+    this.props.startChat(friend);
+  }
 
   render() {
     const { users,search } = this.props;
@@ -53,16 +53,19 @@ class Contacts extends Component {
       );
     });
 
-    return <div style={{ height: "100%" }}>
-    {mappedFriends}
-    </div>;
+    return <div style={{ height: "100%" }}>{mappedFriends}</div>;
   }
 }
 
-function mapStateToProps(reduxState){
-    return{
-        user:reduxState.user
-    }
+function mapStateToProps(reduxState) {
+  return {
+    user: reduxState.user
+  };
 }
 
-export default memo(connect(mapStateToProps,{handleFriend})(Contacts)) 
+export default memo(
+  connect(
+    mapStateToProps,
+    { handleFriend }
+  )(Contacts)
+);
