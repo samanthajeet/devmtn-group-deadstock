@@ -184,6 +184,7 @@ class Chat extends Component {
                 <ConditionalComp
                   users={this.props.users}
                   startChat={this.startChat}
+                  search={this.state.search}
                   style={{
                     maxHeight: "100%",
                     minHeight: "100%",
