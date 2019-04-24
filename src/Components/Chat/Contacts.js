@@ -10,8 +10,18 @@ class Contacts extends Component {
   }
 
   render() {
-    const { users } = this.props;
-    let mappedFriends = users.map(friend => {
+    const { users,search } = this.props;
+    let mappedFriends = users.filter(user=>{
+      const friendSearch = search.toLowerCase().split(' ')
+        for (let i = 0; i < friendSearch.length; i++) {
+          const searchName = friendSearch[i];
+          if (!user.first_name.toLowerCase().includes(searchName) &&
+            !user.last_name.toLowerCase().includes(searchName)) {
+            return false
+          }
+        }
+        return true
+    }).map(friend => {
       return (
         <div
           key={friend.user_id}

@@ -21,7 +21,20 @@ class List extends Component {
   };
 
   render() {
-    const mappedName = this.props.list.map(name => {
+    let { list,search } = this.props
+
+    const mappedName = this.props.list.filter(friend => {
+        const friendSearch = search.toLowerCase().split(' ')
+        for (let i = 0; i < friendSearch.length; i++) {
+          const searchName = friendSearch[i];
+          if (!friend.first_name.toLowerCase().includes(searchName) &&
+            !friend.last_name.toLowerCase().includes(searchName)) {
+            this.props.handleList(list)
+            return false
+          }
+        }
+        return true
+      }).map(name => {
       return (
         <div
           key={name.user_id}
