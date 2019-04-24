@@ -52,7 +52,9 @@ class List extends Component {
         </div>
       );
     });
-    return <div style={{ height: "100%" }}>{mappedName}</div>;
+    return <div style={{ height: "100%" }}>
+    {mappedName}
+    </div>
   }
 }
 
