@@ -66,7 +66,7 @@ export default function reducer(state = initialState, action) {
         case HANDLE_LIST:
             return { ...state, list: action.payload }
         case CLEAR_USER:
-            return { ...state, user: {}, friend:{}, room:'', chat:[] }
+            return { ...state, user: {}, friend:{}, room:'', chat:[] , list:[]}
         default:
             return state
     }
