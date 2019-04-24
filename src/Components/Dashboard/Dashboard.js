@@ -244,6 +244,78 @@ class Dashboard extends React.Component {
     });
   };
 
+
+  async handleHomeToggle(){
+    if(this.state.show){
+      await this.setState({
+        show:false
+      })
+    }
+    if(this.state.show2){
+      await this.setState({
+        show2:false
+      })
+    }
+    this.props.history.push("/dashboard/home")
+  }
+
+  async handleClosetToggle(){
+    if(this.state.show){
+      await this.setState({
+        show:false
+      })
+    }
+    if(this.state.show2){
+      await this.setState({
+        show2:false
+      })
+    }
+    this.props.history.push("/dashboard/closet")
+  }
+
+  async handleCollectionToggle(){
+    if(this.state.show){
+      await this.setState({
+        show:false
+      })
+    }
+    if(this.state.show2){
+      await this.setState({
+        show2:false
+      })
+    }
+    this.props.history.push("/dashboard/collection")
+  }
+
+  async handleCommunityToggle(){
+    if(this.state.show){
+      await this.setState({
+        show:false
+      })
+    }
+    if(this.state.show2){
+      await this.setState({
+        show2:false
+      })
+    }
+    this.props.history.push("/dashboard/community")
+  }
+
+  async handleShopToggle(){
+    if(this.state.show){
+      await this.setState({
+        show:false
+      })
+    }
+    if(this.state.show2){
+      await this.setState({
+        show2:false
+      })
+    }
+    this.props.history.push("/dashboard/shop")
+  }
+
+
   render() {
     const { hidden, show, hidden2, show2 } = this.state;
     const { classes } = this.props;
@@ -383,7 +455,7 @@ class Dashboard extends React.Component {
                   <ListItem
                     button
                     className={classes.iconButtons}
-                    onClick={() => this.props.history.push("/dashboard/home")}
+                    onClick={() => this.handleHomeToggle()}
                   >
                     <ListItemIcon>
                       <HomeIcon className={classes.drawerButtonContent} />
@@ -403,7 +475,7 @@ class Dashboard extends React.Component {
                   <ListItem
                     button
                     className={classes.iconButtons}
-                    onClick={() => this.props.history.push("/dashboard/closet")}
+                    onClick={() => this.handleClosetToggle()}
                   >
                     <ListItemIcon>
                       <i
@@ -431,7 +503,7 @@ class Dashboard extends React.Component {
                   <ListItem
                     button
                     className={classes.iconButtons}
-                    onClick={() => this.props.history.push("/dashboard/collection")}
+                    onClick={() => this.handleCollectionToggle()}
                   >
                     <ListItemIcon>
                       <Favorite className={classes.drawerButtonContent} />
@@ -454,7 +526,7 @@ class Dashboard extends React.Component {
                   <ListItem
                     button
                     className={classes.iconButtons}
-                    onClick={() => this.props.history.push("/dashboard/community")}
+                    onClick={() => this.handleCommunityToggle()}
                   >
                     <ListItemIcon>
                       <Public className={classes.drawerButtonContent} />
@@ -476,7 +548,7 @@ class Dashboard extends React.Component {
                   <ListItem
                     button
                     className={classes.iconButtons}
-                    onClick={() => this.props.history.push("/dashboard/shop")}
+                    onClick={() => this.handleShopToggle()}
                   >
                     <ListItemIcon>
                       <ShoppingCart className={classes.drawerButtonContent} />
