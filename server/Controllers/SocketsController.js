@@ -11,7 +11,18 @@ module.exports={
         chats = chats.filter(chat=>{
             return chat.user_id != room
         })
-        console.log(chats)
-        res.status(200).send(chats)
+        
+        let awaiting = users.map(async id1 =>{
+                let awaitedUsers = await db.chats.get_user_chat({id1})
+                array.push(awaitedUsers[0])
+                return array
+            })
+
+        Promise.all(awaiting).then(
+            (awaitingU)=>{
+                awaitingU = awaitingU[0]
+                awaitingU = awaitingU.sort((a,b)=>{return b.user_id - a.user_id })
+                res.status(200).send(awaitingU)
+            })
     }
 }
