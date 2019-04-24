@@ -122,33 +122,93 @@ class Closet extends Component {
             <p>LOADING</p>
           </Progress>
         ) : (
-            <div>
-              <UserInfo>
-                <Chartjs>
-                  <p>ChartJS goes here</p>
-                  <button onClick={() => this.props.history.push("closet/upload")}>
-                    Add Shoe
-                  </button>
-                </Chartjs>
-                <PaperContainer>
-                  <Paper style={{ height: '100%', padding: '0.5rem', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                    <div style={{ height: '50%', width: '50%' }}>
-                      <img src={this.props.profile_pic} alt="" style={{ width: '100%', height: "100%", objectFit: 'cover' }} />
-                    </div>
-                    <p>
-                      {this.props.bio}
-                    </p>
-                </Paper>
-              </PaperContainer>
-            </UserInfo>
-            <h1 style={{ color: "white" }}>Your Shoes</h1>
-            <Button
+          <div>
+            <UserInfo>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <div
+                  style={{
+                    width: "66%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "10%"
+                  }}
+                >
+                  <h1
+                    style={{
+                      color: "white",
+                      borderBottom: "solid 1px white",
+                      width: "100%"
+                    }}
+                  >
+                    Your Closet
+                  </h1>
+                </div>
+                <Chartjs />
+                <Button
+                style={{marginTop: "5%", width: "90%"}}
               variant="contained"
               color="primary"
+              
               onClick={() => this.props.history.push("closet/upload")}
             >
               Add A New Shoe To Your Closet
             </Button>
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "50vh"}}>
+                <Paper
+                  style={{
+                    height: "90%",
+                    padding: "0.5rem",
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "column",
+                    width: "80%"
+                  }}
+                >
+                  <div style={{ height: "50%", width: "50%",  }}>
+                    <img
+                      src={this.props.profile_pic}
+                      alt=""
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover"
+                      }}
+                    />
+                  </div>
+                  <p>{this.props.bio}</p>
+                </Paper>
+              </div>
+            </UserInfo>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: "10%"
+              }}
+            >
+              <h1
+                style={{
+                  color: "white",
+                  borderBottom: "solid 1px white",
+                  width: "66vw"
+                }}
+              >
+                Your Shoes
+              </h1>
+            </div>
+           
             <MappedUserShoes>{mappedUserShoes}</MappedUserShoes>
           </div>
         )}

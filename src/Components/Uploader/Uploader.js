@@ -70,10 +70,8 @@ class Uploader extends Component {
       }
     };
     axios.put(signedRequest, file, options).then(resp => {
-      console.log(resp)
+      console.log(resp);
     });
-
-    // this.setState({ files: images });
   };
 
   handleSelectedShoe = shoe => {
@@ -143,7 +141,7 @@ class Uploader extends Component {
               width: "100%",
               alignItems: "center",
               position: "relative",
-              backgroundImage: "linear-gradient(black, #26f7ff)"
+              background: "transparent"
             }}
           >
             <button
