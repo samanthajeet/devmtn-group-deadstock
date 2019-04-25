@@ -9,29 +9,25 @@ class ChatMessages extends Component {
   state = {
     messages: [],
     message: "",
-    loading: false
   };
 
   componentDidMount() {
     this.getFriendMessage()
     sockets.on("returnJoin", messages => {
       this.props.handleChat(messages);
-      this.setState({
-        loading: true
-      });
+
     });
     sockets.on("returnMessages", messages => {
       this.props.handleChat(messages);
     });
   }
   
-  getFriendMessage=()=>{
-    console.log(this.props.friend)
-    if(this.props.friend !== {}){
-      // axios.get('api/')
-
+  getFriendMessage=async()=>{
+    if(Object.entries(this.props.friend).length !== 0){
+      let chat = await axios.get(`api/getChat/${this.props.friend.user_id}`)
+      chat = chat.data
+      this.props.handleChat(chat)
     }
-
   }
 
   render() {
@@ -79,16 +75,7 @@ class ChatMessages extends Component {
                 >
                   {message.message}
                 </p>
-                {/* <div style={{}}>
-                  <img
-                    src={message.profile_pic}
-                    style={{
-                      height: "2rem",
-                      width: "2rem",
-                      borderRadius: "50%"
-                    }}
-                  />
-                </div> */}
+
               </div>
             </div>
           </div>
@@ -125,24 +112,7 @@ class ChatMessages extends Component {
                   padding: "2px"
                 }}
               >
-                {/* <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    height: "100%"
-                  }}
-                >
-                  <img
-                    src={message.profile_pic}
-                    style={{
-                      height: "2rem",
-                      width: "2rem",
-                      borderRadius: "50%"
-                    }}
-                  />
-                </div> */}
+            
                 <p
                   style={{
                     margin: 0,
@@ -159,13 +129,20 @@ class ChatMessages extends Component {
         );
       }
     });
+    
 
     return (
       <>
-        {this.state.loading && (
-          <div style={{ marginTop: "5px" }}>{mappedMessages}</div>
-        )}
-      </>
+        {mappedMessages.length !== 0 ?
+          <div style={{ marginTop: "5px" }}>
+            {mappedMessages}
+          </div>
+          : 
+          <div style={{margin:'1rem auto',fontSize:'1rem'}}>
+            No chat history available
+          </div>
+        }
+       </>
     );
   }
 }
