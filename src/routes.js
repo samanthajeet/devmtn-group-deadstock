@@ -4,7 +4,6 @@ import Landing from './Components/Landing/Landing';
 import Register from './Components/Landing/Register';
 import Login from './Components/Landing/Login';
 import Dashboard from './Components/Dashboard/Dashboard';
-import Product from './Components/Product/Product'
 
 export default (
   <Switch>
