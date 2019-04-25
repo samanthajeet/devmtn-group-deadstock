@@ -5,11 +5,10 @@ import Avatar from "@material-ui/core/Avatar";
 import skull from "../Landing/image/skull-white.png";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
 
 const Shoe = styled.div`
   :hover {
-    color: #26f7ff;
-    background: gray;
   }
 `;
 
@@ -58,7 +57,9 @@ class Home extends Component {
 
   render() {
     const { feed } = this.state;
+
     let mappedFeed = feed.map(follower => {
+      console.log(follower.for_sale);
       return (
         <Paper
           key={follower.user_shoe_id}
@@ -75,14 +76,43 @@ class Home extends Component {
             style={{
               height: "8%",
               display: "flex",
-              justifyContent: "flex-start",
+              justifyContent: "space-between",
               alignItems: "center"
             }}
           >
-            <Avatar src={follower.profile_pic} style={{ margin: ".5rem" }} />
-            <div style={{ fontWeight: "bold" }}>
-              {follower.first_name} {follower.last_name}
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Avatar src={follower.profile_pic} style={{ margin: ".5rem" }} />
+              <div style={{ fontWeight: "bold" }}>
+                {follower.first_name} {follower.last_name}
+              </div>
             </div>
+            {follower.for_sale == true ? (
+              <div
+                style={{
+                  border: "1px solid green",
+                  borderRadius: "6px",
+                  padding: "3px 6px 3px 6px",
+                  color: "green",
+                  marginRight: "1%"
+                }}
+              >
+                {" "}
+                For Sale{" "}
+              </div>
+            ) : (
+              <div
+                style={{
+                  border: "1px solid red",
+                  borderRadius: "6px",
+                  padding: "3px 6px 3px 6px",
+                  color: "red",
+                  marginRight: "1%"
+                }}
+              >
+                {" "}
+                Not For Sale{" "}
+              </div>
+            )}
           </div>
           <div style={{ height: "72%" }}>
             <div style={{ display: "flex", height: "50%", width: "100%" }}>
@@ -117,49 +147,63 @@ class Home extends Component {
               display: "flex",
               alignItems: "center",
               flexDirection: "column",
-              justifyContent: "flex-start"
+              justifyContent: "space-between"
             }}
           >
-            <Link
-              style={{ textDecoration: "none", width: "100%", display: "flex" }}
-              to={`/dashboard/shop/${follower.shoe_id}`}
-            >
-              <Shoe>
-                {follower.shoe_brand} {follower.shoe_model} {follower.colorway}
-              </Shoe>
-            </Link>
             <div
               style={{
-                width: "100%",
                 display: "flex",
-                justifyContent: "space-evenly"
+                justifyContent: "space-between",
+                width: "100%"
               }}
             >
-              <div>Copped At: ${follower.bought_price}.00 </div>
-              <div>Sell Price: ${follower.sale_price}.00</div>
+              <Link
+                style={{
+                  textDecoration: "none",
+                  width: "75%",
+                  display: "flex"
+                }}
+                to={`/dashboard/shop/${follower.shoe_id}`}
+              >
+                <Shoe
+                  style={{
+                    fontWeight: "bold",
+                    marginLeft: "1%",
+                    marginTop: "1%"
+                  }}
+                >
+                  {follower.shoe_brand} {follower.shoe_model}{" "}
+                  {follower.colorway}
+                </Shoe>
+              </Link>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginRight: "1%"
+                }}
+              >
+                <div style={{ fontWeight: "bold" }}>Copped At</div>{" "}
+                <div style={{ fontSize: "1.1rem", color: "green" }}>
+                  ${follower.bought_price}.00{" "}
+                </div>
+              </div>
             </div>
+
             <div>{follower.details}</div>
 
-            <button
+            <Button
+              style={{ marginBottom: "1%" }}
+              color="primary"
+              variant="contained"
               onClick={() => {
                 this.props.history.push(
                   `/dashboard/closet/${follower.user_id}`
                 );
               }}
             >
-              View Closet
-            </button>
-            {follower.for_sale ? (
-              <button
-                onClick={() => {
-                  this.props.history.push(
-                    `/dashboard/shop/${follower.shoe_id}`
-                  );
-                }}
-              >
-                View Product
-              </button>
-            ) : null}
+              View {follower.first_name}'s Closet
+            </Button>
           </div>
         </Paper>
       );
