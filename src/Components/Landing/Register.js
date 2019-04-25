@@ -16,8 +16,11 @@ import RFTextField from "./modules/form/RFTextField";
 import FormButton from "./modules/form/FormButton";
 import FormFeedback from "./modules/form/FormFeedback";
 import axios from "axios";
-import {connect} from 'react-redux';
-import {handleUser} from '../../ducks/reducer';
+import { connect } from 'react-redux';
+import { handleUser } from '../../ducks/reducer';
+import Snackbar from "@material-ui/core/Snackbar";
+import CloseIcon from "@material-ui/icons/Close";
+import IconButton from '@material-ui/core/IconButton';
 
 const styles = theme => ({
   form: {
@@ -27,14 +30,27 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
     marginBottom: theme.spacing.unit * 2
   },
+  snackStyle: {
+    backgroundColor:'red'
+  },
   feedback: {
     marginTop: theme.spacing.unit * 2
-  }
+  },
 });
 
 class SignUp extends React.Component {
   state = {
-    sent: false
+    sent: false,
+    open: false
+  };
+
+  handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    this.setState({
+      open: false
+    })
   };
 
   validate = values => {
@@ -55,9 +71,15 @@ class SignUp extends React.Component {
   };
 
   handleSubmit = async values => {
-    const user = await axios.post("/api/auth/register", values);
-    this.props.handleUser(user.data);
-    this.props.history.push("/dashboard");
+    try {
+      const user = await axios.post("/api/auth/register", values);
+      this.props.handleUser(user.data);
+      this.props.history.push("/dashboard");
+    } catch{
+      this.setState({
+        open: true
+      })
+    }
   };
 
   render() {
@@ -66,6 +88,32 @@ class SignUp extends React.Component {
 
     return (
       <React.Fragment>
+        <Snackbar
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          open={this.state.open}
+          autoHideDuration={6000}
+          onClose={() => this.handleClose()}
+          ContentProps={{
+            "aria-describedby": "message-id",
+            classes: {
+              snackStyle: classes.snackStyle
+            }
+          }}
+          message={<span id="message-id">Email is taken</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              onClick={() => this.handleClose()}
+            >
+              <CloseIcon />
+            </IconButton>
+          ]}
+        />
         <AppAppBar />
         <AppForm>
           <React.Fragment>
@@ -155,7 +203,6 @@ class SignUp extends React.Component {
             )}
           </Form>
         </AppForm>
-        {/* <AppFooter /> */}
       </React.Fragment>
     );
   }
@@ -165,7 +212,7 @@ SignUp.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default connect('',{handleUser})(compose(
+export default connect('', { handleUser })(compose(
   withRoot,
   withStyles(styles)
 )(SignUp));

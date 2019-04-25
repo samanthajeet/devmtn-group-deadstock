@@ -153,6 +153,10 @@ const Product = props => {
     setSellers(response.data)
   }
 
+  function setComma(num){
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  }
+
   const mappedSellers = sellers.map( seller => {
         return (
           <div className={classes.demo} key= {seller.user_id}>
@@ -161,7 +165,7 @@ const Product = props => {
                 <Avatar src={seller.profile_pic}  />
                 <ListItemText
                   primary={`${seller.first_name} ${seller.last_name}`}
-                  secondary={secondary ? "Secondary text" : null}
+                  secondary={`Selling for $${setComma(seller.sale_price)} OBO`}
                 />
                 
               </ListItem>

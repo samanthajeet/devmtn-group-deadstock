@@ -158,6 +158,7 @@ class Chart extends Component {
 
   render() {
     // const showLabels = this.state.width > 678 ? true : false;
+    // console.log(this.props)
     const showLabels = true;
     return (
       <div>

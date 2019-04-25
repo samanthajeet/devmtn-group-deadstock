@@ -1,15 +1,7 @@
-import {logout,getSignedRequest,getContacts} from '../Logic/logickevin'
-import mockAxios from "axios";
-import axios from 'axios';
+import {getSignedRequest} from '../Logic/logickevin'
 
 const files = [{name:'pic.jpeg'},{name:'dev.png'}]
 
-describe('Tests logout function', () => {
-    it('should be a function',()=>{
-      expect(typeof logout).toBe('function')
-    });
-});
-    
 describe('Tests getSignedRequest',()=>{
     it('should have be a function',()=>{
         expect(typeof getSignedRequest).toBe('function')
@@ -47,8 +39,3 @@ describe('Tests getSignedRequest',()=>{
     })    
 })
 
-describe('Tests getContacts',()=>{
-    it('should be a function',()=>{
-        expect(typeof getContacts).toBe('function')
-    })
-})
