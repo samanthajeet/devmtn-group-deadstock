@@ -64,7 +64,7 @@ class Chat extends Component {
 
   render() {
     const { hidden, show } = this.props;
-    const { first_name, last_name, profile_pic, user_id } = this.props.friend;
+    const { first_name, last_name, profile_pic } = this.props.friend;
     const ConditionalComp = this.state.compRendered;
     return (
       <div
@@ -207,6 +207,7 @@ class Chat extends Component {
               >
                 <img
                   src={profile_pic}
+                  alt="Profile Pic"
                   height="66rem"
                   width="66rem"
                   style={{ borderRadius: "50%", marginLeft: "3%" }}

@@ -7,7 +7,6 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import LinearProgress from '@material-ui/core/LinearProgress';
 import Fade from '@material-ui/core/Fade';
 
 
@@ -62,7 +61,7 @@ class CommunityCard extends Component {
   checkFollowing = async() => {
     const followed_user_id = this.props.user_id
     await axios.get(`/api/checkFollowing/${followed_user_id}`).then( response => {
-      if(response.data != ''){
+      if(response.data !== ''){
         this.setState({
           following: true
         })
@@ -91,7 +90,7 @@ class CommunityCard extends Component {
   }
 
   render() { 
-    const { classes, theme } = this.props;
+    const { classes } = this.props;
     const {following, checked, loading} = this.state
     return ( 
       <>

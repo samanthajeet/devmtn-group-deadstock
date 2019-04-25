@@ -24,19 +24,6 @@ const UserInfo = styled.div`
   justify-content: space-around;
 `;
 
-const ChartJS = styled.div`
-  width: 70%;
-  background-color: white;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-`;
-
-const PaperContainer = styled.div`
-  width: 30%;
-  height: 100%;
-`;
-
 const SkullProgress = styled.div`
   animation-name: spin;
   animation-duration: 2s;
@@ -93,9 +80,7 @@ class Closet extends Component {
         profile_pic: response.data.profile_pic,
         bio: response.data.bio
       })
-      // console.log(response.data)
     } else {
-      // console.log(this.props)
       this.setState({
         profile_pic: this.props.profile_pic,
         bio: this.props.bio
