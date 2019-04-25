@@ -13,21 +13,21 @@ module.exports = {
   },
   getStats1: async(req, res) => {
     const db = req.app.get('db');
-    const {user_id} = req.session.user
+    const {user_id} = req.params
     const brands = await db.closet.get_brand_counts({user_id})
     res.status(200).send(brands)
   },
 
   getStats2:async(req,res)=>{
     const db = req.app.get('db');
-    const {user_id} = req.session.user
+    const {user_id} = req.params
     const value = await db.closet.get_value({user_id})
     res.status(200).send(value)
   },
 
   getStats3:async(req,res)=>{
     const db = req.app.get('db');
-    const {user_id} = req.session.user;
+    const {user_id} = req.params
     const vintage = await db.closet.get_vintage({user_id})
     const regular = await db.closet.get_regular({user_id})
     const shoes = []

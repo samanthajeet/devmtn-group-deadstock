@@ -171,7 +171,7 @@ class Closet extends Component {
                     Your Closet
                   </h1>
                 </div>
-                <Chartjs user_id = {this.props.match.params} />
+                <Chartjs user_id = {this.props.match.params.user_id} />
                 { this.props.user_id === +this.props.match.params.user_id ?(
 
                     <Button

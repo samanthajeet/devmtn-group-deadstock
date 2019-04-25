@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
-import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
 
 const styles = theme => ({
@@ -88,10 +87,11 @@ const BottomRow = styled.div`
 
 function ClosetCard(props) {
   const { classes } = props;
-  function combineModelColor(model, colorway) {
-    const modelColorway = model + " - " + colorway;
-    return modelColorway;
-  }
+
+  // function combineModelColor(model, colorway) {
+  //   const modelColorway = model + " - " + colorway;
+  //   return modelColorway;
+  // }
 
 
   return (
