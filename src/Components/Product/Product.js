@@ -17,6 +17,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import styled from "styled-components";
 import Fade from '@material-ui/core/Fade';
 import skull from "../Landing/image/skull-white.png";
+import Avatar from "@material-ui/core/Avatar";
 
 
 const Progress = styled.div`
@@ -94,13 +95,13 @@ const styles = theme => ({
   }
 });
 
-function generate(element) {
-  return [0, 1, 2].map(value =>
-    React.cloneElement(element, {
-      key: value
-    })
-  );
-}
+// function generate(element) {
+//   return [0, 1, 2].map(value =>
+//     React.cloneElement(element, {
+//       key: value
+//     })
+//   );
+// }
 
 const Product = props => {
   const { classes } = props;
@@ -115,16 +116,17 @@ const Product = props => {
   const [image2, setImage2] = useState("");
   const [image3, setImage3] = useState("");
   const [image4, setImage4] = useState("");
-  const [dense = false, setDense] = useState("");
+  const [dense, setDense] = useState(false);
   const [secondary = false, setSecondary] = useState("");
   const [open = false, setOpen] = useState("");
   const [loading, setLoading] = useState("");
-  const [sellers, setSellers] = useState({});
+  const [sellers, setSellers] = useState([]);
 
   useEffect(() => {
     setLoading(true);
     getShoe();
     getSellers();
+    console.log(props, 222)
   }, []);
 
   const getShoe = async () => {
@@ -148,9 +150,27 @@ const Product = props => {
   const getSellers= async() => {
     const shoe_id = props.match.params.shoe_id;
     const response = await axios.get(`/api/sellers/${shoe_id}`)
-    await setSellers(response.data)
+    setSellers(response.data)
   }
 
+  const mappedSellers = sellers.map( seller => {
+        return (
+          <div className={classes.demo} key= {seller.user_id}>
+          <List dense={dense}>
+              <ListItem onClick={() => props.history.push(`/dashboard/closet/${seller.user_id}`)} >
+                <Avatar src={seller.profile_pic}  />
+                <ListItemText
+                  primary={`${seller.first_name} ${seller.last_name}`}
+                  secondary={secondary ? "Secondary text" : null}
+                />
+                
+              </ListItem>
+          </List>
+        </div>
+        )
+      })
+     
+  
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -224,21 +244,7 @@ const Product = props => {
               <Typography variant="h5" component="h3">
                 Sellers
               </Typography>
-              <div className={classes.demo}>
-                <List dense={dense}>
-                  {generate(
-                    <ListItem>
-                      <ListItemIcon>
-                        <i class="material-icons">person</i>
-                      </ListItemIcon>
-                      <ListItemText
-                        primary="user"
-                        secondary={secondary ? "Secondary text" : null}
-                      />
-                    </ListItem>
-                  )}
-                </List>
-              </div>
+              {mappedSellers}
             </Paper>
           </div>
         </div>

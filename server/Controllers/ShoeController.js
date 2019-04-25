@@ -15,7 +15,6 @@ module.exports = {
     const db = req.app.get('db');
     const {shoe_id} = req.params
     let response = await db.shoes.get_sellers({shoe_id});
-    
     res.status(200).send(response)
   }
 }
