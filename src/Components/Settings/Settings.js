@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import Paper from "@material-ui/core/Paper";
-import { DropzoneDialog } from "material-ui-dropzone";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import styled from "styled-components";
 import "./Settings.css";
-import { v4 as randomString } from "uuid";
 
 const Progress = styled.div`
   color: white;
@@ -34,7 +32,6 @@ class Settings extends Component {
       isLoading:false
     };
     this.handlePhoto = this.handlePhoto.bind(this);
-    // this.sendPhoto = this.sendPhoto.bind(this);
   }
 
 
@@ -58,33 +55,16 @@ handlePhoto(event) {
     });
   };
   // take the file from the input field and process it at a DataURL (a special way to interpret files)
-  console.log(file)
  reader.readAsDataURL(file);
 
-  console.log(this.state)
 
-
-//   if(this.state.file !== '' && this.state.filename != "" && this.state.filetype != '')
-// {  axios.post('/api/s3', this.state).then(response => {
-//     console.log('hit return', response.data)
-//     this.setState({ profile_pic: response.data.Location,isLoading:false }); })}
 setTimeout(() => {  
   
   axios.post('/api/s3', this.state).then(response => {
-  console.log('hit return', response.data)
   this.setState({ profile_pic: response.data.Location,isLoading:false });
 })}, 5000)
 
 }
-
-// when clicked it upload
-// sendPhoto() {
-//   console.log('hit sendPhoto')
-//   axios.post('/api/s3', this.state).then(response => {
-//     console.log('hit return', response.data)
-//     this.setState({ profile_pic: response.data.Location });
-// })
-// }
 
   componentDidMount() {
     this.handleGetUser();
@@ -110,54 +90,6 @@ handleInputChange(prop, val) {
     [prop]: val
   });
 }
-
-// handleOpen=()=>{
-//   this.setState({
-//     open:true
-//   })
-// }
-
-// handleClose=async()=>{
-//   console.log('hit close')
-//   await this.sendPhoto()
-//   this.setState({
-//     open:false
-//   })
-// }
-
-// sendPhoto=()=>{
-//   const {file,filename,filetype} = this.state
-//   console.log({file,filename,filetype})
-//   axios.post('/api/s3',{file,filename,filetype})
-// }
-
-// handleSave=async(file)=>{
-//   console.log(file[0],'hit upload')
-//   await this.setState({
-//     open:false,
-//     file:file[0],
-//     filename:file[0].name,
-//     filetype:file[0].type
-//   })
-//   console.log(this.state.file)
-//   this.handlePhoto()
-// }
-
-// handlePhoto=()=>{
-//   console.log('hit photo')
-//   const reader = new FileReader();
-
-
-//   reader.onload = async photo => {
-//     console.log(photo.target.result)
-//     // the photo param here is the processed image from the reader.
-//     await this.setState({
-//       file: photo.target.result
-//     });
-//   };
-//   console.log('files', this.state.file)
-//   // reader.readAsDataURL(file);
-// }
 
 updateUser() {
   const {
@@ -248,25 +180,9 @@ render() {
                       backgroundSize: "cover"
                     }}
                   />}
-                  {/* <Button onClick={() => this.handleOpen()}>Edit Photo</Button> */}
                 </div>
-                {/* <DropzoneDialog
-                  align="center"
-                  open={this.state.open}
-                  onSave={this.handleSave.bind(this)}
-                  filesLimit={1}
-                  acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
-                  showPreviews={true}
-                  maxFileSize={10000000}
-                  onClose={this.handleClose.bind(this)}
-                  height={450}
-                  width={400}
-                /> */}
           
           <input type="file" onChange={this.handlePhoto} />
-        {/* <button onClick={this.sendPhoto}>upload</button> */}
-          {/* <img src={this.state.img} alt="none" /> */}
-
                 <TextField
                   id="standard-multiline-fixed"
                   label="About Me"

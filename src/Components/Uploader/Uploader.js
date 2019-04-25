@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import { DropzoneArea } from "material-ui-dropzone";
-import Button from "@material-ui/core/Button";
 import { v4 as randomString } from "uuid";
 import axios from "axios";
 import SearchItem from "./SearchItem";
-import { OutlinedInput } from "@material-ui/core";
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import TextFieldForm from "./TextFieldForm";
 import SelectedItem from "./SelectedItem";
@@ -96,7 +93,6 @@ class Uploader extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     const mappedProducts = this.state.products
       .filter(shoe => {
         const { selectedShoe } = this.state;

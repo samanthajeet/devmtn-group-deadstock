@@ -1,14 +1,8 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import { withStyles } from "@material-ui/core/styles";
-import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
@@ -64,13 +58,9 @@ class TextFieldForm extends Component {
     } else {
       alert(" please add all info");
     }
-
-    // axios.post("/api/closet/addShoe", {});
   };
 
   render() {
-    const { classes } = this.props;
-
     return (
       <form
         noValidate
@@ -173,9 +163,5 @@ class TextFieldForm extends Component {
     );
   }
 }
-
-// TextFieldForm.propTypes = {
-//   classes: PropTypes.object.isRequired
-// };
 
 export default TextFieldForm;
