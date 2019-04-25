@@ -83,7 +83,7 @@ class Chart extends Component {
   }
 
   getFirstChartStats = async () => {
-    let brands = await axios.get('/api/closetstats1')
+    let brands = await axios.get(`/api/closetstats1/${this.props.user_id}`)
     brands = brands.data
     let chart1Data = { ...this.state.chart1Data }
     let labels = [...chart1Data.labels]
@@ -100,7 +100,7 @@ class Chart extends Component {
   }
 
   getSecondChartStats = async () => {
-    let value = await axios.get('api/closetstats2')
+    let value = await axios.get(`/api/closetstats2/${this.props.user_id}`)
     value = value.data;
     let chart2Data = { ...this.state.chart2Data }
     let labels = [...chart2Data.labels]
@@ -117,7 +117,7 @@ class Chart extends Component {
   }
 
   getThirdChartStats = async () => {
-    let shoes = await axios.get('/api/closetstats3')
+    let shoes = await axios.get(`/api/closetstats3/${this.props.user_id}`)
     shoes = shoes.data
     let chart3Data = { ...this.state.chart3Data }
     let data = [...chart3Data.datasets[0].data]
@@ -158,7 +158,7 @@ class Chart extends Component {
 
   render() {
     // const showLabels = this.state.width > 678 ? true : false;
-    // console.log(this.props)
+    // console.log(1111,this.props.user_id)
     const showLabels = true;
     return (
       <div>
