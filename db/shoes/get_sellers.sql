@@ -1,4 +1,4 @@
-select u.user_id, x.first_name, x.last_name, x.profile_pic
+select u.user_id, x.first_name, x.last_name, x.profile_pic, u.sale_price
 from shoes s
 join user_shoes u
 on u.shoe_id = s.shoe_id

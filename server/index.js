@@ -170,6 +170,7 @@ app.get(`/api/collection`, collCtrl.getCollection);
 // Chat Endpoints
 const sockCtrl = require("./Controllers/SocketsController");
 app.get(`/api/chats`, sockCtrl.getChats);
+app.get('/api/getChat/:user_id',sockCtrl.getChat)
 
 //Socket Endpoints
 io.on("connection", function(socket) {

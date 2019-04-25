@@ -86,9 +86,8 @@ class Closet extends Component {
     });
   };
 
-  getUserInfo = async() => {
-    console.log(this.props.user_id, +this.props.match.params.user_id )
-    if( this.props.user_id != +this.props.match.params.user_id){
+  getUserInfo = async () => {
+    if (this.props.user_id != +this.props.match.params.user_id) {
       let response = await axios.get(`/api/closetUserInfo/${this.props.match.params.user_id}`)
       this.setState({
         profile_pic: response.data.profile_pic,
@@ -142,101 +141,100 @@ class Closet extends Component {
             <p>LOADING</p>
           </Progress>
         ) : (
-          <div>
-            <UserInfo>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
+            <div>
+              <UserInfo>
                 <div
                   style={{
-                    width: "66%",
                     display: "flex",
+                    flexDirection: "column",
                     justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: "10%"
+                    alignItems: "center"
                   }}
                 >
-                  <h1
+                  <div
                     style={{
-                      color: "white",
-                      borderBottom: "solid 1px white",
-                      width: "100%"
+                      width: "66%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: "10%"
                     }}
                   >
-                    Your Closet
+                    <h1
+                      style={{
+                        color: "white",
+                        borderBottom: "solid 1px white",
+                        width: "100%"
+                      }}
+                    >
+                      Your Closet
                   </h1>
                 </div>
                 <Chartjs user_id = {this.props.match.params.user_id} />
                 { this.props.user_id === +this.props.match.params.user_id ?(
 
                     <Button
-                    style={{marginTop: "5%", width: "90%"}}
-                  variant="contained"
-                  color="primary"
-                  
-                  onClick={() => this.props.history.push("closet/upload")}
-                >
-                  Add A New Shoe To Your Closet
+                      style={{ marginTop: "5%", width: "90%" }}
+                      variant="contained"
+                      color="primary"
+                      onClick={() => this.props.history.push("/dashboard/closet/upload")}
+                    >
+                      Add A New Shoe To Your Closet
                 </Button>
-                ): (
-                  null
-                )}
-              </div>
+                  ) : (
+                      null
+                    )}
+                </div>
 
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "50vh"}}>
-                <Paper
-                  style={{
-                    height: "90%",
-                    padding: "0.5rem",
-                    display: "flex",
-                    alignItems: "center",
-                    flexDirection: "column",
-                    width: "80%"
-                  }}
-                >
-                  <div style={{ height: "50%", width: "50%",  }}>
-                    <img
-                      src={this.state.profile_pic}
-                      alt=""
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover"
-                      }}
-                    />
-                  </div>
-                  <p>{this.state.bio}</p>
-                </Paper>
-              </div>
-            </UserInfo>
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: "10%"
-              }}
-            >
-              <h1
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "50vh" }}>
+                  <Paper
+                    style={{
+                      height: "90%",
+                      padding: "0.5rem",
+                      display: "flex",
+                      alignItems: "center",
+                      flexDirection: "column",
+                      width: "80%"
+                    }}
+                  >
+                    <div style={{ height: "50%", width: "50%", }}>
+                      <img
+                        src={this.state.profile_pic}
+                        alt=""
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover"
+                        }}
+                      />
+                    </div>
+                    <p>{this.state.bio}</p>
+                  </Paper>
+                </div>
+              </UserInfo>
+              <div
                 style={{
-                  color: "white",
-                  borderBottom: "solid 1px white",
-                  width: "66vw"
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "10%"
                 }}
               >
-                Your Shoes
+                <h1
+                  style={{
+                    color: "white",
+                    borderBottom: "solid 1px white",
+                    width: "66vw"
+                  }}
+                >
+                  Your Shoes
               </h1>
+              </div>
+
+              <MappedUserShoes>{mappedUserShoes}</MappedUserShoes>
             </div>
-           
-            <MappedUserShoes>{mappedUserShoes}</MappedUserShoes>
-          </div>
-        )}
+          )}
       </div>
     );
   }
