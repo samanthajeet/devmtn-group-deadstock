@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import sockets from "./Sockets";
 import { handleChat } from "../../ducks/reducer";
 // import CircularProgress from "@material-ui/core/CircularProgress";
+import axios from 'axios';
 
 class ChatMessages extends Component {
   state = {
@@ -12,6 +13,7 @@ class ChatMessages extends Component {
   };
 
   componentDidMount() {
+    this.getFriendMessage()
     sockets.on("returnJoin", messages => {
       this.props.handleChat(messages);
       this.setState({
@@ -21,6 +23,15 @@ class ChatMessages extends Component {
     sockets.on("returnMessages", messages => {
       this.props.handleChat(messages);
     });
+  }
+  
+  getFriendMessage=()=>{
+    console.log(this.props.friend)
+    if(this.props.friend !== {}){
+      // axios.get('api/')
+
+    }
+
   }
 
   render() {
