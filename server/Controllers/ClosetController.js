@@ -5,7 +5,12 @@ module.exports = {
     response = await db.closet.get_closet({user_id})
     res.status(200).send(response)
   },
-
+  getClosetUserInfo: async (req, res) => {
+    const db = req.app.get('db');
+    const {user_id} = req.params
+    response = await db.closet.get_closet_user_info({user_id})
+    res.status(200).send(response[0])
+  },
   getStats1: async(req, res) => {
     const db = req.app.get('db');
     const {user_id} = req.session.user

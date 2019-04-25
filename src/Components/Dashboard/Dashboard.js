@@ -21,7 +21,7 @@ import Collection from "../Collection/Collection";
 import Community from "../Community/Community";
 import Shop from "../Shop/Shop";
 import Logout from "@material-ui/icons/ExitToApp";
-import Search from "@material-ui/icons/Search";
+// import Search from "@material-ui/icons/Search";
 import ChatIcon from "@material-ui/icons/Forum";
 import SettingsIcon from "@material-ui/icons/Settings";
 import HomeIcon from "@material-ui/icons/Home";
@@ -270,7 +270,7 @@ class Dashboard extends React.Component {
         show2:false
       })
     }
-    this.props.history.push("/dashboard/closet")
+    this.props.history.push(`/dashboard/closet/${this.props.user.user_id}`)
   }
 
   async handleCollectionToggle(){
@@ -623,7 +623,7 @@ class Dashboard extends React.Component {
             <Settings hidden={hidden} show={show} />
             <Route path="/dashboard/home" component={Home} />
             <Route path="/dashboard/closet/upload" component={Uploader} />
-            <Route exact path="/dashboard/closet" component={Closet} />
+            <Route exact path='/dashboard/closet/:user_id' component={Closet} />
             <Route path="/dashboard/collection" component={Collection} />
             <Route
               path="/dashboard/community"

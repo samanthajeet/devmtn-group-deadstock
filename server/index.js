@@ -146,6 +146,8 @@ app.get("/api/closetstats1", closetCtrl.getStats1);
 app.get("/api/closetstats2", closetCtrl.getStats2);
 app.get("/api/closetstats3", closetCtrl.getStats3);
 app.get(`/api/closet/:user_id`, closetCtrl.getCloset);
+app.get(`/api/closetUserInfo/:user_id`, closetCtrl.getCloset);
+
 app.post(`/api/closet/addshoe`, closetCtrl.addShoe);
 app.delete(`/api/closet/delete/:shoe_id`, closetCtrl.deleteShoe);
 
