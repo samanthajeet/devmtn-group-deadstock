@@ -82,6 +82,7 @@ function ProductHero(props) {
           align="center"
           variant="h5"
           className={classes.h5}
+          style={{fontWeight:'bold', fontSize:'2rem', textShadow:'2px 2px #000000'}}
         >
           A Sneakerhead Community
         </Typography>
@@ -96,7 +97,11 @@ function ProductHero(props) {
         >
           Register
         </Button>
-        <Typography variant="body2" color="inherit" className={classes.more}>
+        <Typography 
+          variant="body2" color="inherit" 
+          className={classes.more}
+          style={{fontWeight:'bold', fontSize:'1.5rem', textShadow:'2px 2px #000000'}}
+          >
           Discover the experience
         </Typography>
         
