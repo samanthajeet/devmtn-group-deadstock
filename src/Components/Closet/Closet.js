@@ -65,17 +65,19 @@ class Closet extends Component {
     this.state = {
       open: false,
       user_shoes: [],
-      loading: true
+      loading: true,
+      user_image: '',
+      user_bio: ''
     };
   }
 
   componentDidMount() {
     this.getCloset();
+    this.getUserInfo()
   }
 
   getCloset = async () => {
-    let { user_id } = this.props;
-    let response = await axios.get(`/api/closet/${user_id}`);
+    let response = await axios.get(`/api/closet/${this.props.match.params.user_id}`);
     this.setState({
       user_shoes: response.data
     });
@@ -83,6 +85,23 @@ class Closet extends Component {
       loading: false
     });
   };
+
+  getUserInfo = async() => {
+    console.log(this.props.user_id, +this.props.match.params.user_id )
+    if( this.props.user_id !== +this.props.match.params){
+      let response = await axios.get(`/api/closetUserInfo/${this.props.match.params.user_id}`)
+      this.setState({
+        profile_pic: response.data.profile_pic,
+        bio: response.data.bio
+      })
+      console.log(response.data)
+    } else {
+      this.setState({
+        profile_pic: this.props.profile_pic,
+        bio: this.props.bio
+      })
+    }
+  }
 
   onOpenModal = () => {
     this.setState({ open: true });
@@ -152,15 +171,20 @@ class Closet extends Component {
                   </h1>
                 </div>
                 <Chartjs />
-                <Button
-                style={{marginTop: "5%", width: "90%"}}
-              variant="contained"
-              color="primary"
-              
-              onClick={() => this.props.history.push("closet/upload")}
-            >
-              Add A New Shoe To Your Closet
-            </Button>
+                { this.props.user_id === this.props.match.params ?(
+
+                    <Button
+                    style={{marginTop: "5%", width: "90%"}}
+                  variant="contained"
+                  color="primary"
+                  
+                  onClick={() => this.props.history.push("closet/upload")}
+                >
+                  Add A New Shoe To Your Closet
+                </Button>
+                ): (
+                  null
+                )}
               </div>
 
               <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "50vh"}}>
@@ -176,7 +200,7 @@ class Closet extends Component {
                 >
                   <div style={{ height: "50%", width: "50%",  }}>
                     <img
-                      src={this.props.profile_pic}
+                      src={this.state.profile_pic}
                       alt=""
                       style={{
                         width: "100%",
@@ -185,7 +209,7 @@ class Closet extends Component {
                       }}
                     />
                   </div>
-                  <p>{this.props.bio}</p>
+                  <p>{this.state.bio}</p>
                 </Paper>
               </div>
             </UserInfo>
