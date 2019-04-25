@@ -88,14 +88,15 @@ class Closet extends Component {
 
   getUserInfo = async() => {
     console.log(this.props.user_id, +this.props.match.params.user_id )
-    if( this.props.user_id !== +this.props.match.params){
+    if( this.props.user_id != +this.props.match.params.user_id){
       let response = await axios.get(`/api/closetUserInfo/${this.props.match.params.user_id}`)
       this.setState({
         profile_pic: response.data.profile_pic,
         bio: response.data.bio
       })
-      console.log(response.data)
+      // console.log(response.data)
     } else {
+      // console.log(this.props)
       this.setState({
         profile_pic: this.props.profile_pic,
         bio: this.props.bio
@@ -170,8 +171,8 @@ class Closet extends Component {
                     Your Closet
                   </h1>
                 </div>
-                <Chartjs />
-                { this.props.user_id === this.props.match.params ?(
+                <Chartjs user_id = {this.props.match.params} />
+                { this.props.user_id === +this.props.match.params.user_id ?(
 
                     <Button
                     style={{marginTop: "5%", width: "90%"}}
