@@ -35,5 +35,22 @@ module.exports={
                     res.status(200).send(awaitingU)
                 })
         }
+    },
+    getChat: async(req,res)=>{
+        const db = req.app.get('db')
+        let {user_id} = req.params
+        user_id = +user_id
+        let big
+        let small 
+        if(user_id > req.session.user.user_id){
+            big = user_id;
+            small = req.session.user.user_id
+        } else {
+            small = user_id;
+            big = req.session.user.user_id
+        }
+        const room = big + ':' + small
+        let chat = await db.chats.get_chats({room})
+        res.status(200).send(chat)
     }
 }
