@@ -54,7 +54,9 @@ class Closet extends Component {
       user_shoes: [],
       loading: true,
       user_image: '',
-      user_bio: ''
+      user_bio: '',
+      first_name: '',
+      last_name: ''
     };
   }
 
@@ -78,7 +80,9 @@ class Closet extends Component {
       let response = await axios.get(`/api/closetUserInfo/${this.props.match.params.user_id}`)
       this.setState({
         profile_pic: response.data.profile_pic,
-        bio: response.data.bio
+        bio: response.data.bio,
+        first_name: response.data.first_name,
+        last_name: response.data.last_name
       })
     } else {
       this.setState({
@@ -145,6 +149,17 @@ class Closet extends Component {
                       marginTop: "10%"
                     }}
                   >
+                  { (this.props.user_id != +this.props.match.params.user_id) ? (
+                    <h1
+                    style={{
+                      color: "white",
+                      borderBottom: "solid 1px white",
+                      width: "100%"
+                    }}
+                  >
+                    {this.state.first_name} {this.state.last_name}'s Closet
+                </h1>
+                  ):(
                     <h1
                       style={{
                         color: "white",
@@ -154,6 +169,8 @@ class Closet extends Component {
                     >
                       Your Closet
                   </h1>
+                  )}
+                    
                 </div>
                 <Chartjs user_id = {this.props.match.params.user_id} />
                 { this.props.user_id === +this.props.match.params.user_id ?(
