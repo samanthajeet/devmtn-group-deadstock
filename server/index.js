@@ -7,6 +7,8 @@ pg = require("pg");
 pgSession = require("connect-pg-simple")(session);
 
 const app = express();
+
+app.use( express.static( `${__dirname}/../build` ) );
 const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env;
 
 app.use(express.json());
