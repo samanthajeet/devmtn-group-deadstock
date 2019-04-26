@@ -4,44 +4,41 @@ import ProductCard from "../ProductCard/ProductCard";
 import { withRouter } from "react-router";
 // import CircularProgress from "@material-ui/core/CircularProgress";
 import styled from "styled-components";
-import skull from '../Landing/image/skull-white.png'
+import skull from "../Landing/image/skull-white.png";
 
 const MappedCollection = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  
 `;
 
-const CollectionContainer = styled.div `
-    h2{
-        color:white
-    }
-`
+const CollectionContainer = styled.div`
+  h2 {
+    color: white;
+  }
+`;
 
-const SkullProgress = styled.div `
+const SkullProgress = styled.div`
   animation-name: spin;
   animation-duration: 2s;
   animation-iteration-count: infinite;
-  animation-timing-function: linear; 
-  
+  animation-timing-function: linear;
 
   @keyframes spin {
     from {
-        transform:rotate(0deg);
+      transform: rotate(0deg);
     }
     to {
-        transform:rotate(360deg);
+      transform: rotate(360deg);
     }
-}
-`
+  }
+`;
 
 const Progress = styled.div`
   margin-top: 25%;
   color: white;
   letter-spacing: 0.2rem;
-
-`
+`;
 
 class Collection extends Component {
   state = {
@@ -78,20 +75,34 @@ class Collection extends Component {
       <>
         {this.state.loading ? (
           <Progress>
-
             <SkullProgress>
-              <img src={skull} alt='loading' />
-              </SkullProgress>
+              <img src={skull} alt="loading" />
+            </SkullProgress>
             <p>LOADING</p>
           </Progress>
         ) : (
-            <CollectionContainer>
-                
-                <h2>Your Shoe Collection</h2>
-                <MappedCollection>
-                {mappedCollection}
-                </MappedCollection>
-            </CollectionContainer>
+          <CollectionContainer>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: "1%"
+              }}
+            >
+              <h1
+                style={{
+                  color: "white",
+                  borderBottom: "solid 1px white",
+                  width: "66%"
+                }}
+              >
+                Your Collection
+              </h1>
+            </div>
+            <MappedCollection>{mappedCollection}</MappedCollection>
+          </CollectionContainer>
         )}
       </>
     );

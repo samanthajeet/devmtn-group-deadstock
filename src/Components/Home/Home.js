@@ -225,7 +225,28 @@ class Home extends Component {
             <p>LOADING</p>
           </Progress>
         ) : (
-          <div>{mappedFeed}</div>
+          <div>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: "1%"
+              }}
+            >
+              <h1
+                style={{
+                  color: "white",
+                  borderBottom: "solid 1px white",
+                  width: "100%"
+                }}
+              >
+                Home
+              </h1>
+            </div>
+            <div>{mappedFeed}</div>
+          </div>
         )}
       </div>
     );
