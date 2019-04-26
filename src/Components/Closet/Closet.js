@@ -20,7 +20,6 @@ const MappedUserShoes = styled.div`
 const UserInfo = styled.div`
   display: flex;
   width: 100%;
-  height: 20rem;
   justify-content: space-around;
 `;
 
@@ -136,7 +135,7 @@ class Closet extends Component {
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "center",
+                    justifyContent: "space-around",
                     alignItems: "center"
                   }}
                 >
@@ -145,38 +144,38 @@ class Closet extends Component {
                       width: "66%",
                       display: "flex",
                       justifyContent: "center",
-                      alignItems: "center",
-                      marginTop: "10%"
+                      alignItems: "center"
+                      
                     }}
                   >
-                  { (this.props.user_id != +this.props.match.params.user_id) ? (
-                    <h1
-                    style={{
-                      color: "white",
-                      borderBottom: "solid 1px white",
-                      width: "100%"
-                    }}
-                  >
-                    {this.state.first_name} {this.state.last_name}'s Closet
+                    {(this.props.user_id != +this.props.match.params.user_id) ? (
+                      <h1
+                        style={{
+                          color: "white",
+                          borderBottom: "solid 1px white",
+                          width: "100%"
+                        }}
+                      >
+                        {this.state.first_name} {this.state.last_name}'s Closet
                 </h1>
-                  ):(
-                    <h1
-                      style={{
-                        color: "white",
-                        borderBottom: "solid 1px white",
-                        width: "100%"
-                      }}
-                    >
-                      Your Closet
+                    ) : (
+                        <h1
+                          style={{
+                            color: "white",
+                            borderBottom: "solid 1px white",
+                            width: "100%"
+                          }}
+                        >
+                          Your Closet
                   </h1>
-                  )}
-                    
-                </div>
-                <Chartjs user_id = {this.props.match.params.user_id} />
-                { this.props.user_id === +this.props.match.params.user_id ?(
+                      )}
+
+                  </div>
+                  <Chartjs user_id={this.props.match.params.user_id} />
+                  {this.props.user_id === +this.props.match.params.user_id ? (
 
                     <Button
-                      style={{ marginTop: "5%", width: "90%" }}
+                      style={{ width: "80%" }}
                       variant="contained"
                       color="primary"
                       onClick={() => this.props.history.push("/dashboard/closet/upload")}
@@ -188,30 +187,56 @@ class Closet extends Component {
                     )}
                 </div>
 
-                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "50vh" }}>
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "70vh" }}>
                   <Paper
                     style={{
-                      height: "90%",
                       padding: "0.5rem",
                       display: "flex",
                       alignItems: "center",
                       flexDirection: "column",
-                      width: "80%"
+                      justifyContent: "space-between",
+                      width: "100%",
+                      minWidth: '300px',
+                      maxWidth: '400px',
+                      minHeight: '50vh'
                     }}
                   >
                     <div style={{ height: "50%", width: "50%", }}>
+                      <h3
+                        style={{
+                          color: "black",
+                          margin: "0",
+                          padding: "0",
+                          display: "flex",
+                          alignItems: "center",
+                          width: "100%",
+                          justifyContent: "center"
+                        }}
+                      >
+                        <div>{this.props.first_name}</div>
+                        <div style={{ marginLeft: "2%" }}>
+                          {this.props.last_name}
+                        </div>
+                      </h3>
                       <img
                         src={this.state.profile_pic}
                         alt=""
                         style={{
-                          width: "100%",
-                          height: "100%",
+                          width: "12rem",
+                          marginTop: '10%',
+                          height: "12rem",
                           objectFit: "cover"
                         }}
                       />
                     </div>
-                    <p>{this.state.bio}</p>
-                  </Paper>
+                    <div
+                      style={{ display: "flex", justifyContent: "flex-start" }}
+                    >
+                      <p style={{ margin: "0", padding: "0", marginTop: "2%" }}>
+                        {this.state.bio}
+                      </p>
+                    </div>                  
+                    </Paper>
                 </div>
               </UserInfo>
               <div
@@ -220,7 +245,7 @@ class Closet extends Component {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  marginTop: "10%"
+                  marginTop: "1%"
                 }}
               >
                 <h1
