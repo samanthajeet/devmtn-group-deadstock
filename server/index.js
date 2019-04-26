@@ -1,3 +1,5 @@
+const path = require('path'); // Usually moved to the start of file
+
 require("dotenv").config();
 
 const express = require("express");
@@ -195,4 +197,8 @@ io.on("connection", function(socket) {
     const messages = await db.chats.create_message({ message, user_id, room });
     io.to(room).emit("returnMessages", messages);
   });
+});
+
+app.get('*', (req, res)=>{
+  res.sendFile(path.join(__dirname, '../build/index.html'));
 });
