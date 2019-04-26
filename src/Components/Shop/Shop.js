@@ -80,7 +80,28 @@ class Shop extends Component {
             <p>LOADING</p>
           </Progress>
         ) : (
-          <MappedShoes>{mappedShoes}</MappedShoes>
+          <div>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: "1%"
+              }}
+            >
+              <h1
+                style={{
+                  color: "white",
+                  borderBottom: "solid 1px white",
+                  width: "66%"
+                }}
+              >
+                The Shop
+              </h1>
+            </div>
+            <MappedShoes>{mappedShoes}</MappedShoes>
+          </div>
         )}
       </>
     );

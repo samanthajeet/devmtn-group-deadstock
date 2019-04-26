@@ -6,6 +6,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom'
 
 class TextFieldForm extends Component {
   state = {
@@ -55,6 +57,7 @@ class TextFieldForm extends Component {
         boughtPrice,
         isForSale
       });
+      this.props.history.push(`/dashboard/closet/${this.props.user.user_id}`)
     } else {
       alert(" please add all info");
     }
@@ -163,5 +166,9 @@ class TextFieldForm extends Component {
     );
   }
 }
-
-export default TextFieldForm;
+function mapStateToProps(reduxState){
+  return{
+    user:reduxState.user
+  }
+}
+export default withRouter(connect(mapStateToProps)(TextFieldForm));

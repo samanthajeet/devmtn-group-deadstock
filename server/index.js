@@ -1,3 +1,5 @@
+const path = require('path'); // Usually moved to the start of file
+
 require("dotenv").config();
 
 const express = require("express");
@@ -7,6 +9,8 @@ pg = require("pg");
 pgSession = require("connect-pg-simple")(session);
 
 const app = express();
+
+app.use( express.static( `${__dirname}/../build` ) );
 const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env;
 
 app.use(express.json());
@@ -193,4 +197,8 @@ io.on("connection", function(socket) {
     const messages = await db.chats.create_message({ message, user_id, room });
     io.to(room).emit("returnMessages", messages);
   });
+});
+
+app.get('*', (req, res)=>{
+  res.sendFile(path.join(__dirname, '../build/index.html'));
 });
