@@ -1,5 +1,4 @@
 import React, { Component, memo } from "react";
-import axios from "axios";
 import { connect } from "react-redux";
 import { handleFriend } from "../../ducks/reducer";
 
@@ -38,6 +37,7 @@ class Contacts extends Component {
         >
           <img
             src={friend.profile_pic}
+            alt="Friend Profile Pic"
             style={{
               height: "3rem",
               width: "3rem",

@@ -6,7 +6,7 @@ export default class SearchItem extends Component {
   }
   render() {
     const {
-      shoe_id,
+      // shoe_id,
       shoe_model,
       brand,
       colorway,
@@ -35,6 +35,7 @@ export default class SearchItem extends Component {
           <img
             src={image_1_url}
             style={{ marginRight: "5px", height: "5vw", width: "5vw" }}
+            alt=""
           />
         </div>
 

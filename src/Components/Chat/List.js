@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import sockets from "./Sockets";
 import axios from "axios";
 import { handleList, handleFriend } from "../../ducks/reducer";
 import { connect } from "react-redux";
@@ -51,6 +50,7 @@ class List extends Component {
         >
           <img
             src={name.profile_pic}
+            alt="Profile Pic"
             style={{
               height: "3rem",
               width: "3rem",

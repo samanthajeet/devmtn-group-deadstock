@@ -7,7 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Divider from "@material-ui/core/Divider";
 import Icon from "@material-ui/core/Icon";
 import Button from "@material-ui/core/Button";
@@ -117,7 +116,6 @@ const Product = props => {
   const [image3, setImage3] = useState("");
   const [image4, setImage4] = useState("");
   const [dense, setDense] = useState(false);
-  const [secondary = false, setSecondary] = useState("");
   const [open = false, setOpen] = useState("");
   const [loading, setLoading] = useState("");
   const [sellers, setSellers] = useState([]);
