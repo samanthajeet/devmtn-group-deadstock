@@ -102,9 +102,9 @@ class CommunityCard extends Component {
               <Typography component="h5" variant="h5">
                 {this.props.first_name} {this.props.last_name}
               </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
+              {/* <Typography variant="subtitle1" color="textSecondary">
                 50 Pairs of Shoes
-              </Typography>
+              </Typography> */}
               {loading ? (
                 null
               ):(
@@ -122,12 +122,14 @@ class CommunityCard extends Component {
                   </Fade>
                 )
               )}
+
             </CardContent>
             <div className={classes.controls} />
           </div>
           <CardMedia
             className={classes.cover}
             image={this.props.profile_pic}
+
           />
         </Card>
         </Fade>
