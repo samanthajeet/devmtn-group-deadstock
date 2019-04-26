@@ -20,7 +20,6 @@ const MappedUserShoes = styled.div`
 const UserInfo = styled.div`
   display: flex;
   width: 100%;
-  height: 20rem;
   justify-content: space-around;
 `;
 
@@ -66,18 +65,20 @@ class Closet extends Component {
       open: false,
       user_shoes: [],
       loading: true,
-      user_image: '',
-      user_bio: ''
+      user_image: "",
+      user_bio: ""
     };
   }
 
   componentDidMount() {
     this.getCloset();
-    this.getUserInfo()
+    this.getUserInfo();
   }
 
   getCloset = async () => {
-    let response = await axios.get(`/api/closet/${this.props.match.params.user_id}`);
+    let response = await axios.get(
+      `/api/closet/${this.props.match.params.user_id}`
+    );
     this.setState({
       user_shoes: response.data
     });
@@ -86,23 +87,24 @@ class Closet extends Component {
     });
   };
 
-  getUserInfo = async() => {
-    console.log(this.props.user_id, +this.props.match.params.user_id )
-    if( this.props.user_id != +this.props.match.params.user_id){
-      let response = await axios.get(`/api/closetUserInfo/${this.props.match.params.user_id}`)
+  getUserInfo = async () => {
+    if (this.props.user_id != +this.props.match.params.user_id) {
+      let response = await axios.get(
+        `/api/closetUserInfo/${this.props.match.params.user_id}`
+      );
       this.setState({
         profile_pic: response.data.profile_pic,
         bio: response.data.bio
-      })
+      });
       // console.log(response.data)
     } else {
       // console.log(this.props)
       this.setState({
         profile_pic: this.props.profile_pic,
         bio: this.props.bio
-      })
+      });
     }
-  }
+  };
 
   onOpenModal = () => {
     this.setState({ open: true });
@@ -113,6 +115,7 @@ class Closet extends Component {
   };
 
   render() {
+    console.log(this.props);
     let mappedUserShoes = this.state.user_shoes.map(shoe => {
       return (
         <div key={shoe.user_shoe_id}>
@@ -148,7 +151,7 @@ class Closet extends Component {
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "center",
+                  justifyContent: "space-around",
                   alignItems: "center"
                 }}
               >
@@ -158,7 +161,7 @@ class Closet extends Component {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    marginTop: "10%"
+                    marginTop: "1%"
                   }}
                 >
                   <h1
@@ -171,46 +174,82 @@ class Closet extends Component {
                     Your Closet
                   </h1>
                 </div>
-                <Chartjs user_id = {this.props.match.params} />
-                { this.props.user_id === +this.props.match.params.user_id ?(
-
-                    <Button
-                    style={{marginTop: "5%", width: "90%"}}
-                  variant="contained"
-                  color="primary"
-                  
-                  onClick={() => this.props.history.push("closet/upload")}
-                >
-                  Add A New Shoe To Your Closet
-                </Button>
-                ): (
-                  null
-                )}
+                <Chartjs user_id={this.props.match.params} />
+                {this.props.user_id === +this.props.match.params.user_id ? (
+                  <Button
+                    style={{ width: "80%" }}
+                    variant="contained"
+                    color="primary"
+                    onClick={() =>
+                      this.props.history.push("/dashboard/closet/upload")
+                    }
+                  >
+                    Add A New Shoe To Your Closet
+                  </Button>
+                ) : null}
               </div>
 
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "50vh"}}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "70vh"
+                }}
+              >
                 <Paper
                   style={{
-                    height: "90%",
                     padding: "0.5rem",
                     display: "flex",
                     alignItems: "center",
                     flexDirection: "column",
-                    width: "80%"
+                    minWidth: "300px",
+                    maxWidth: "400px",
+                    width: "100%",
+                    minHeight: "50vh"
                   }}
                 >
-                  <div style={{ height: "50%", width: "50%",  }}>
+                  <h3
+                    style={{
+                      color: "black",
+                      margin: "0",
+                      padding: "0",
+                      display: "flex",
+                      alignItems: "center",
+                      width: "100%",
+                      justifyContent: "center"
+                    }}
+                  >
+                    <div>{this.props.first_name}</div>
+                    <div style={{ marginLeft: "2%" }}>
+                      {this.props.last_name}
+                    </div>
+                  </h3>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center"
+                    }}
+                  >
                     <img
                       src={this.state.profile_pic}
                       alt=""
                       style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover"
+                        width: "12rem",
+                        height: "12rem",
+                        objectFit: "cover",
+                        marginTop: "1%"
                       }}
                     />
                   </div>
-                  <p>{this.state.bio}</p>
+                  <div
+                    style={{ display: "flex", justifyContent: "flex-start" }}
+                  >
+                    <p style={{ margin: "0", padding: "0", marginTop: "2%" }}>
+                      {this.state.bio}
+                    </p>
+                  </div>
                 </Paper>
               </div>
             </UserInfo>
@@ -220,7 +259,7 @@ class Closet extends Component {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                marginTop: "10%"
+                marginTop: "2%"
               }}
             >
               <h1
@@ -233,7 +272,6 @@ class Closet extends Component {
                 Your Shoes
               </h1>
             </div>
-           
             <MappedUserShoes>{mappedUserShoes}</MappedUserShoes>
           </div>
         )}
